@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CardConEsquinasSuperiores" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">#FFFFFF</item>
+        <item name="cardElevation">6dp</item>
+        <item name="shapeAppearanceOverlay">@style/EsquinasSuperiores</item>
+    </style>
+
+    <style name="EsquinasSuperiores">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+    </style>
+
+    <style name="LoginTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="boxStrokeColor">#A9A9A9</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxBackgroundColor">#FFFFFF</item>
+    </style>
+
+    <style name="InvenzoButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">#1976D3</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:padding">12dp</item>
+    </style>
+    <style name="titulos">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">6dp</item>
+    </style>
+
+</resources>
+
+
+
