@@ -533,6 +533,7 @@
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/Bienvenida"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
