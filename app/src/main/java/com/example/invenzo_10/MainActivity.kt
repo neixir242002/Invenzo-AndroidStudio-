@@ -22,16 +22,16 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ActivityInicio::class.java)
             startActivity(intent)
         }
-        val bottomNavigationView = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView.post {
-            bottomNavigationView.selectedItemId = R.id.more
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.recyclerProductos)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+//        val bottomNavigationView = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNavigationView)
+//        bottomNavigationView.post {
+//            bottomNavigationView.selectedItemId = R.id.more
+//        }
+//
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.recyclerProductos)) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            insets
+//        }
 
     }
 }

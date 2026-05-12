@@ -214,15 +214,3 @@
     </style>
 
 </resources>
-
-        <item name="android:background">
-            @android:color/transparent
-        </item>
-
-        <item name="titleTextColor">
-            @color/textPrimary
-        </item>
-
-    </style>
-
-</resources>
