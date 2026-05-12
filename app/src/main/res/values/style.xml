@@ -1,36 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CardConEsquinasSuperiores" parent="Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">#FFFFFF</item>
-        <item name="cardElevation">6dp</item>
-        <item name="shapeAppearanceOverlay">@style/EsquinasSuperiores</item>
+
+    <!-- ========================= -->
+    <!-- COLORES GENERALES -->
+    <!-- ========================= -->
+
+    <color name="primaryColor">#2563EB</color>
+    <color name="primaryLight">#DBEAFE</color>
+
+    <color name="successColor">#10B981</color>
+    <color name="successLight">#D1FAE5</color>
+
+    <color name="dangerColor">#EF4444</color>
+    <color name="dangerLight">#FEE2E2</color>
+
+    <color name="warningColor">#F97316</color>
+    <color name="warningLight">#FFEDD5</color>
+
+    <color name="textPrimary">#111827</color>
+    <color name="textSecondary">#6B7280</color>
+
+    <color name="backgroundColor">#F5F7FA</color>
+    <color name="cardColor">#FFFFFF</color>
+
+    <!-- ========================= -->
+    <!-- CARD PRINCIPAL -->
+    <!-- ========================= -->
+
+    <style name="DashboardCard" parent="Widget.Material3.CardView.Elevated">
+
+        <item name="cardCornerRadius">22dp</item>
+
+        <item name="cardElevation">3dp</item>
+
+        <item name="cardBackgroundColor">@color/cardColor</item>
+
+        <item name="strokeWidth">0dp</item>
+
     </style>
+
+    <!-- ========================= -->
+    <!-- CARD SUPERIOR -->
+    <!-- ========================= -->
+
+    <style name="CardConEsquinasSuperiores"
+        parent="Widget.Material3.CardView.Elevated">
+
+        <item name="cardBackgroundColor">@color/cardColor</item>
+
+        <item name="cardElevation">3dp</item>
+
+        <item name="shapeAppearanceOverlay">
+            @style/EsquinasSuperiores
+        </item>
+
+    </style>
+
+    <!-- ========================= -->
+    <!-- ESQUINAS -->
+    <!-- ========================= -->
 
     <style name="EsquinasSuperiores">
-        <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerFamilyTopRight">rounded</item>
-        <item name="cornerSizeTopLeft">20dp</item>
-        <item name="cornerSizeTopRight">20dp</item>
+
+        <item name="cornerFamily">rounded</item>
+
+        <item name="cornerSizeTopLeft">24dp</item>
+
+        <item name="cornerSizeTopRight">24dp</item>
+
+        <item name="cornerSizeBottomLeft">0dp</item>
+
+        <item name="cornerSizeBottomRight">0dp</item>
+
     </style>
 
-    <style name="LoginTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <!-- ========================= -->
+    <!-- INPUTS -->
+    <!-- ========================= -->
+
+    <style name="LoginTextInputLayout"
+        parent="Widget.Material3.TextInputLayout.OutlinedBox">
+
         <item name="android:layout_marginTop">8dp</item>
+
         <item name="android:layout_marginBottom">8dp</item>
-        <item name="boxStrokeColor">#A9A9A9</item>
+
+        <item name="boxStrokeColor">@color/primaryColor</item>
+
         <item name="boxStrokeWidth">1dp</item>
-        <item name="boxBackgroundColor">#FFFFFF</item>
+
+        <item name="boxStrokeWidthFocused">2dp</item>
+
+        <item name="boxCornerRadiusTopStart">16dp</item>
+
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+
+        <item name="boxBackgroundColor">@color/cardColor</item>
+
+        <item name="hintTextColor">@color/textSecondary</item>
+
     </style>
 
-    <style name="InvenzoButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:backgroundTint">#1976D3</item>
-        <item name="android:textColor">#FFFFFF</item>
+    <!-- ========================= -->
+    <!-- BOTONES -->
+    <!-- ========================= -->
+
+    <style name="InvenzoButton"
+        parent="Widget.Material3.Button">
+
+        <item name="android:backgroundTint">
+            @color/primaryColor
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+        <item name="cornerRadius">18dp</item>
+
+        <item name="android:paddingVertical">14dp</item>
+
         <item name="android:textStyle">bold</item>
-        <item name="cornerRadius">12dp</item>
-        <item name="android:padding">12dp</item>
+
+        <item name="android:textSize">15sp</item>
+
+        <item name="fontFamily">sans-serif-medium</item>
+
+        <item name="elevation">0dp</item>
+
     </style>
-    <style name="titulos">
-        <item name="cardCornerRadius">12dp</item>
-        <item name="cardElevation">6dp</item>
+
+    <!-- ========================= -->
+    <!-- TITULOS -->
+    <!-- ========================= -->
+
+    <style name="DashboardTitle">
+
+        <item name="android:textColor">
+            @color/textPrimary
+        </item>
+
+        <item name="android:textSize">18sp</item>
+
+        <item name="android:fontFamily">
+            sans-serif-medium
+        </item>
+
+    </style>
+
+    <!-- ========================= -->
+    <!-- SUBTEXTO -->
+    <!-- ========================= -->
+
+    <style name="DashboardSubtitle">
+
+        <item name="android:textColor">
+            @color/textSecondary
+        </item>
+
+        <item name="android:textSize">13sp</item>
+
+        <item name="android:fontFamily">
+            sans-serif
+        </item>
+
+    </style>
+
+    <!-- ========================= -->
+    <!-- NUMEROS GRANDES -->
+    <!-- ========================= -->
+
+    <style name="DashboardBigNumber">
+
+        <item name="android:textColor">
+            @color/textPrimary
+        </item>
+
+        <item name="android:textSize">30sp</item>
+
+        <item name="android:textStyle">bold</item>
+
+        <item name="android:fontFamily">
+            sans-serif-black
+        </item>
+
+    </style>
+
+    <!-- ========================= -->
+    <!-- ICONOS CIRCULARES -->
+    <!-- ========================= -->
+
+    <style name="DashboardIconContainer">
+
+        <item name="android:padding">10dp</item>
+
     </style>
 
     <style name="circleImage">
@@ -48,5 +215,14 @@
 
 </resources>
 
+        <item name="android:background">
+            @android:color/transparent
+        </item>
 
+        <item name="titleTextColor">
+            @color/textPrimary
+        </item>
 
+    </style>
+
+</resources>
