@@ -1,3 +1,43 @@
 <resources>
-    <string name="app_name">Invenzo_1.0</string>
+
+    <string name="app_name">DashboardUI</string>
+
+    <string name="more_options">Más opciones</string>
+
+    <string name="admin">Administrador</string>
+
+    <string name="david_garcia">David Garcia</string>
+
+    <string name="administration">Administración</string>
+
+    <string name="settings">Configuración</string>
+
+    <string name="categories">Categorias</string>
+
+    <string name="inventories">Inventario</string>
+
+    <string name="providers">Proveedores</string>
+
+    <string name="users">Usuarios</string>
+
+    <string name="warehouses">Almacenes</string>
+
+    <string name="profile">Perfil</string>
+
+    <string name="app_settings">Configuración de la app</string>
+
+    <string name="notifications">Notificaciones</string>
+
+    <string name="help_support">Ayuda y soporte</string>
+
+    <string name="logout">Cerrar sesión</string>
+
+    <string name="home">Inicio</string>
+
+    <string name="products">Productos</string>
+
+    <string name="reports">Reportes</string>
+
+    <string name="more">Más</string>
+
 </resources>

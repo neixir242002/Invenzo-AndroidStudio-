@@ -1,9 +1,12 @@
 package com.example.invenzo_10
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -12,6 +15,7 @@ import kotlin.random.Random
 
 
 class ActivityInicio: AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -25,20 +29,6 @@ class ActivityInicio: AppCompatActivity() {
             val yValue = Random.nextInt(1, 10).toFloat()
             entries.add(Entry(i.toFloat(), yValue))
         }
-
-        val dataSet = LineDataSet(entries, "Datos aleatorios")
-        dataSet.color = Color.BLUE
-        dataSet.valueTextColor = Color.BLACK
-        dataSet.lineWidth = 2f
-        dataSet.setCircleColor(Color.RED)
-
-        val lineData = LineData(dataSet)
-
-        // 🔹 Asignar datos y refrescar
-        lineChart.data = lineData
-        lineChart.description.text = "Gráfica con datos random"
-        lineChart.animateX(1000)
-        lineChart.invalidate()
 
     }
 }
