@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="background">#FAFAFA</color>
+
+    <color name="white">#FFFFFF</color>
+
+    <color name="textPrimary">#212121</color>
+
+    <color name="textSecondary">#757575</color>
+
+    <color name="bluePrimary">#2962FF</color>
+
+    <color name="redBadge">#FF3B30</color>
+
+    <color name="grayBorder">#EAEAEA</color>
+
+    <color name="blueLightIndicator">#E3F2FD</color>
+
+</resources>
