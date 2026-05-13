@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".ActivityInicio"/>
         <activity android:name=".ProductosActivity"/>
+        <activity android:name=".AgregarProductoActivity"/>
         <activity android:name=".ReportesActivity"/>
         <activity android:name=".MasOpcionesActivity"/>
     </application>
