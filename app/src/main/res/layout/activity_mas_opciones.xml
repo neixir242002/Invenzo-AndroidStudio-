@@ -30,6 +30,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/icons8_men_"
+                    android:contentDescription="Menu"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -51,6 +52,7 @@
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:src="@drawable/icons8_notificaci_n_24"
+                    android:contentDescription="Notificaciones"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -76,6 +78,7 @@
                         android:background="@drawable/bg_blue_icon"
                         android:padding="12dp"
                         android:src="@drawable/icons8_men_"
+                        android:contentDescription="Usuario"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -106,6 +109,7 @@
                         android:layout_height="24dp"
                         android:src="@drawable/ic_more"
                         android:rotation="-90"
+                        android:contentDescription="Ver más"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -134,6 +138,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <!-- Control de Inventario -->
+                    <include layout="@layout/item_option" android:id="@+id/optControlInventario"/>
+                    <View style="@style/Divider" />
                     <!-- Categorías -->
                     <include layout="@layout/item_option" android:id="@+id/optCategorias"/>
                     <View style="@style/Divider" />

@@ -24,6 +24,7 @@
         <activity android:name=".ProductosActivity"/>
         <activity android:name=".ReportesActivity"/>
         <activity android:name=".MasOpcionesActivity"/>
+        <activity android:name=".ControlInventarioActivity"/>
     </application>
 
 </manifest>
