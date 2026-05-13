@@ -66,29 +66,21 @@ class ActivityInicio : AppCompatActivity() {
             when (item.itemId) {
 
                 R.id.home -> {
-
                     true
                 }
 
                 R.id.products -> {
-
-                    startActivity(
-                        Intent(
-                            this,
-                            ProductosActivity::class.java
-                        )
-                    )
-
+                    startActivity(Intent(this, ProductosActivity::class.java))
                     true
                 }
 
                 R.id.reports -> {
-
+                    startActivity(Intent(this, ReportesActivity::class.java))
                     true
                 }
 
                 R.id.more -> {
-
+                    startActivity(Intent(this, MasOpcionesActivity::class.java))
                     true
                 }
 
@@ -101,15 +93,5 @@ class ActivityInicio : AppCompatActivity() {
             findViewById<FloatingActionButton>(
                 R.id.floatingActionButton
             )
-
-//        fab.setOnClickListener {
-//
-//            startActivity(
-//                Intent(
-//                    this,
-//                    AgregarProductoActivity::class.java
-//                )
-//            )
-//        }
     }
 }
