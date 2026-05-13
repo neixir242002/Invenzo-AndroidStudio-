@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/reports"
-        android:icon="@drawable/icons8_aumentar_las_ganancias_24"
+        android:icon="@drawable/icons8_alerta_24"
         android:title="@string/reports"/>
 
     <item
