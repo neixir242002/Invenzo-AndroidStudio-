@@ -22,8 +22,6 @@
         </activity>
         <activity android:name=".ActivityInicio"/>
         <activity android:name=".ProductosActivity"/>
-        <activity android:name=".ProductosActivity"
-            tools:ignore="DuplicateActivity" />
     </application>
 
 </manifest>

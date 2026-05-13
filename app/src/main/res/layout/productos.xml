@@ -23,6 +23,7 @@
             android:id="@+id/imageView"
             android:layout_width="33dp"
             android:layout_height="31dp"
+            android:background="@drawable/bg_blue_icon"
             app:srcCompat="@drawable/icons8_men_" />
 
         <TextView
