@@ -2,8 +2,7 @@ package com.example.invenzo_10
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,28 +14,51 @@ class MasOpcionesActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_mas_opciones)
 
-        setupOptions()
+        setupClickListeners()
         setupBottomNavigation()
     }
 
-    private fun setupOptions() {
+    private fun setupClickListeners() {
+        // Perfil
+        findViewById<android.view.View>(R.id.cardProfile).setOnClickListener {
+            Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
+        }
+
         // Administración
-        setupOption(R.id.optCategorias, R.drawable.ic_launcher_foreground, "Categorías")
-        setupOption(R.id.optProveedores, R.drawable.ic_launcher_foreground, "Proveedores")
-        setupOption(R.id.optUsuarios, R.drawable.ic_launcher_foreground, "Usuarios")
-        setupOption(R.id.optAlmacenes, R.drawable.ic_launcher_foreground, "Almacenes")
+        findViewById<android.view.View>(R.id.optCategorias).setOnClickListener {
+            Toast.makeText(this, "Categorías", Toast.LENGTH_SHORT).show()
+        }
+        findViewById<android.view.View>(R.id.optInventarios).setOnClickListener {
+            Toast.makeText(this, "Inventarios", Toast.LENGTH_SHORT).show()
+        }
+        findViewById<android.view.View>(R.id.optUsuarios).setOnClickListener {
+            Toast.makeText(this, "Usuarios", Toast.LENGTH_SHORT).show()
+        }
 
         // Configuración
-        setupOption(R.id.optPerfil, R.drawable.ic_launcher_foreground, "Perfil")
-        setupOption(R.id.optConfigApp, R.drawable.ic_launcher_foreground, "Configuración de la app")
-        setupOption(R.id.optNotificaciones, R.drawable.ic_launcher_foreground, "Notificaciones")
-        setupOption(R.id.optAyuda, R.drawable.ic_launcher_foreground, "Ayuda y soporte")
-    }
+        findViewById<android.view.View>(R.id.optPerfil).setOnClickListener {
+            Toast.makeText(this, "Ajustes de Perfil", Toast.LENGTH_SHORT).show()
+        }
+        findViewById<android.view.View>(R.id.optConfigApp).setOnClickListener {
+            Toast.makeText(this, "Configuración de la app", Toast.LENGTH_SHORT).show()
+        }
+        findViewById<android.view.View>(R.id.optNotificaciones).setOnClickListener {
+            Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+        }
+        findViewById<android.view.View>(R.id.optAyuda).setOnClickListener {
+            Toast.makeText(this, "Ayuda y soporte", Toast.LENGTH_SHORT).show()
+        }
 
-    private fun setupOption(viewId: Int, iconRes: Int, title: String) {
-        val view = findViewById<android.view.View>(viewId)
-        view.findViewById<ImageView>(R.id.optionIcon).setImageResource(iconRes)
-        view.findViewById<TextView>(R.id.optionTitle).text = title
+        // Cerrar sesión
+        findViewById<android.view.View>(R.id.btnLogout).setOnClickListener {
+            Toast.makeText(this, "Cerrando sesión...", Toast.LENGTH_SHORT).show()
+            // Aquí iría la lógica de logout
+        }
+        
+        // FAB
+        findViewById<android.view.View>(R.id.fab).setOnClickListener {
+            startActivity(Intent(this, AgregarProductoActivity::class.java))
+        }
     }
 
     private fun setupBottomNavigation() {
