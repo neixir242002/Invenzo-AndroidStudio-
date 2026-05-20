@@ -1,6 +1,21 @@
 <resources>
 
-    <string name="app_name">DashboardUI</string>
+    <string name="app_name">INVENZO</string>
+
+<!--  textos de la aplicaccion inicio secion  -->
+    <string name="infobasica">Sistema de Inventario</string>
+    <string name="login">Inicio de secion</string>
+    <string name="welcom">Bienvenido de nuevo</string>
+    <string name="text_gmail">Correo electronico</string>
+    <string name="imput_gmail">pedrot777@gmail.com</string>
+    <string name="text_password">Contraseña</string>
+    <string name="imput_password">Contraseña</string>
+    <string name="self_saving">Recordar</string>
+    <string name="recover_password">¿Olvidaste tu contraseña?</string>
+    <string name="button_login">Iniciar Secion</string>
+    <string name="go_register">Registrate</string>
+    <string name="no_tienes_cuenta">¿No tienes una cuenta?</string>
+
 
     <string name="more_options">Más opciones</string>
 
@@ -37,6 +52,7 @@
     <string name="reports">Reportes</string>
 
     <string name="more">Más</string>
+
 
 
 </resources>
