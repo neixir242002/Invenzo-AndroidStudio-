@@ -252,26 +252,13 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:layout_height="65dp"
+        android:background="#FFFFFF"
+        app:elevation="8dp"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_footer" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/bluePrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomNav"
-        app:layout_constraintEnd_toEndOf="@+id/bottomNav"
-        app:layout_constraintStart_toStartOf="@+id/bottomNav"
-        app:layout_constraintTop_toTopOf="@+id/bottomNav"
-        app:layout_constraintVertical_bias="0.0"
-        app:shapeAppearanceOverlay="@style/circleImage"
-        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

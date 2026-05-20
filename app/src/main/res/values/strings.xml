@@ -38,5 +38,36 @@
 
     <string name="more">Más</string>
 
+    <string name="hola_david">Hola, David \uD83D\uDC4B</string>
+    <string name="resumen_hoy">Aquí tienes un resumen de hoy</string>
+    <string name="resumen_general">Resumen general</string>
+    <string name="total_productos">Total productos</string>
+    <string name="stock_bajo">Stock bajo</string>
+    <string name="movimientos">Movimientos</string>
+    <string name="valor_total">Valor total</string>
+    <string name="tendencia_inventario">Tendencia del inventario</string>
+    <string name="ultimos_movimientos">Últimos movimientos</string>
+    <string name="productos_agregados">Productos agregados</string>
+    <string name="hace_5_horas">Hace 5 horas</string>
+
+    <!-- Placeholders / Hardcoded values -->
+    <string name="val_80">80</string>
+    <string name="val_12">12</string>
+    <string name="val_248">248</string>
+    <string name="val_4_2m">$4.2M</string>
+    <string name="val_plus_25_mes">+25% este mes</string>
+    <string name="val_minus_10_mes">-10% este mes</string>
+    <string name="val_plus_5_2_hoy">+5.2% hoy</string>
+    <string name="val_plus_12_mensual">+12% mensual</string>
+    <string name="val_plus_10">+10</string>
+
+    <!-- Content Descriptions -->
+    <string name="desc_perfil">Imagen de perfil</string>
+    <string name="desc_notificaciones">Notificaciones</string>
+    <string name="desc_icon_productos">Icono de productos</string>
+    <string name="desc_icon_stock">Icono de stock bajo</string>
+    <string name="desc_icon_movimientos">Icono de movimientos</string>
+    <string name="desc_icon_valor">Icono de valor total</string>
+    <string name="desc_icon_carrito">Icono de carrito</string>
 
 </resources>

@@ -34,14 +34,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/textPrimary" />
+                    app:tint="#111827" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Más opciones"
-                    android:textColor="@color/textPrimary"
+                    android:textColor="#111827"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -56,15 +56,17 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/textPrimary" />
+                    app:tint="#111827" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!-- PROFILE CARD -->
             <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FFFFFF">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -89,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="David Garcia"
-                        android:textColor="@color/textPrimary"
+                        android:textColor="#111827"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/imgUser"
@@ -99,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Administrador"
-                        android:textColor="@color/textSecondary"
+                        android:textColor="#6B7280"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@id/userName"
                         app:layout_constraintTop_toBottomOf="@id/userName" />
@@ -113,7 +115,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/textSecondary" />
+                        app:tint="#6B7280" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -123,34 +125,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
                 android:text="Administración"
-                android:textColor="@color/textSecondary"
+                android:textColor="#6B7280"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FFFFFF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- Control de Inventario -->
                     <include layout="@layout/item_option" android:id="@+id/optControlInventario"/>
-                    <View style="@style/Divider" />
-                    <!-- Categorías -->
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
                     <include layout="@layout/item_option" android:id="@+id/optCategorias"/>
-                    <View style="@style/Divider" />
-                    <!-- Proveedores -->
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
                     <include layout="@layout/item_option" android:id="@+id/optProveedores"/>
-                    <View style="@style/Divider" />
-                    <!-- Usuarios -->
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
                     <include layout="@layout/item_option" android:id="@+id/optUsuarios"/>
-                    <View style="@style/Divider" />
-                    <!-- Almacenes -->
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
                     <include layout="@layout/item_option" android:id="@+id/optAlmacenes"/>
 
                 </LinearLayout>
@@ -162,15 +161,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Configuración"
-                android:textColor="@color/textSecondary"
+                android:textColor="#6B7280"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FFFFFF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -178,11 +179,11 @@
                     android:orientation="vertical">
 
                     <include layout="@layout/item_option" android:id="@+id/optPerfil"/>
-                    <View style="@style/Divider" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
                     <include layout="@layout/item_option" android:id="@+id/optConfigApp"/>
-                    <View style="@style/Divider" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
                     <include layout="@layout/item_option" android:id="@+id/optNotificaciones"/>
-                    <View style="@style/Divider" />
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
                     <include layout="@layout/item_option" android:id="@+id/optAyuda"/>
 
                 </LinearLayout>
@@ -196,7 +197,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="30dp"
                 android:text="Cerrar sesión"
-                android:textColor="@color/dangerColor"
+                android:textColor="#EF4444"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:padding="8dp"/>
@@ -206,27 +207,16 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:background="#FFFFFF"
+        app:elevation="8dp"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_footer" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/bluePrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomNav"
-        app:layout_constraintEnd_toEndOf="@+id/bottomNav"
-        app:layout_constraintStart_toStartOf="@+id/bottomNav"
-        app:layout_constraintTop_toTopOf="@+id/bottomNav"
-        app:layout_constraintVertical_bias="0.0"
-        app:shapeAppearanceOverlay="@style/circleImage"
-        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

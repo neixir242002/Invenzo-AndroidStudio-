@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -16,12 +14,15 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val inicioSecion: Button =findViewById(R.id.inicioSecion)
+        val inicioSecion: Button = findViewById(R.id.inicioSecion)
 
         inicioSecion.setOnClickListener {
             val intent = Intent(this, ActivityInicio::class.java)
             startActivity(intent)
+            // Transición suave de desvanecimiento
+            @Suppress("DEPRECATION")
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            finish()
         }
-
     }
 }

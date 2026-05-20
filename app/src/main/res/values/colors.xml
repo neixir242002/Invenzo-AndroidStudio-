@@ -3,23 +3,31 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="colorPrimary">#1976D2</color>
-    <color name="colorPrimaryDark">#1565C0</color>
-    <color name="colorAccent">#FF5722</color>
+    <!-- Colores usados en tus layouts -->
+    <color name="colorPrimary">#2563EB</color>
+    <color name="colorPrimaryDark">#1E40AF</color>
+    <color name="colorAccent">#3B82F6</color>
 
-    <color name="ic_laun_background">#FFFFFF</color>
-    <color name="ic_launcherppp">#FF5722</color>
-    <color name="background">#FAFAFA</color>
-<!--    <color name="textPrimary">#212121</color>-->
+    <color name="backgroundColor">#F5F7FA</color>
+    <color name="primaryColor">#2563EB</color>
+    <color name="primaryLight">#DBEAFE</color>
+    <color name="textPrimary">#111827</color>
+    <color name="textSecondary">#6B7280</color>
+    <color name="grayBorder">#E5E7EB</color>
 
-<!--    <color name="textSecondary">#757575</color>-->
+    <color name="successColor">#10B981</color>
+    <color name="successLight">#D1FAE5</color>
 
-    <color name="bluePrimary">#2962FF</color>
+    <color name="dangerColor">#EF4444</color>
+    <color name="dangerLight">#FEE2E2</color>
 
-    <color name="redBadge">#FF3B30</color>
+    <color name="warningColor">#F97316</color>
+    <color name="warningLight">#FFEDD5</color>
 
-    <color name="grayBorder">#EAEAEA</color>
+    <color name="cardColor">#FFFFFF</color>
 
-    <color name="blueLightIndicator">#E3F2FD</color>
-
+    <!-- Missing colors fixed -->
+    <color name="bluePrimary">#2563EB</color>
+    <color name="ic_laun_background">#3DDC84</color>
+    <color name="ic_launcherppp">#2563EB</color>
 </resources>

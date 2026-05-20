@@ -21,7 +21,6 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- HEADER -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -58,7 +57,6 @@
                     app:tint="@color/textPrimary" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- TABS / CHIPS -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,31 +67,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
+                    <Button
+                        android:id="@+id/btnTabVentas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ventas"
-                        android:textAllCaps="false"
-                        app:cornerRadius="20dp" />
+                        android:textAllCaps="false" />
 
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.Material3.Button.TonalButton"
+                    <Button
+                        android:id="@+id/btnTabProductos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="Productos"
-                        android:textAllCaps="false"
-                        app:cornerRadius="20dp" />
+                        android:textAllCaps="false" />
 
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.Material3.Button.TonalButton"
+                    <Button
+                        android:id="@+id/btnTabMovimientos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="Movimientos"
-                        android:textAllCaps="false"
-                        app:cornerRadius="20dp" />
+                        android:textAllCaps="false" />
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -319,26 +314,13 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:layout_height="65dp"
+        android:background="#FFFFFF"
+        app:elevation="8dp"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_footer" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/bluePrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomNav"
-        app:layout_constraintEnd_toEndOf="@+id/bottomNav"
-        app:layout_constraintStart_toStartOf="@+id/bottomNav"
-        app:layout_constraintTop_toTopOf="@+id/bottomNav"
-        app:layout_constraintVertical_bias="0.0"
-        app:shapeAppearanceOverlay="@style/circleImage"
-        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

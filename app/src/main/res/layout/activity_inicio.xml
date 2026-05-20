@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#F5F7FA">
 
-    <!-- SCROLL -->
-
+    <!-- SCROLL PRINCIPAL -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +22,6 @@
             android:padding="20dp">
 
             <!-- HEADER -->
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -37,6 +33,7 @@
                     android:background="@drawable/bg_blue_icon"
                     android:padding="10dp"
                     android:src="@drawable/icons8_men_"
+                    android:contentDescription="@string/desc_perfil"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -47,27 +44,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
-                    android:text="Hola, David 👋"
+                    android:text="@string/hola_david"
                     android:textColor="#111827"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@id/profileImage"
-                    app:layout_constraintTop_toTopOf="@id/profileImage"/>
+                    app:layout_constraintTop_toTopOf="@id/profileImage" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Aquí tienes un resumen de hoy"
+                    android:text="@string/resumen_hoy"
                     android:textColor="#6B7280"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="@id/txtHola"
-                    app:layout_constraintTop_toBottomOf="@id/txtHola"/>
+                    app:layout_constraintTop_toBottomOf="@id/txtHola" />
 
                 <ImageView
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:src="@drawable/icons8_notificaci_n_24"
+                    android:contentDescription="@string/desc_notificaciones"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profileImage"
@@ -75,19 +73,16 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- TITULO -->
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="Resumen general"
+                android:text="@string/resumen_general"
                 android:textColor="#111827"
                 android:textSize="19sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <!-- FILA 1 -->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +91,6 @@
                 android:weightSum="2">
 
                 <!-- CARD 1 -->
-
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="165dp"
@@ -115,7 +109,7 @@
                             android:id="@+id/productsNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="80"
+                            android:text="@string/val_80"
                             android:textColor="#111827"
                             android:textSize="34sp"
                             android:textStyle="bold"
@@ -128,6 +122,7 @@
                             android:background="@drawable/bg_blue_icon"
                             android:padding="10dp"
                             android:src="@drawable/icons8_caja_llena_24"
+                            android:contentDescription="@string/desc_icon_productos"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="#2563EB"/>
@@ -136,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
-                            android:text="Total productos"
+                            android:text="@string/total_productos"
                             android:textColor="#6B7280"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +140,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+25% este mes"
+                            android:text="@string/val_plus_25_mes"
                             android:textColor="#10B981"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -157,7 +152,6 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- CARD 2 -->
-
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="165dp"
@@ -176,7 +170,7 @@
                             android:id="@+id/stockNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="12"
+                            android:text="@string/val_12"
                             android:textColor="#111827"
                             android:textSize="34sp"
                             android:textStyle="bold"
@@ -189,6 +183,7 @@
                             android:background="@drawable/bg_red_icon"
                             android:padding="10dp"
                             android:src="@drawable/icons8_alerta_24"
+                            android:contentDescription="@string/desc_icon_stock"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="#EF4444"/>
@@ -197,7 +192,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
-                            android:text="Stock bajo"
+                            android:text="@string/stock_bajo"
                             android:textColor="#6B7280"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -206,7 +201,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="-10% este mes"
+                            android:text="@string/val_minus_10_mes"
                             android:textColor="#EF4444"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -220,7 +215,6 @@
             </LinearLayout>
 
             <!-- FILA 2 -->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -229,7 +223,6 @@
                 android:weightSum="2">
 
                 <!-- CARD 3 -->
-
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="165dp"
@@ -248,7 +241,7 @@
                             android:id="@+id/movementNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="248"
+                            android:text="@string/val_248"
                             android:textColor="#111827"
                             android:textSize="34sp"
                             android:textStyle="bold"
@@ -261,6 +254,7 @@
                             android:background="@drawable/bg_orange_icon"
                             android:padding="10dp"
                             android:src="@drawable/icons8_aumentar_las_ganancias_24"
+                            android:contentDescription="@string/desc_icon_movimientos"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="#F97316"/>
@@ -269,7 +263,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
-                            android:text="Movimientos"
+                            android:text="@string/movimientos"
                             android:textColor="#6B7280"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -278,7 +272,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+5.2% hoy"
+                            android:text="@string/val_plus_5_2_hoy"
                             android:textColor="#10B981"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -290,7 +284,6 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- CARD 4 -->
-
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="165dp"
@@ -309,7 +302,7 @@
                             android:id="@+id/valueNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$4.2M"
+                            android:text="@string/val_4_2m"
                             android:textColor="#111827"
                             android:textSize="28sp"
                             android:textStyle="bold"
@@ -322,6 +315,7 @@
                             android:background="@drawable/bg_green_icon"
                             android:padding="10dp"
                             android:src="@drawable/icons8_ventas_totales_24"
+                            android:contentDescription="@string/desc_icon_valor"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="#10B981"/>
@@ -330,7 +324,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
-                            android:text="Valor total"
+                            android:text="@string/valor_total"
                             android:textColor="#6B7280"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -339,7 +333,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+12% mensual"
+                            android:text="@string/val_plus_12_mensual"
                             android:textColor="#10B981"
                             android:textSize="13sp"
                             android:textStyle="bold"
@@ -353,7 +347,6 @@
             </LinearLayout>
 
             <!-- GRAFICA -->
-
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
@@ -371,7 +364,7 @@
                         android:id="@+id/chartTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tendencia del inventario"
+                        android:text="@string/tendencia_inventario"
                         android:textColor="#111827"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -393,12 +386,11 @@
             </com.google.android.material.card.MaterialCardView>
 
             <!-- ULTIMO MOVIMIENTO -->
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="Últimos movimientos"
+                android:text="@string/ultimos_movimientos"
                 android:textColor="#111827"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
@@ -424,6 +416,7 @@
                         android:background="@drawable/bg_green_icon"
                         android:padding="10dp"
                         android:src="@drawable/icons8_carrito_de_compras_24"
+                        android:contentDescription="@string/desc_icon_carrito"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -434,7 +427,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Productos agregados"
+                        android:text="@string/productos_agregados"
                         android:textColor="#111827"
                         android:textSize="15sp"
                         android:textStyle="bold"
@@ -445,7 +438,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Hace 5 horas"
+                        android:text="@string/hace_5_horas"
                         android:textColor="#6B7280"
                         android:textSize="13sp"
                         app:layout_constraintStart_toStartOf="@id/movementTitle"
@@ -454,7 +447,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+10"
+                        android:text="@string/val_plus_10"
                         android:textColor="#10B981"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -471,39 +464,18 @@
     </androidx.core.widget.NestedScrollView>
 
     <!-- BOTTOM NAV -->
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:theme="@style/Theme.Material3.Light"
+        android:background="#FFFFFF"
+        app:elevation="8dp"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/menu_footer" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/bluePrimary"
-        app:layout_anchor="@id/bottomNav"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomNav"
-        app:layout_constraintEnd_toEndOf="@+id/bottomNav"
-        app:layout_constraintStart_toStartOf="@+id/bottomNav"
-        app:layout_constraintTop_toTopOf="@+id/bottomNav"
-        app:layout_constraintVertical_bias="0.0"
-        app:shapeAppearanceOverlay="@style/circleImage"
-        app:tint="@color/white"
-        tools:ignore="MissingConstraints" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
