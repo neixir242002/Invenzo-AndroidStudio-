@@ -26,6 +26,7 @@
         <activity android:name=".AgregarProductoActivity"/>
         <activity android:name=".ReportesActivity"/>
         <activity android:name=".MasOpcionesActivity"/>
+        <activity android:name=".NuevaCategoriaActivity"/>
     </application>
 
 </manifest>
