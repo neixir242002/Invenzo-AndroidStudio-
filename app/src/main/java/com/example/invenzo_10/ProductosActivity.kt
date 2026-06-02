@@ -1,9 +1,11 @@
 package com.example.invenzo_10
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -18,25 +20,14 @@ class ProductosActivity : AppCompatActivity() {
 
         // 🔹 Bottom Navigation
         val bottomNav =
-            findViewById<BottomNavigationView>(
-                R.id.bottomNav
-            )
-
-        bottomNav.selectedItemId = R.id.products
+            findViewById<BottomNavigationView>(R.id.bottomNav)
 
         bottomNav.setOnItemSelectedListener { item ->
 
             when (item.itemId) {
 
                 R.id.home -> {
-
-                    startActivity(
-                        Intent(
-                            this,
-                            ActivityInicio::class.java
-                        )
-                    )
-
+                    startActivity(Intent(this, ActivityInicio::class.java))
                     true
                 }
 
@@ -46,18 +37,25 @@ class ProductosActivity : AppCompatActivity() {
                 }
 
                 R.id.reports -> {
-
+                    startActivity(Intent(this, ReportesActivity::class.java))
                     true
                 }
 
                 R.id.more -> {
-
+                    startActivity(Intent(this, MasOpcionesActivity::class.java))
                     true
                 }
 
                 else -> false
             }
         }
+
+        // 🔹 Floating Button
+        val fab =
+            findViewById<FloatingActionButton>(
+                R.id.floatingActionButton
+            )
+
 
         // 🔹 Botón agregar producto
         val agregarProducto =

@@ -1,280 +1,307 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    tools:context=".NuevaCategoriaActivity">
+    android:background="@color/backgroundColor">
 
-    <!-- HEADER -->
-    <LinearLayout
-        android:id="@+id/header"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="15dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    <!-- TOP BAR -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_back"/>
+            android:id="@+id/btnBack"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_arrow"
+            android:rotation="180"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primaryColor" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="15dp"
-            android:text="Nueva Categoría"
-            android:textColor="#1E3A8A"
+            android:layout_marginStart="16dp"
+            android:text="@string/new_category"
+            android:textColor="@color/primaryColor"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/icons8_notificaci_n_24" />
-    </LinearLayout>
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/icons8_notificaci_n_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primaryColor" />
 
-    <!-- SCROLL -->
-    <ScrollView
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/topBar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
-            <!-- CARD -->
-            <LinearLayout
+            <!-- MAIN FORM CARD -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/DashboardCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_card"
-                android:orientation="vertical"
-                android:padding="18dp">
+                android:layout_height="wrap_content">
 
-                <!-- Nombre -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre de la categoría"
-                    android:textStyle="bold"
-                    android:textColor="#333"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputNombre"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="14dp"
-                    app:boxCornerRadiusTopEnd="14dp"
-                    app:boxCornerRadiusBottomStart="14dp"
-                    app:boxCornerRadiusBottomEnd="14dp"
-                    app:boxStrokeColor="#D1D5DB">
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editNombre"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category_name"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputNombre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Ej: Electrónica"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginTop="8dp"
+                        app:hintEnabled="false"
+                        app:boxBackgroundMode="none"
+                        app:errorEnabled="true">
 
-                <TextView
-                    android:id="@+id/errorNombre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="El nombre es obligatorio"
-                    android:textColor="#DC2626"
-                    android:textSize="12sp"
-                    android:visibility="gone"/>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editNombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_input"
+                            android:hint="@string/hint_category_name"
+                            android:inputType="text"
+                            android:padding="16dp"
+                            android:textColor="@color/textPrimary"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Descripcion -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Descripción"
-                    android:textStyle="bold"
-                    android:textColor="#333"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/description"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputDescripcion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="14dp"
-                    app:boxCornerRadiusTopEnd="14dp"
-                    app:boxCornerRadiusBottomStart="14dp"
-                    app:boxCornerRadiusBottomEnd="14dp"
-                    app:boxStrokeColor="#D1D5DB">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editDescripcion"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inputDescripcion"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:gravity="top"
-                        android:hint="Añade detalles sobre esta categoría..."
-                        android:inputType="textMultiLine"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:hintEnabled="false"
+                        app:boxBackgroundMode="none"
+                        app:errorEnabled="true">
 
-                <TextView
-                    android:id="@+id/errorDescripcion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="La descripción es demasiado corta"
-                    android:textColor="#DC2626"
-                    android:textSize="12sp"
-                    android:visibility="gone"/>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editDescripcion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_input"
+                            android:gravity="top"
+                            android:hint="@string/hint_description"
+                            android:inputType="textMultiLine"
+                            android:minLines="4"
+                            android:padding="16dp"
+                            android:textColor="@color/textPrimary"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- ICONOS -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Seleccionar icono"
-                    android:textStyle="bold"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
 
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:columnCount="5">
+                        <TextView
+                            android:id="@+id/tvSelectIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/select_icon"
+                            android:textColor="@color/textSecondary"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <!-- ICONO -->
-                    <LinearLayout
-                        android:id="@+id/icon1"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_margin="6dp"
-                        android:background="@drawable/bg_icon_unselected"
-                        android:gravity="center"
-                        tools:ignore="DuplicateIds">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_all"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:columnCount="5"
+                        android:rowCount="2">
 
                         <ImageView
                             android:id="@+id/icon1"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:background="@drawable/bg_icon_normal"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/bg_input"
                             android:padding="12dp"
-                            android:src="@drawable/ic_category"
-                            android:tint="@android:color/darker_gray"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/icon2"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_margin="6dp"
-                        android:background="@drawable/bg_icon_unselected"
-                        android:gravity="center">
+                            android:src="@drawable/icons8_caja_llena_24"
+                            app:tint="@color/textPrimary" />
 
                         <ImageView
                             android:id="@+id/icon2"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:background="@drawable/bg_icon_normal"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/bg_input"
                             android:padding="12dp"
-                            android:src="@drawable/icons8_carrito_de_compras_24"
-                            app:tint="@android:color/darker_gray"
-                            tools:ignore="DuplicateIds" />
-                    </LinearLayout>
+                            android:src="@drawable/ic_categories"
+                            app:tint="@color/textPrimary" />
 
-                </GridLayout>
+                        <!-- Otros iconos según sea necesario -->
 
-            </LinearLayout>
+                    </GridLayout>
 
-            <!-- PREVIEW -->
-            <LinearLayout
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- PREVIEW CARD -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/bg_blue_card"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="20dp">
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/primaryColor">
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/ic_category"
-                    android:tint="@color/white" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:orientation="vertical">
+                    android:padding="20dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/iconPreview"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#4DFFFFFF"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/app_name"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_categories"
+                            app:tint="@color/white" />
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvPreviewTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Vista previa"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/preview"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iconPreview"
+                        app:layout_constraintTop_toTopOf="@id/iconPreview" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Así es como verás tu nueva categoría"
-                        android:textColor="@color/white"/>
-                </LinearLayout>
+                        android:text="@string/preview_desc"
+                        android:textColor="#E3F2FD"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/tvPreviewTitle"
+                        app:layout_constraintTop_toBottomOf="@id/tvPreviewTitle" />
 
-            </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- BOTON -->
-            <Button
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CREATE BUTTON -->
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonCrear"
+                style="@style/InvenzoButton"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#2563EB"
-                android:text="Crear Categoría"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:layout_marginBottom="20dp"
+                android:text="@string/create_category"
+                app:icon="@drawable/ic_add"
+                app:iconGravity="textEnd" />
 
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    </ScrollView>
-
-    <!-- FOOTER -->
+    <!-- BOTTOM NAV -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        app:itemIconTint="@drawable/nav_item_color_state"
-        app:itemTextColor="@drawable/nav_item_color_state"
+        android:theme="@style/Theme.Material3.Light"
+        app:itemIconTint="@color/nav_item_color_state"
+        app:itemTextColor="@color/nav_item_color_state"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_footer" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/bluePrimary"
+        app:backgroundTint="@color/primaryColor"
         app:layout_constraintBottom_toBottomOf="@+id/bottomNav"
         app:layout_constraintEnd_toEndOf="@+id/bottomNav"
         app:layout_constraintStart_toStartOf="@+id/bottomNav"
         app:layout_constraintTop_toTopOf="@+id/bottomNav"
         app:layout_constraintVertical_bias="0.0"
         app:shapeAppearanceOverlay="@style/circleImage"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,6 +53,35 @@
 
     <string name="more">Más</string>
 
+    <string name="edit_category">Editar Categoría</string>
+    <string name="category_name">Nombre de la categoría</string>
+    <string name="description">Descripción</string>
+    <string name="select_icon">Seleccionar Icono</string>
+    <string name="total_value">Valor Total</string>
+    <string name="save_changes">Guardar Cambios</string>
+    <string name="delete_category">Eliminar Categoría</string>
 
+    <string name="categories_title">Categorías</string>
+    <string name="products_count_format">%1$d Productos</string>
+    <string name="electronics">Electrónica</string>
+    <string name="electronics_desc">Dispositivos, gadgets y accesorios tecnológicos</string>
+    <string name="sample_products_count">124</string>
+    <string name="sample_total_value">$4.2k</string>
+
+    <string name="filter_all">Todas</string>
+    <string name="filter_recent">Recientes</string>
+    <string name="filter_favorites">Favoritas</string>
+    <string name="need_new_section">¿Necesitas una nueva sección?</string>
+    <string name="create_custom_category">Crea una categoría personalizada.</string>
+
+    <string name="new_category">Nueva Categoría</string>
+    <string name="hint_category_name">Ej: Electrónica</string>
+    <string name="error_name_required">El nombre es obligatorio</string>
+    <string name="hint_description">Añade detalles sobre esta categoría...</string>
+    <string name="error_desc_short">La descripción es demasiado corta</string>
+    <string name="view_all">Ver todos</string>
+    <string name="preview">Vista previa</string>
+    <string name="preview_desc">Así es como verás tu nueva categoría en el listado principal.</string>
+    <string name="create_category">Crear Categoría</string>
 
 </resources>
