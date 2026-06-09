@@ -78,57 +78,45 @@
                     android:padding="20dp">
 
                     <TextView
+                        style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/category_name"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
+                        android:layout_marginTop="0dp"
+                        android:text="@string/category_name" />
 
                     <EditText
+                        style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:autofillHints="name"
-                        android:background="@drawable/bg_input"
-                        android:backgroundTint="#F3F4F6"
                         android:hint="@string/category_name"
                         android:inputType="text"
-                        android:padding="16dp"
-                        android:text="@string/electronics"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="16sp" />
+                        android:text="@string/electronics" />
 
                     <TextView
+                        style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/description"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
+                        android:text="@string/description" />
 
                     <EditText
+                        style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:autofillHints="none"
-                        android:background="@drawable/bg_input"
-                        android:backgroundTint="#F3F4F6"
                         android:gravity="top"
                         android:hint="@string/description"
                         android:inputType="textMultiLine"
                         android:minLines="4"
-                        android:padding="16dp"
-                        android:text="@string/electronics_desc"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="16sp" />
+                        android:text="@string/electronics_desc" />
 
                     <TextView
+                        style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/select_icon"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
+                        android:text="@string/select_icon" />
 
                     <GridLayout
                         android:layout_width="match_parent"
@@ -144,7 +132,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
+                            app:cardBackgroundColor="@color/inputBackground">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -178,7 +166,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
+                            app:cardBackgroundColor="@color/inputBackground">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -195,7 +183,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
+                            app:cardBackgroundColor="@color/inputBackground">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -212,7 +200,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
+                            app:cardBackgroundColor="@color/inputBackground">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -229,7 +217,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
+                            app:cardBackgroundColor="@color/inputBackground">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"

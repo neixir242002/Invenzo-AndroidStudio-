@@ -34,5 +34,9 @@
     <color name="textSecondary">#6B7280</color>
     <color name="backgroundColor">#F5F7FA</color>
     <color name="cardColor">#FFFFFF</color>
+    <color name="inputBackground">#F3F4F6</color>
+    <color name="iconBackground">#E3F2FD</color>
+    <color name="textLight">#E3F2FD</color>
+    <color name="white_4d">#4DFFFFFF</color>
 
 </resources>

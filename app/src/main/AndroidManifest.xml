@@ -29,6 +29,11 @@
         <activity android:name=".EditarCategoriaActivity"/>
         <activity android:name=".CategoriaActivity"/>
         <activity android:name=".NuevaCategoriaActivity"/>
+        <activity android:name=".UsuariosActivity"/>
+        <activity android:name=".NuevoUsuarioActivity"/>
+        <activity android:name=".EditarUsuarioActivity"/>
+        <activity android:name=".RestablecerPasswordActivity"/>
+        <activity android:name=".ConfiguracionActivity"/>
     </application>
 
 </manifest>

@@ -26,35 +26,20 @@ class MasOpcionesActivity : AppCompatActivity() {
 
         // Administración
         findViewById<android.view.View>(R.id.optCategorias).setOnClickListener {
-            Toast.makeText(this, "Categorías", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, CategoriaActivity::class.java))
         }
         findViewById<android.view.View>(R.id.optInventarios).setOnClickListener {
             Toast.makeText(this, "Inventarios", Toast.LENGTH_SHORT).show()
         }
         findViewById<android.view.View>(R.id.optUsuarios).setOnClickListener {
-            Toast.makeText(this, "Usuarios", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, UsuariosActivity::class.java))
         }
 
         // Configuración
-        findViewById<android.view.View>(R.id.optPerfil).setOnClickListener {
-            Toast.makeText(this, "Ajustes de Perfil", Toast.LENGTH_SHORT).show()
-        }
-        findViewById<android.view.View>(R.id.optConfigApp).setOnClickListener {
-            Toast.makeText(this, "Configuración de la app", Toast.LENGTH_SHORT).show()
-        }
-        findViewById<android.view.View>(R.id.optNotificaciones).setOnClickListener {
-            Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
-        }
-        findViewById<android.view.View>(R.id.optAyuda).setOnClickListener {
-            Toast.makeText(this, "Ayuda y soporte", Toast.LENGTH_SHORT).show()
+        findViewById<android.view.View>(R.id.optConfiguracion).setOnClickListener {
+            startActivity(Intent(this, ConfiguracionActivity::class.java))
         }
 
-        // Cerrar sesión
-        findViewById<android.view.View>(R.id.btnLogout).setOnClickListener {
-            Toast.makeText(this, "Cerrando sesión...", Toast.LENGTH_SHORT).show()
-            // Aquí iría la lógica de logout
-        }
-        
         // FAB
         findViewById<android.view.View>(R.id.fab).setOnClickListener {
             startActivity(Intent(this, AgregarProductoActivity::class.java))
