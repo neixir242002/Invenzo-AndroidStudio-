@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F7FA">
 
-    <!-- SCROLL PRINCIPAL -->
+    <!-- SCROLL CONTENT -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -33,7 +34,6 @@
                     android:background="@drawable/bg_blue_icon"
                     android:padding="10dp"
                     android:src="@drawable/icons8_men_"
-                    android:contentDescription="@string/desc_perfil"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
-                    android:text="@string/hola_david"
+                    android:text="Hola, David 👋"
                     android:textColor="#111827"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/resumen_hoy"
+                    android:text="Aquí tienes un resumen de hoy"
                     android:textColor="#6B7280"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="@id/txtHola"
@@ -65,19 +65,18 @@
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:src="@drawable/icons8_notificaci_n_24"
-                    android:contentDescription="@string/desc_notificaciones"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/profileImage"
                     app:tint="#111827" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- TITULO -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="@string/resumen_general"
+                android:text="Resumen general"
                 android:textColor="#111827"
                 android:textSize="19sp"
                 android:textStyle="bold" />
@@ -94,11 +93,11 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="165dp"
-                    android:layout_weight="1"
                     android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="24dp"
-                    app:cardElevation="3dp"
-                    app:cardBackgroundColor="#FFFFFF">
+                    app:cardElevation="3dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -109,12 +108,12 @@
                             android:id="@+id/productsNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/val_80"
+                            android:text="80"
                             android:textColor="#111827"
                             android:textSize="34sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:layout_width="46dp"
@@ -122,44 +121,41 @@
                             android:background="@drawable/bg_blue_icon"
                             android:padding="10dp"
                             android:src="@drawable/icons8_caja_llena_24"
-                            android:contentDescription="@string/desc_icon_productos"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:tint="#2563EB"/>
+                            app:tint="#2563EB" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
-                            android:text="@string/total_productos"
+                            android:text="Total productos"
                             android:textColor="#6B7280"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/productsNumber"/>
+                            app:layout_constraintTop_toBottomOf="@id/productsNumber" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/val_plus_25_mes"
+                            android:text="+25% este mes"
                             android:textColor="#10B981"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
+                            app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- CARD 2 -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="165dp"
-                    android:layout_weight="1"
                     android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="24dp"
-                    app:cardElevation="3dp"
-                    app:cardBackgroundColor="#FFFFFF">
+                    app:cardElevation="3dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -170,12 +166,12 @@
                             android:id="@+id/stockNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/val_12"
+                            android:text="12"
                             android:textColor="#111827"
                             android:textSize="34sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:layout_width="46dp"
@@ -183,35 +179,31 @@
                             android:background="@drawable/bg_red_icon"
                             android:padding="10dp"
                             android:src="@drawable/icons8_alerta_24"
-                            android:contentDescription="@string/desc_icon_stock"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:tint="#EF4444"/>
+                            app:tint="#EF4444" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
-                            android:text="@string/stock_bajo"
+                            android:text="Stock bajo"
                             android:textColor="#6B7280"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/stockNumber"/>
+                            app:layout_constraintTop_toBottomOf="@id/stockNumber" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/val_minus_10_mes"
+                            android:text="-10% este mes"
                             android:textColor="#EF4444"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
+                            app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </com.google.android.material.card.MaterialCardView>
-
             </LinearLayout>
 
             <!-- FILA 2 -->
@@ -226,11 +218,11 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="165dp"
-                    android:layout_weight="1"
                     android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="24dp"
-                    app:cardElevation="3dp"
-                    app:cardBackgroundColor="#FFFFFF">
+                    app:cardElevation="3dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -241,12 +233,12 @@
                             android:id="@+id/movementNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/val_248"
+                            android:text="248"
                             android:textColor="#111827"
                             android:textSize="34sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:layout_width="46dp"
@@ -254,44 +246,41 @@
                             android:background="@drawable/bg_orange_icon"
                             android:padding="10dp"
                             android:src="@drawable/icons8_aumentar_las_ganancias_24"
-                            android:contentDescription="@string/desc_icon_movimientos"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:tint="#F97316"/>
+                            app:tint="#F97316" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
-                            android:text="@string/movimientos"
+                            android:text="Movimientos"
                             android:textColor="#6B7280"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/movementNumber"/>
+                            app:layout_constraintTop_toBottomOf="@id/movementNumber" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/val_plus_5_2_hoy"
+                            android:text="+5.2% hoy"
                             android:textColor="#10B981"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
+                            app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- CARD 4 -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="165dp"
-                    android:layout_weight="1"
                     android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="24dp"
-                    app:cardElevation="3dp"
-                    app:cardBackgroundColor="#FFFFFF">
+                    app:cardElevation="3dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -302,12 +291,12 @@
                             android:id="@+id/valueNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/val_4_2m"
+                            android:text="$4.2M"
                             android:textColor="#111827"
                             android:textSize="28sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:layout_width="46dp"
@@ -315,35 +304,31 @@
                             android:background="@drawable/bg_green_icon"
                             android:padding="10dp"
                             android:src="@drawable/icons8_ventas_totales_24"
-                            android:contentDescription="@string/desc_icon_valor"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:tint="#10B981"/>
+                            app:tint="#10B981" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
-                            android:text="@string/valor_total"
+                            android:text="Valor total"
                             android:textColor="#6B7280"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/valueNumber"/>
+                            app:layout_constraintTop_toBottomOf="@id/valueNumber" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/val_plus_12_mensual"
+                            android:text="+12% mensual"
                             android:textColor="#10B981"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
-
+                            app:layout_constraintStart_toStartOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </com.google.android.material.card.MaterialCardView>
-
             </LinearLayout>
 
             <!-- GRAFICA -->
@@ -351,9 +336,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
                 android:layout_marginTop="24dp"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="24dp"
-                app:cardElevation="3dp"
-                app:cardBackgroundColor="#FFFFFF">
+                app:cardElevation="3dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -364,25 +349,23 @@
                         android:id="@+id/chartTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/tendencia_inventario"
+                        android:text="Tendencia del inventario"
                         android:textColor="#111827"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/lineChart"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginTop="18dp"
-                        app:layout_constraintTop_toBottomOf="@id/chartTitle"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
+                        app:layout_constraintTop_toBottomOf="@id/chartTitle" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
             <!-- ULTIMO MOVIMIENTO -->
@@ -390,19 +373,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="@string/ultimos_movimientos"
+                android:text="Últimos movimientos"
                 android:textColor="#111827"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="22dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="#FFFFFF">
+                app:cardElevation="2dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -416,65 +399,60 @@
                         android:background="@drawable/bg_green_icon"
                         android:padding="10dp"
                         android:src="@drawable/icons8_carrito_de_compras_24"
-                        android:contentDescription="@string/desc_icon_carrito"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="#10B981"/>
+                        app:tint="#10B981" />
 
                     <TextView
                         android:id="@+id/movementTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="@string/productos_agregados"
+                        android:text="Productos agregados"
                         android:textColor="#111827"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/cartIcon"
-                        app:layout_constraintTop_toTopOf="@id/cartIcon"/>
+                        app:layout_constraintTop_toTopOf="@id/cartIcon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/hace_5_horas"
+                        android:text="Hace 5 horas"
                         android:textColor="#6B7280"
                         android:textSize="13sp"
                         app:layout_constraintStart_toStartOf="@id/movementTitle"
-                        app:layout_constraintTop_toBottomOf="@id/movementTitle"/>
+                        app:layout_constraintTop_toBottomOf="@id/movementTitle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/val_plus_10"
+                        android:text="+10"
                         android:textColor="#10B981"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@id/cartIcon"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/cartIcon"/>
-
+                        app:layout_constraintTop_toTopOf="@id/cartIcon" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 
-    <!-- BOTTOM NAV -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/white"
+        app:backgroundTint="@color/white"
+        android:elevation="8dp"
         android:theme="@style/Theme.Material3.Light"
-        app:itemIconTint="@drawable/nav_item_color_state"
-        app:itemTextColor="@drawable/nav_item_color_state"
+        app:itemIconTint="@color/nav_item_color_state"
+        app:itemTextColor="@color/nav_item_color_state"
         app:labelVisibilityMode="labeled"
-        app:itemActiveIndicatorStyle="@null"
-        app:itemRippleColor="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

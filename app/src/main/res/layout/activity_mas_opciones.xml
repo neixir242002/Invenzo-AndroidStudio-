@@ -6,6 +6,7 @@
     android:background="@color/backgroundColor">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -61,6 +62,7 @@
 
             <!-- PROFILE CARD -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -119,7 +121,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- SECCIÓN ADMINISTRACIÓN -->
+            <!-- ADMINISTRACIÓN SECTION -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <include layout="@layout/item_option" android:id="@+id/optControlInventario"/>
+                    <include layout="@layout/item_option" android:id="@+id/optInventarios"/>
                     <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
                     <include layout="@layout/item_option" android:id="@+id/optCategorias"/>
                     <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" />
@@ -155,7 +157,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- SECCIÓN CONFIGURACIÓN -->
+            <!-- SETTINGS SECTION -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -189,7 +191,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- CERRAR SESIÓN -->
             <TextView
                 android:id="@+id/btnLogout"
                 android:layout_width="wrap_content"
@@ -205,14 +206,29 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        android:contentDescription="@string/add_product"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:backgroundTint="@color/primaryColor"
+        app:tint="@color/white"
+        app:shapeAppearanceOverlay="@style/circleImage"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/white"
+        app:backgroundTint="@color/white"
+        android:elevation="8dp"
         android:theme="@style/Theme.Material3.Light"
-        app:itemIconTint="@drawable/nav_item_color_state"
-        app:itemTextColor="@drawable/nav_item_color_state"
+        app:itemIconTint="@color/nav_item_color_state"
+        app:itemTextColor="@color/nav_item_color_state"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

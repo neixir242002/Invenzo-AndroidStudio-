@@ -30,6 +30,19 @@
     <string name="productos_agregados">Productos agregados</string>
     <string name="hace_5_horas">Hace 5 horas</string>
 
+    <!-- Claves que causaban advertencias por estar solo en inglés -->
+    <string name="button_login">Iniciar Sesión</string>
+    <string name="go_register">Regístrate</string>
+    <string name="imput_gmail">ejemplo@correo.com</string>
+    <string name="imput_password">Contraseña</string>
+    <string name="login">Inicio de sesión</string>
+    <string name="no_tienes_cuenta">¿No tienes una cuenta?</string>
+    <string name="recover_password">¿Olvidaste tu contraseña?</string>
+    <string name="self_saving">Sistema de Inventario</string>
+    <string name="text_gmail">Correo electrónico</string>
+    <string name="text_password">Contraseña</string>
+    <string name="welcom">Bienvenido de nuevo</string>
+
     <!-- Login strings -->
     <string name="inventory_system">Sistema de Inventario</string>
     <string name="welcome_back">Bienvenido de nuevo</string>

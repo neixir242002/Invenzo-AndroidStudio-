@@ -12,7 +12,7 @@
         <item name="strokeWidth">0dp</item>
     </style>
 
-    <!-- Card with rounded top corners for bottom sheet look -->
+    <!-- Card with rounded top corners -->
     <style name="CardConEsquinasSuperiores" parent="Widget.Material3.CardView.Elevated">
         <item name="cardBackgroundColor">@color/cardColor</item>
         <item name="cardElevation">4dp</item>
@@ -23,14 +23,6 @@
     <style name="ShapeAppearance.App.Card.TopRounded" parent="">
         <item name="cornerSizeTopLeft">32dp</item>
         <item name="cornerSizeTopRight">32dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-    </style>
-
-    <style name="EsquinasSuperiores" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopLeft">24dp</item>
-        <item name="cornerSizeTopRight">24dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
@@ -71,22 +63,37 @@
     </style>
 
     <!-- ========================= -->
-    <!-- BOTTOM NAVIGATION STYLE -->
+    <!-- FLOATING BOTTOM NAVIGATION (ESTILO IMAGEN) -->
     <!-- ========================= -->
 
     <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
-        <item name="android:background">@color/navBackground</item>
+        <item name="android:background">@drawable/bg_bottom_nav_floating</item>
         <item name="itemIconTint">@color/nav_item_color_state</item>
         <item name="itemTextColor">@color/nav_item_color_state</item>
-        <item name="itemActiveIndicatorStyle">@style/App.TopLineIndicator</item>
+        <item name="itemActiveIndicatorStyle">@style/App.Indicator.GreenBar</item>
+        <!-- Cambiado a labeled para mostrar los títulos debajo de los iconos -->
         <item name="labelVisibilityMode">labeled</item>
+        <item name="itemTextAppearanceActive">@style/App.BottomNav.Text</item>
+        <item name="itemTextAppearanceInactive">@style/App.BottomNav.Text</item>
         <item name="itemRippleColor">@android:color/transparent</item>
+        <item name="elevation">8dp</item>
     </style>
 
-    <style name="App.TopLineIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/navIndicator</item>
-        <item name="android:width">40dp</item>
+    <style name="App.BottomNav.Text" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="App.Indicator.GreenBar" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/navIndicatorGreen</item>
+        <item name="android:width">14dp</item>
         <item name="android:height">3dp</item>
+        <!-- Ajustamos el shape para que sea una pequeña barra -->
+        <item name="shapeAppearance">@style/ShapeAppearance.App.Indicator</item>
+    </style>
+
+    <style name="ShapeAppearance.App.Indicator" parent="">
+        <item name="cornerSize">2dp</item>
     </style>
 
     <!-- ========================= -->
@@ -106,28 +113,9 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="DashboardSubtitle">
-        <item name="android:textColor">@color/textSecondary</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:fontFamily">sans-serif</item>
-    </style>
-
-    <style name="DashboardBigNumber">
-        <item name="android:textColor">@color/textPrimary</item>
-        <item name="android:textSize">30sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">sans-serif-black</item>
-    </style>
-
     <style name="circleImage">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">32dp</item>
-    </style>
-
-    <style name="Divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/grayBorder</item>
     </style>
 
 </resources>

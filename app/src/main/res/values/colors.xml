@@ -3,11 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- UI Colors from the latest image -->
-    <color name="navBackground">#111319</color>
-    <color name="navInactive">#5F626C</color>
-    <color name="navActive">#FFFFFF</color>
-    <color name="navIndicator">#3D7BFF</color>
+    <!-- UI Colors from the floating nav image -->
+    <color name="navBackgroundFloating">#FFFFFF</color>
+    <color name="navInactiveIcon">#9CA3AF</color>
+    <color name="navActiveIcon">#111827</color>
+    <color name="navIndicatorGreen">#84CC16</color>
+    <color name="navIndicator">#84CC16</color> <!-- Added to fix linking error and maintain style -->
 
     <!-- Dashboard/Project Palette -->
     <color name="primaryDark">#00002A</color>
@@ -19,8 +20,8 @@
     <color name="backgroundColor">#F1F5F9</color>
     <color name="cardColor">#FFFFFF</color>
 
-    <color name="textPrimary">#00002A</color>
-    <color name="textSecondary">#4E6A9C</color>
+    <color name="textPrimary">#111827</color>
+    <color name="textSecondary">#6B7280</color>
     <color name="grayBorder">#D5E2EC</color>
 
     <color name="successColor">#10B981</color>

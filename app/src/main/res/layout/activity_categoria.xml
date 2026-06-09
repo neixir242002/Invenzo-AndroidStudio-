@@ -166,7 +166,7 @@
                         android:layout_height="match_parent"
                         android:contentDescription="@string/app_name"
                         android:padding="16dp"
-                        android:src="@drawable/ic_categories"
+                        android:src="@drawable/icons8_categorias_24"
                         app:tint="@color/textSecondary" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -197,13 +197,13 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/white"
+        app:backgroundTint="@color/white"
+        android:elevation="8dp"
         android:theme="@style/Theme.Material3.Light"
-        app:itemIconTint="@drawable/nav_item_color_state"
-        app:itemTextColor="@drawable/nav_item_color_state"
+        app:itemIconTint="@color/nav_item_color_state"
+        app:itemTextColor="@color/nav_item_color_state"
         app:labelVisibilityMode="labeled"
-        app:itemActiveIndicatorStyle="@null"
-        app:itemRippleColor="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
