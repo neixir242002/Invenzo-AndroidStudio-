@@ -51,7 +51,7 @@
             android:id="@+id/txtCantidadProductos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="42 productos"
+            android:text="@string/sample_product_count_text"
             android:textColor="@color/textSecondary"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="@id/txtNombreCategoria"

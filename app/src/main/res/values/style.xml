@@ -6,50 +6,25 @@
     <!-- ========================= -->
 
     <style name="DashboardCard" parent="Widget.Material3.CardView.Elevated">
-
         <item name="cardCornerRadius">22dp</item>
-
         <item name="cardElevation">3dp</item>
-
         <item name="cardBackgroundColor">@color/cardColor</item>
-
         <item name="strokeWidth">0dp</item>
-
     </style>
 
-    <!-- ========================= -->
-    <!-- CARD SUPERIOR -->
-    <!-- ========================= -->
-
-    <style name="CardConEsquinasSuperiores"
-        parent="Widget.Material3.CardView.Elevated">
-
+    <!-- Card with rounded top corners -->
+    <style name="CardConEsquinasSuperiores" parent="Widget.Material3.CardView.Elevated">
         <item name="cardBackgroundColor">@color/cardColor</item>
-
-        <item name="cardElevation">3dp</item>
-
-        <item name="shapeAppearanceOverlay">
-            @style/EsquinasSuperiores
-        </item>
-
+        <item name="cardElevation">4dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.Card.TopRounded</item>
+        <item name="strokeWidth">0dp</item>
     </style>
 
-    <!-- ========================= -->
-    <!-- ESQUINAS -->
-    <!-- ========================= -->
-
-    <style name="EsquinasSuperiores">
-
-        <item name="cornerFamily">rounded</item>
-
-        <item name="cornerSizeTopLeft">24dp</item>
-
-        <item name="cornerSizeTopRight">24dp</item>
-
+    <style name="ShapeAppearance.App.Card.TopRounded" parent="">
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeTopRight">32dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
-
         <item name="cornerSizeBottomRight">0dp</item>
-
     </style>
 
     <!-- ========================= -->
@@ -58,29 +33,17 @@
 
     <style name="LoginTextInputLayout"
         parent="Widget.Material3.TextInputLayout.OutlinedBox">
-
         <item name="android:layout_marginTop">8dp</item>
-
         <item name="android:layout_marginBottom">8dp</item>
-
         <item name="boxStrokeColor">@color/primaryColor</item>
-
         <item name="boxStrokeWidth">1dp</item>
-
         <item name="boxStrokeWidthFocused">2dp</item>
-
         <item name="boxCornerRadiusTopStart">16dp</item>
-
         <item name="boxCornerRadiusTopEnd">16dp</item>
-
         <item name="boxCornerRadiusBottomStart">16dp</item>
-
         <item name="boxCornerRadiusBottomEnd">16dp</item>
-
         <item name="boxBackgroundColor">@color/cardColor</item>
-
         <item name="hintTextColor">@color/textSecondary</item>
-
     </style>
 
     <!-- ========================= -->
@@ -89,27 +52,48 @@
 
     <style name="InvenzoButton"
         parent="Widget.Material3.Button">
-
-        <item name="android:backgroundTint">
-            @color/primaryColor
-        </item>
-
-        <item name="android:textColor">
-            #FFFFFF
-        </item>
-
+        <item name="android:backgroundTint">@color/primaryColor</item>
+        <item name="android:textColor">#FFFFFF</item>
         <item name="cornerRadius">18dp</item>
-
         <item name="android:paddingVertical">14dp</item>
-
         <item name="android:textStyle">bold</item>
-
         <item name="android:textSize">15sp</item>
-
         <item name="fontFamily">sans-serif-medium</item>
-
         <item name="elevation">0dp</item>
+    </style>
 
+    <!-- ========================= -->
+    <!-- FLOATING BOTTOM NAVIGATION (ESTILO IMAGEN) -->
+    <!-- ========================= -->
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@drawable/bg_bottom_nav_floating</item>
+        <item name="itemIconTint">@color/nav_item_color_state</item>
+        <item name="itemTextColor">@color/nav_item_color_state</item>
+        <item name="itemActiveIndicatorStyle">@style/App.Indicator.GreenBar</item>
+        <!-- Cambiado a labeled para mostrar los títulos debajo de los iconos -->
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemTextAppearanceActive">@style/App.BottomNav.Text</item>
+        <item name="itemTextAppearanceInactive">@style/App.BottomNav.Text</item>
+        <item name="itemRippleColor">@android:color/transparent</item>
+        <item name="elevation">8dp</item>
+    </style>
+
+    <style name="App.BottomNav.Text" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="App.Indicator.GreenBar" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/navIndicatorGreen</item>
+        <item name="android:width">14dp</item>
+        <item name="android:height">3dp</item>
+        <!-- Ajustamos el shape para que sea una pequeña barra -->
+        <item name="shapeAppearance">@style/ShapeAppearance.App.Indicator</item>
+    </style>
+
+    <style name="ShapeAppearance.App.Indicator" parent="">
+        <item name="cornerSize">2dp</item>
     </style>
 
     <style name="InvenzoInput" parent="">
@@ -121,6 +105,8 @@
     </style>
 
     <style name="InvenzoLabel" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/textSecondary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:layout_marginTop">20dp</item>
@@ -131,65 +117,16 @@
     <!-- ========================= -->
 
     <style name="DashboardTitle">
-
-        <item name="android:textColor">
-            @color/textPrimary
-        </item>
-
+        <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textSize">18sp</item>
-
-        <item name="android:fontFamily">
-            sans-serif-medium
-        </item>
-
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <!-- ========================= -->
-    <!-- SUBTEXTO -->
-    <!-- ========================= -->
-
-    <style name="DashboardSubtitle">
-
-        <item name="android:textColor">
-            @color/textSecondary
-        </item>
-
-        <item name="android:textSize">13sp</item>
-
-        <item name="android:fontFamily">
-            sans-serif
-        </item>
-
-    </style>
-
-    <!-- ========================= -->
-    <!-- NUMEROS GRANDES -->
-    <!-- ========================= -->
-
-    <style name="DashboardBigNumber">
-
-        <item name="android:textColor">
-            @color/textPrimary
-        </item>
-
-        <item name="android:textSize">30sp</item>
-
+    <style name="SectionTitle">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-
-        <item name="android:fontFamily">
-            sans-serif-black
-        </item>
-
-    </style>
-
-    <!-- ========================= -->
-    <!-- ICONOS CIRCULARES -->
-    <!-- ========================= -->
-
-    <style name="DashboardIconContainer">
-
-        <item name="android:padding">10dp</item>
-
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="circleImage">
@@ -201,8 +138,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/grayBorder</item>
-        <item name="android:layout_marginStart">56dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
     </style>
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.invenzo_10
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.BarChart
@@ -20,6 +21,7 @@ class ReportesActivity : AppCompatActivity() {
 
         setupBarChart()
         setupBottomNavigation()
+
     }
 
     private fun setupBarChart() {
@@ -47,25 +49,24 @@ class ReportesActivity : AppCompatActivity() {
         bottomNav.selectedItemId = R.id.reports
 
         bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home -> {
-                    startActivity(Intent(this, ActivityInicio::class.java))
-                    finish()
-                    true
-                }
-                R.id.products -> {
-                    startActivity(Intent(this, ProductosActivity::class.java))
-                    finish()
-                    true
-                }
-                R.id.reports -> true
-                R.id.more -> {
-                    startActivity(Intent(this, MasOpcionesActivity::class.java))
-                    finish()
-                    true
-                }
-                else -> false
+            if (item.itemId == R.id.reports) return@setOnItemSelectedListener true
+
+            val intent = when (item.itemId) {
+                R.id.home -> Intent(this, ActivityInicio::class.java)
+                R.id.products -> Intent(this, ProductosActivity::class.java)
+                R.id.categoria -> Intent(this, CategoriaActivity::class.java)
+                R.id.more -> Intent(this, MasOpcionesActivity::class.java)
+                else -> null
             }
+
+            intent?.let {
+                it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                startActivity(it)
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0, 0)
+                finish()
+            }
+            true
         }
     }
 }

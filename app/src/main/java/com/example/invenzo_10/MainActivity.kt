@@ -4,49 +4,25 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
-
         setContentView(R.layout.activity_main)
 
-        // 🔹 Botón iniciar sesión
-        val inicioSecion: Button =
-            findViewById(R.id.inicioSecion)
+        val inicioSecion: Button = findViewById(R.id.inicioSecion)
 
         inicioSecion.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    ActivityInicio::class.java
-                )
-
+            val intent = Intent(this, ActivityInicio::class.java)
             startActivity(intent)
-        }
-
-        // 🔹 Texto Registrate
-        val registrate: TextView =
-            findViewById(R.id.textView4)
-
-        registrate.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    RegistroActivity::class.java
-                )
-
-            startActivity(intent)
+            // Transición suave de desvanecimiento
+            @Suppress("DEPRECATION")
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            finish()
         }
     }
 }

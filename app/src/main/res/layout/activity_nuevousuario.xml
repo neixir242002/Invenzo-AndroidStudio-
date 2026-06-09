@@ -118,6 +118,7 @@
                     <TextView
                         style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/full_name" />
 
@@ -172,6 +173,7 @@
                     <TextView
                         style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="0dp"
                         android:text="@string/system_role" />
 

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -65,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Registro"
+                    android:text="@string/registration"
                     android:textColor="@color/black"
                     android:textSize="25sp"
                     android:textStyle="bold" />
@@ -76,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="5dp"
-                    android:text="Crea tu cuenta"
+                    android:text="@string/create_account"
                     android:textColor="#696969"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -86,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:text="Nombre completo"
+                    android:text="@string/full_name"
                     android:textColor="#696969"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -102,7 +101,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Juan Pérez"
+                        android:hint="@string/hint_name"
                         android:textColor="#000000"
                         android:textColorHint="#A9A9A9"
                         android:textStyle="bold" />
@@ -113,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:text="Correo electrónico"
+                    android:text="@string/email_address"
                     android:textColor="#696969"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -129,7 +128,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="correo@gmail.com"
+                        android:hint="@string/hint_email"
                         android:textColor="#000000"
                         android:textColorHint="#A9A9A9"
                         android:textStyle="bold" />
@@ -140,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:text="Contraseña"
+                    android:text="@string/password"
                     android:textColor="#696969"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -156,7 +155,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Contraseña"
+                        android:hint="@string/password"
                         android:inputType="textPassword"
                         android:textColor="#000000"
                         android:textColorHint="#A9A9A9"
@@ -168,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:text="Confirmar contraseña"
+                    android:text="@string/confirm_password"
                     android:textColor="#696969"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -184,7 +183,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Confirmar contraseña"
+                        android:hint="@string/confirm_password"
                         android:inputType="textPassword"
                         android:textColor="#000000"
                         android:textColorHint="#A9A9A9"
@@ -198,7 +197,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="Crear cuenta" />
+                    android:text="@string/create_account" />
 
                 <!-- LOGIN -->
                 <LinearLayout
@@ -212,7 +211,7 @@
                         android:id="@+id/textYaCuenta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="¿Ya tienes una cuenta?"
+                        android:text="@string/already_have_account"
                         android:textColor="#696969"
                         android:textStyle="bold" />
 
@@ -221,7 +220,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Inicia sesión"
+                        android:text="@string/login_action"
                         android:textColor="#1976D2"
                         android:textStyle="bold" />
 

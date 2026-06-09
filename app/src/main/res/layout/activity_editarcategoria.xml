@@ -18,7 +18,7 @@
             android:id="@+id/btnBack"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/desc_back_button"
             android:src="@drawable/ic_arrow"
             android:rotation="180"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,7 +41,7 @@
         <ImageView
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/desc_notificaciones"
             android:src="@drawable/icons8_notificaci_n_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,45 +78,57 @@
                     android:padding="20dp">
 
                     <TextView
-                        style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:text="@string/category_name" />
+                        android:text="@string/category_name"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp" />
 
                     <EditText
-                        style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:autofillHints="name"
+                        android:background="@drawable/fondo_redondo"
+                        android:backgroundTint="#F3F4F6"
                         android:hint="@string/category_name"
                         android:inputType="text"
-                        android:text="@string/electronics" />
+                        android:padding="16dp"
+                        android:text="@string/electronics"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="16sp" />
 
                     <TextView
-                        style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/description" />
+                        android:layout_marginTop="20dp"
+                        android:text="@string/description"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp" />
 
                     <EditText
-                        style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:autofillHints="none"
+                        android:background="@drawable/fondo_redondo"
+                        android:backgroundTint="#F3F4F6"
                         android:gravity="top"
                         android:hint="@string/description"
                         android:inputType="textMultiLine"
                         android:minLines="4"
-                        android:text="@string/electronics_desc" />
+                        android:padding="16dp"
+                        android:text="@string/electronics_desc"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="16sp" />
 
                     <TextView
-                        style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/select_icon" />
+                        android:layout_marginTop="20dp"
+                        android:text="@string/select_icon"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp" />
 
                     <GridLayout
                         android:layout_width="match_parent"
@@ -132,7 +144,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="@color/inputBackground">
+                            app:cardBackgroundColor="#F3F4F6">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -155,7 +167,7 @@
                                 android:layout_height="match_parent"
                                 android:contentDescription="@string/app_name"
                                 android:padding="16dp"
-                                android:src="@drawable/ic_categories"
+                                android:src="@drawable/icons8_categorias_24"
                                 app:tint="@color/white" />
                         </com.google.android.material.card.MaterialCardView>
 
@@ -166,7 +178,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="@color/inputBackground">
+                            app:cardBackgroundColor="#F3F4F6">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -183,7 +195,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="@color/inputBackground">
+                            app:cardBackgroundColor="#F3F4F6">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -200,7 +212,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="@color/inputBackground">
+                            app:cardBackgroundColor="#F3F4F6">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -217,7 +229,7 @@
                             android:layout_margin="4dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
-                            app:cardBackgroundColor="@color/inputBackground">
+                            app:cardBackgroundColor="#F3F4F6">
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -329,7 +341,9 @@
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/white"
+        app:backgroundTint="@color/white"
+        android:elevation="8dp"
         android:theme="@style/Theme.Material3.Light"
         app:itemIconTint="@color/nav_item_color_state"
         app:itemTextColor="@color/nav_item_color_state"
@@ -338,21 +352,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/primaryColor"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomNav"
-        app:layout_constraintEnd_toEndOf="@+id/bottomNav"
-        app:layout_constraintStart_toStartOf="@+id/bottomNav"
-        app:layout_constraintTop_toTopOf="@+id/bottomNav"
-        app:layout_constraintVertical_bias="0.0"
-        app:shapeAppearanceOverlay="@style/circleImage"
-        app:tint="@color/white"
-        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

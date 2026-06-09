@@ -16,41 +16,48 @@
     <string name="go_register">Register</string>
     <string name="no_tienes_cuenta">Don’t have an account?</string>
 
-
-
     <string name="more_options">More options</string>
-
     <string name="admin">Administrator</string>
-
     <string name="david_garcia">David Garcia</string>
-
     <string name="administration">Administration</string>
-
     <string name="settings">Settings</string>
-
     <string name="categories">Categories</string>
-
     <string name="inventories">Inventory</string>
-
     <string name="users">Users</string>
-
     <string name="warehouses">Warehouses</string>
-
     <string name="profile">Profile</string>
-
     <string name="app_settings">App Settings</string>
-
     <string name="notifications">Notifications</string>
-
     <string name="help_support">Help &amp; Support</string>
-
     <string name="logout">Log Out</string>
-
     <string name="home">Home</string>
-
     <string name="products">Products</string>
-
     <string name="reports">Reports</string>
-
     <string name="more">More</string>
+
+    <!-- Configuration strings -->
+    <string name="security">Security</string>
+    <string name="theme">Theme</string>
+    <string name="language">Language</string>
+    <string name="backup">Backup</string>
+    <string name="export_data">Export Data</string>
+    <string name="terms_conditions">Terms &amp; Conditions</string>
+    <string name="about_app">About App</string>
+
+    <!-- Users Activity strings -->
+    <string name="users_title">Users</string>
+    <string name="total_users">Total Users</string>
+    <string name="sample_user_total">42</string>
+    <string name="this_week">This week</string>
+    <string name="active_users">Active users</string>
+    <string name="sample_user_active">38</string>
+    <string name="total_percentage">+15% this month</string>
+    <string name="hint_search_user">Search user...</string>
+    <string name="personnel_list">Personnel list</string>
+    <string name="view_all">View all</string>
+
+    <!-- User Item Placeholders -->
+    <string name="sample_initials">AM</string>
+    <string name="sample_user_name">Alejandro Mendoza</string>
+    <string name="active">Active</string>
 </resources>
