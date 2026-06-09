@@ -39,14 +39,6 @@ class MasOpcionesActivity : AppCompatActivity() {
         findViewById<android.view.View>(R.id.optConfiguracion).setOnClickListener {
             startActivity(Intent(this, ConfiguracionActivity::class.java))
         }
-
-        // FAB
-        findViewById<android.view.View>(R.id.fab).setOnClickListener {
-            startActivity(Intent(this, AgregarProductoActivity::class.java))
-        }
-        findViewById<android.view.View>(R.id.optCategorias).setOnClickListener {
-            startActivity(Intent(this, CategoriaActivity::class.java))
-        }
     }
 
     private fun setupBottomNavigation() {

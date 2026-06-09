@@ -30,6 +30,10 @@
         <activity android:name=".RegistroActivity"/>
         <activity android:name=".AgregarProductoActivity"/>
         <activity android:name=".EditarCategoriaActivity"/>
+        <activity android:name=".ConfiguracionActivity"/>
+        <activity android:name=".EditarUsuarioActivity"/>
+        <activity android:name=".NuevoUsuarioActivity"/>
+        <activity android:name=".UsuariosActivity"/>
     </application>
 
 </manifest>

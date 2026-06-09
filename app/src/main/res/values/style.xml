@@ -105,6 +105,8 @@
     </style>
 
     <style name="InvenzoLabel" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/textSecondary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:layout_marginTop">20dp</item>
@@ -130,6 +132,12 @@
     <style name="circleImage">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">32dp</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/grayBorder</item>
     </style>
 
 </resources>

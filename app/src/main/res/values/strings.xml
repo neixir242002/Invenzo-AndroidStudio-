@@ -30,6 +30,64 @@
     <string name="productos_agregados">Productos agregados</string>
     <string name="hace_5_horas">Hace 5 horas</string>
 
+    <!-- Configuration strings -->
+    <string name="edit">Editar</string>
+    <string name="account_section">CUENTA</string>
+    <string name="preferences_section">PREFERENCIAS</string>
+    <string name="system_section">SISTEMA</string>
+    <string name="support_section">SOPORTE</string>
+
+    <!-- New Configuration strings -->
+    <string name="security">Seguridad</string>
+    <string name="theme">Tema</string>
+    <string name="language">Idioma</string>
+    <string name="backup">Copia de Seguridad</string>
+    <string name="export_data">Exportar Datos</string>
+    <string name="terms_conditions">Términos y condiciones</string>
+    <string name="about_app">Acerca de la app</string>
+
+    <!-- Edit User strings -->
+    <string name="edit_user_title">Editar Usuario</string>
+    <string name="change_profile_picture">Cambiar foto de perfil</string>
+    <string name="email">Correo electrónico</string>
+    <string name="sample_user_email">alejandro.m@example.com</string>
+    <string name="system_role">Rol en el sistema</string>
+    <string name="sample_user_role_vendedor">Vendedor</string>
+    <string name="reset_password">Restablecer contraseña</string>
+    <string name="account_status">Estado de la cuenta</string>
+    <string name="account_status_desc">Activar o desactivar el acceso del usuario</string>
+    <string name="delete_user">Eliminar usuario</string>
+
+    <!-- Add Product strings -->
+    <string name="sale_price">Precio de venta</string>
+    <string name="hint_price">Ej. 150000</string>
+    <string name="description_optional">Descripción (opcional)</string>
+    <string name="hint_product_description">Descripción del producto&#8230;</string>
+
+    <!-- New User strings -->
+    <string name="new_user_title">Nuevo Usuario</string>
+    <string name="user_identity">Identidad del usuario</string>
+    <string name="user_identity_desc">Información básica para la identificación</string>
+    <string name="hint_full_name">Alejandro Mendoza</string>
+    <string name="role_security">Rol y Seguridad</string>
+    <string name="sample_user_role">Selecciona un rol</string>
+    <string name="temp_password">Contraseña temporal</string>
+    <string name="password_placeholder">••••••••</string>
+    <string name="allow_immediate_access">Permitir acceso inmediato</string>
+    <string name="collab_text">Colabora con tu equipo de manera eficiente</string>
+    <string name="save_user">Guardar Usuario</string>
+
+    <!-- Reset Password strings -->
+    <string name="reset_password_user_title">Restablecer Contraseña</string>
+    <string name="reset_password_desc">Ingresa tu nueva contraseña para recuperar el acceso a tu cuenta.</string>
+    <string name="new_password_label">Nueva Contraseña</string>
+    <string name="security_requirements_title">REQUISITOS DE SEGURIDAD</string>
+    <string name="req_min_chars">Mínimo 8 caracteres</string>
+    <string name="req_one_number">Al menos un número</string>
+    <string name="req_special_char">Un carácter especial</string>
+    <string name="confirm_password_label">Confirmar Contraseña</string>
+    <string name="update_password_button">Actualizar Contraseña</string>
+
     <!-- Claves que causaban advertencias por estar solo en inglés -->
     <string name="button_login">Iniciar Sesión</string>
     <string name="go_register">Regístrate</string>
@@ -81,7 +139,7 @@
     <string name="total_value">Valor total</string>
 
     <!-- Products strings -->
-    <string name="hint_search_products">Buscar productos...</string>
+    <string name="hint_search_products">Buscar productos&#8230;</string>
     <string name="low_stock_title">Bajo stock</string>
     <string name="out_of_stock_title">Agotados</string>
     <string name="add_product">Agregar producto</string>
@@ -94,10 +152,6 @@
     <string name="hint_quantity">Ej. 10</string>
     <string name="unit">Unidad</string>
     <string name="hint_unit">Ej. Unidades</string>
-    <string name="sale_price">Precio de venta</string>
-    <string name="hint_price">Ej. 150000</string>
-    <string name="description_optional">Descripción (opcional)</string>
-    <string name="hint_product_description">Descripción del producto...</string>
     <string name="save_product">Guardar producto</string>
 
     <!-- Reports strings -->
@@ -122,7 +176,7 @@
     <string name="entry">Entrada</string>
     <string name="exit">Salida</string>
     <string name="hint_quantity_required">Cantidad *</string>
-    <string name="observations">Observaciones</string>
+    <string name="observations">Observations</string>
     <string name="recent_movements">Movimientos Recientes</string>
     <string name="view_history">Ver Historial</string>
     <string name="stock_summary">Resumen de Stock</string>
@@ -130,14 +184,30 @@
     <string name="infobasica">Información básica para tu cuenta</string>
     <string name="new_category">Nueva Categoría</string>
     <string name="category_name">Nombre de la categoría</string>
-    <string name="hint_category_name">Ej. Electrónicos, Ropa...</string>
+    <string name="hint_category_name">Ej. Electrónicos, Ropa&#8230;</string>
     <string name="description">Descripción</string>
-    <string name="hint_description">Escribe una breve descripción aquí...</string>
+    <string name="hint_description">Escribe una breve descripción aquí&#8230;</string>
     <string name="select_icon">Selecciona un icono</string>
     <string name="view_all">Ver todos</string>
     <string name="preview">Vista previa</string>
     <string name="preview_desc">Así es como se verá tu nueva categoría en la lista principal.</string>
     <string name="create_category">Crear Categoría</string>
+
+    <!-- Users Activity strings -->
+    <string name="users_title">Usuarios</string>
+    <string name="total_users">Total Usuarios</string>
+    <string name="sample_user_total">42</string>
+    <string name="this_week">Esta semana</string>
+    <string name="active_users">Usuarios activos</string>
+    <string name="sample_user_active">38</string>
+    <string name="total_percentage">+15% este mes</string>
+    <string name="hint_search_user">Buscar usuario&#8230;</string>
+    <string name="personnel_list">Lista de personal</string>
+
+    <!-- User Item Placeholders -->
+    <string name="sample_initials">AM</string>
+    <string name="sample_user_name">Alejandro Mendoza</string>
+    <string name="active">Activo</string>
 
     <!-- Placeholders / Hardcoded values -->
     <string name="val_80">80</string>
