@@ -1,43 +1,23 @@
 <resources>
-
-    <string name="app_name">DashboardUI</string>
-
+    <string name="app_name">Invenzo</string>
     <string name="more_options">Más opciones</string>
-
     <string name="admin">Administrador</string>
-
     <string name="david_garcia">David Garcia</string>
-
     <string name="administration">Administración</string>
-
     <string name="settings">Configuración</string>
-
     <string name="categories">Categorias</string>
-
     <string name="inventories">Inventario</string>
-
     <string name="users">Usuarios</string>
-
     <string name="warehouses">Almacenes</string>
-
     <string name="profile">Perfil</string>
-
     <string name="app_settings">Configuración de la app</string>
-
     <string name="notifications">Notificaciones</string>
-
     <string name="help_support">Ayuda y soporte</string>
-
     <string name="logout">Cerrar sesión</string>
-
     <string name="home">Inicio</string>
-
     <string name="products">Productos</string>
-
     <string name="reports">Reportes</string>
-
     <string name="more">Más</string>
-
     <string name="hola_david">Hola, David \uD83D\uDC4B</string>
     <string name="resumen_hoy">Aquí tienes un resumen de hoy</string>
     <string name="resumen_general">Resumen general</string>
@@ -50,16 +30,126 @@
     <string name="productos_agregados">Productos agregados</string>
     <string name="hace_5_horas">Hace 5 horas</string>
 
+    <!-- Login strings -->
+    <string name="inventory_system">Sistema de Inventario</string>
+    <string name="welcome_back">Bienvenido de nuevo</string>
+    <string name="login_title">Inicio de sesión</string>
+    <string name="remember_me">Recuérdame</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="register_action">Regístrate</string>
+    <string name="no_account">¿No tienes una cuenta?</string>
+    <string name="login_button">Iniciar Sesión</string>
+    <string name="hint_email_example">ejemplo@correo.com</string>
+
+    <!-- Registration strings -->
+    <string name="registration">Registro</string>
+    <string name="create_account">Crea tu cuenta</string>
+    <string name="full_name">Nombre completo</string>
+    <string name="email_address">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="already_have_account">¿Ya tienes una cuenta?</string>
+    <string name="login_action">Inicia sesión</string>
+    <string name="hint_name">Juan Pérez</string>
+    <string name="hint_email">correo@gmail.com</string>
+
+    <!-- Categories strings -->
+    <string name="categories_title">Categorías</string>
+    <string name="filter_all">Todos</string>
+    <string name="filter_recent">Recientes</string>
+    <string name="filter_favorites">Favoritos</string>
+    <string name="need_new_section">¿Necesitas una nueva sección?</string>
+    <string name="create_custom_category">Crea una categoría personalizada</string>
+    <string name="edit_category">Editar Categoría</string>
+    <string name="electronics">Electrónica</string>
+    <string name="electronics_desc">Dispositivos y accesorios electrónicos</string>
+    <string name="save_changes">Guardar cambios</string>
+    <string name="delete_category">Eliminar categoría</string>
+    <string name="total_value">Valor total</string>
+
+    <!-- Products strings -->
+    <string name="hint_search_products">Buscar productos...</string>
+    <string name="low_stock_title">Bajo stock</string>
+    <string name="out_of_stock_title">Agotados</string>
+    <string name="add_product">Agregar producto</string>
+    <string name="add_image">Agregar imagen</string>
+    <string name="image_format_hint">PNG, JPG hasta 5MB</string>
+    <string name="product_name">Nombre del producto</string>
+    <string name="hint_product_name">Ej. Laptop HP 15\"</string>
+    <string name="category">Categoría</string>
+    <string name="quantity">Cantidad</string>
+    <string name="hint_quantity">Ej. 10</string>
+    <string name="unit">Unidad</string>
+    <string name="hint_unit">Ej. Unidades</string>
+    <string name="sale_price">Precio de venta</string>
+    <string name="hint_price">Ej. 150000</string>
+    <string name="description_optional">Descripción (opcional)</string>
+    <string name="hint_product_description">Descripción del producto...</string>
+    <string name="save_product">Guardar producto</string>
+
+    <!-- Reports strings -->
+    <string name="reports_title">Reportes</string>
+    <string name="tab_sales">Ventas</string>
+    <string name="tab_products">Productos</string>
+    <string name="tab_movements">Movimientos</string>
+    <string name="total_sales">Ventas totales</string>
+    <string name="monthly">Mensual</string>
+    <string name="top_categories">Categorías más vendidas</string>
+    <string name="category_tech">Tecnología</string>
+    <string name="category_furniture">Mobiliario</string>
+    <string name="sales_comparison">+ 15.3% vs. mes anterior</string>
+
+    <!-- Inventory Control strings -->
+    <string name="inventory_control_title">Control de Inventario</string>
+    <string name="inventory_control_desc">Registra entradas y salidas de productos</string>
+    <string name="register_movement">Registrar Movimiento</string>
+    <string name="hint_product_required">Producto *</string>
+    <string name="select_product">Selecciona un producto</string>
+    <string name="hint_type_required">Tipo *</string>
+    <string name="entry">Entrada</string>
+    <string name="exit">Salida</string>
+    <string name="hint_quantity_required">Cantidad *</string>
+    <string name="observations">Observaciones</string>
+    <string name="recent_movements">Movimientos Recientes</string>
+    <string name="view_history">Ver Historial</string>
+    <string name="stock_summary">Resumen de Stock</string>
+
+    <string name="infobasica">Información básica para tu cuenta</string>
+    <string name="new_category">Nueva Categoría</string>
+    <string name="category_name">Nombre de la categoría</string>
+    <string name="hint_category_name">Ej. Electrónicos, Ropa...</string>
+    <string name="description">Descripción</string>
+    <string name="hint_description">Escribe una breve descripción aquí...</string>
+    <string name="select_icon">Selecciona un icono</string>
+    <string name="view_all">Ver todos</string>
+    <string name="preview">Vista previa</string>
+    <string name="preview_desc">Así es como se verá tu nueva categoría en la lista principal.</string>
+    <string name="create_category">Crear Categoría</string>
+
     <!-- Placeholders / Hardcoded values -->
     <string name="val_80">80</string>
     <string name="val_12">12</string>
     <string name="val_248">248</string>
     <string name="val_4_2m">$4.2M</string>
     <string name="val_plus_25_mes">+25% este mes</string>
-    <string name="val_minus_10_mes">-10% este mes</string>
+    <string name="val_minus_10_mes">–10% este mes</string>
     <string name="val_plus_5_2_hoy">+5.2% hoy</string>
     <string name="val_plus_12_mensual">+12% mensual</string>
     <string name="val_plus_10">+10</string>
+    <string name="val_total_sales_amount">$24,500,000</string>
+    <string name="val_tech_amount">$15,200,000</string>
+    <string name="val_furniture_amount">$6,300,000</string>
+    <string name="val_tech_percent">62%</string>
+    <string name="val_furniture_percent">26%</string>
+    <string name="val_date_range">01 May 2024 – 31 May 2024</string>
+    <string name="sample_products_count">124</string>
+    <string name="sample_total_value">$12.5M</string>
+    <string name="sample_product_count_text">42 productos</string>
+    <string name="sample_product_name">Laptop Dell XPS</string>
+    <string name="sample_date_time">2025-12-10 10:30</string>
+    <string name="sample_stock_text">Stock actual: 5</string>
+    <string name="available">Disponible</string>
+    <string name="sample_cant_text">Cant: 10</string>
 
     <!-- Content Descriptions -->
     <string name="desc_perfil">Imagen de perfil</string>
@@ -69,5 +159,5 @@
     <string name="desc_icon_movimientos">Icono de movimientos</string>
     <string name="desc_icon_valor">Icono de valor total</string>
     <string name="desc_icon_carrito">Icono de carrito</string>
-
+    <string name="desc_back_button">Botón atrás</string>
 </resources>

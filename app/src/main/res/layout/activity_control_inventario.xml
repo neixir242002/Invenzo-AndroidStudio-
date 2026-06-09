@@ -31,6 +31,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/icons8_men_"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Control de Inventario"
+                    android:text="@string/inventory_control_title"
                     android:textColor="@color/textPrimary"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -52,6 +53,7 @@
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:src="@drawable/icons8_notificaci_n_24"
+                    android:contentDescription="@string/desc_notificaciones"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Registra entradas y salidas de productos"
+                android:text="@string/inventory_control_desc"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
 
@@ -82,7 +84,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Registrar Movimiento"
+                        android:text="@string/register_movement"
                         android:textColor="@color/textPrimary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -92,14 +94,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:hint="Producto *">
+                        android:hint="@string/hint_product_required">
 
                         <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/spinnerProducto"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
-                            android:text="Selecciona un producto" />
+                            android:text="@string/select_product" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
@@ -114,14 +116,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:layout_weight="1"
-                            android:hint="Tipo *">
+                            android:hint="@string/hint_type_required">
 
                             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                                 android:id="@+id/spinnerTipo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="none"
-                                android:text="Entrada" />
+                                android:text="@string/entry" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -130,7 +132,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_weight="1"
-                            android:hint="Cantidad *">
+                            android:hint="@string/hint_quantity_required">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:layout_width="match_parent"
@@ -143,7 +145,7 @@
                         style="@style/LoginTextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Observaciones">
+                        android:hint="@string/observations">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
@@ -158,7 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Registrar Movimiento"
+                        android:text="@string/register_movement"
                         app:icon="@drawable/icons8_aumentar_las_ganancias_24" />
 
                 </LinearLayout>
@@ -173,7 +175,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Movimientos Recientes"
+                    android:text="@string/recent_movements"
                     android:textColor="@color/textPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -184,7 +186,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ver Historial"
+                    android:text="@string/view_history"
                     android:textColor="@color/primaryColor"
                     android:textSize="13sp"
                     android:textStyle="bold"
@@ -219,7 +221,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="Resumen de Stock"
+                android:text="@string/stock_summary"
                 android:textColor="@color/textPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -252,13 +254,15 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="#FFFFFF"
-        app:elevation="8dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:theme="@style/Theme.Material3.Light"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_footer" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

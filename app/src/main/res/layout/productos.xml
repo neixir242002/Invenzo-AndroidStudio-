@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backgroundColor">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -13,17 +14,17 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="33dp"
             android:layout_height="31dp"
-            app:srcCompat="@drawable/icons8_men_" />
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/icons8_men_"
+            app:tint="@color/textPrimary" />
 
         <TextView
             android:id="@+id/textView6"
@@ -32,15 +33,18 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingStart="50dp"
-            android:text="Productos"
-            android:textSize="16dp"
+            android:text="@string/products"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="33dp"
             android:layout_height="32dp"
-            app:srcCompat="@drawable/icons8_notificaci_n_24" />
+            android:contentDescription="@string/desc_notificaciones"
+            app:srcCompat="@drawable/icons8_notificaci_n_24"
+            app:tint="@color/textPrimary" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,35 +55,35 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/fondo_redondo"
-        android:backgroundTint="#C7C7C7"
+        android:backgroundTint="@color/grayBorder"
         android:orientation="horizontal"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <ImageView
             android:id="@+id/imageView9"
             android:layout_width="33dp"
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
-            android:background="#00FFFFFF"
-            android:backgroundTint="#00FFFFFF"
-            app:srcCompat="@drawable/lupa_inactiva" />
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/lupa_inactiva"
+            app:tint="@color/textSecondary" />
 
         <EditText
             android:id="@+id/editTextText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#00FFFFFF"
+            android:background="@android:color/transparent"
             android:ems="10"
-            android:hint="Buscar productos..."
+            android:hint="@string/hint_search_products"
             android:inputType="text"
-            android:paddingStart="10dp" />
+            android:paddingStart="10dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="@color/textSecondary" />
     </LinearLayout>
 
     <ImageView
@@ -88,13 +92,14 @@
         android:layout_height="0dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/fondo_redondo"
-        android:backgroundTint="#C7C7C7"
+        android:backgroundTint="@color/grayBorder"
+        android:contentDescription="@string/app_name"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout2"
-        app:srcCompat="@drawable/filter_alt_24dp_000000_fill0_wght400_grad0_opsz24" />
+        app:srcCompat="@drawable/filter_alt_24dp_000000_fill0_wght400_grad0_opsz24"
+        app:tint="@color/textPrimary" />
 
     <LinearLayout
         android:id="@+id/tabLayout"
@@ -104,19 +109,17 @@
         android:orientation="horizontal"
         android:paddingHorizontal="20dp"
         android:weightSum="3"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Todos"
-            android:textColor="#2962FF"
+            android:text="@string/filter_all"
+            android:textColor="@color/primaryColor"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -125,8 +128,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Bajo stock"
-            android:textColor="#9E9E9E"
+            android:text="@string/low_stock_title"
+            android:textColor="@color/textSecondary"
             android:textSize="16sp" />
 
         <TextView
@@ -134,8 +137,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Agotados"
-            android:textColor="#9E9E9E"
+            android:text="@string/out_of_stock_title"
+            android:textColor="@color/textSecondary"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -148,38 +151,38 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
     <!-- FLOAT BUTTON -->
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/agregarProducto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/ic_add"
-        app:backgroundTint="#2962FF"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerProductos"
+        app:backgroundTint="@color/primaryColor"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerProductos"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:tint="#FFFFFF"
-        app:shapeAppearanceOverlay="@style/circleImage" />
+        app:shapeAppearanceOverlay="@style/circleImage"
+        app:tint="@color/white" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="#FFFFFF"
-        app:elevation="8dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:theme="@style/Theme.Material3.Light"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_footer" />
-
+        app:menu="@menu/bottom_nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

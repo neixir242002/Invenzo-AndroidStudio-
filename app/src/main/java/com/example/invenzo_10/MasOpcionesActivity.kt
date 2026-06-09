@@ -49,6 +49,7 @@ class MasOpcionesActivity : AppCompatActivity() {
             val intent = when (item.itemId) {
                 R.id.home -> Intent(this, ActivityInicio::class.java)
                 R.id.products -> Intent(this, ProductosActivity::class.java)
+                R.id.categoria -> Intent(this, CategoriaActivity::class.java)
                 R.id.reports -> Intent(this, ReportesActivity::class.java)
                 else -> null
             }

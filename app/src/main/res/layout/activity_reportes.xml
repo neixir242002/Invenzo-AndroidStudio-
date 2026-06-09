@@ -29,7 +29,8 @@
                     android:id="@+id/btnMenu"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/icons8_men_"
+                    android:src="@drawable/ic_more"
+                    android:contentDescription="@string/app_name"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Reportes"
+                    android:text="@string/reports_title"
                     android:textColor="@color/textPrimary"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -51,78 +52,46 @@
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:src="@drawable/icons8_notificaci_n_24"
+                    android:contentDescription="@string/desc_notificaciones"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/textPrimary" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <Button
-                        android:id="@+id/btnTabVentas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ventas"
-                        android:textAllCaps="false" />
-
-                    <Button
-                        android:id="@+id/btnTabProductos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Productos"
-                        android:textAllCaps="false" />
-
-                    <Button
-                        android:id="@+id/btnTabMovimientos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Movimientos"
-                        android:textAllCaps="false" />
-                </LinearLayout>
-            </HorizontalScrollView>
-
             <!-- DATE SELECTOR -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/grayBorder"
-                app:strokeWidth="1dp">
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/cardColor"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:padding="16dp">
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_launcher_foreground"
-                        app:tint="@color/textSecondary" />
+                        android:contentDescription="@string/app_name"
+                        app:tint="@color/primaryColor" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_weight="1"
-                        android:text="01 May 2024 - 31 May 2024"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
+                        android:text="@string/val_date_range"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -146,7 +115,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ventas totales"
+                            android:text="@string/total_sales"
                             android:textColor="@color/textSecondary"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -155,8 +124,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mensual"
-                            android:textColor="@color/textPrimary"
+                            android:text="@string/monthly"
+                            android:textColor="@color/primaryColor"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -167,15 +136,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="$24,500,000"
+                        android:text="@string/val_total_sales_amount"
                         android:textColor="@color/textPrimary"
-                        android:textSize="28sp"
+                        android:textSize="32sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+ 15.3% vs. mes anterior"
+                        android:text="@string/sales_comparison"
                         android:textColor="@color/successColor"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -184,27 +153,25 @@
                         android:id="@+id/barChart"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:layout_marginTop="16dp" />
+                        android:layout_marginTop="24dp" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- MOST SOLD CATEGORIES -->
             <TextView
+                style="@style/SectionTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                android:text="Categorías más vendidas"
-                android:textColor="@color/textPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="32dp"
+                android:text="@string/top_categories" />
 
             <com.google.android.material.card.MaterialCardView
                 style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="32dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -221,7 +188,7 @@
                             android:id="@+id/cat1Title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tecnología"
+                            android:text="@string/category_tech"
                             android:textColor="@color/textPrimary"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
@@ -230,7 +197,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$15,200,000"
+                            android:text="@string/val_tech_amount"
                             android:textColor="@color/textPrimary"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toStartOf="@id/cat1Percent"
@@ -241,7 +208,7 @@
                             android:id="@+id/cat1Percent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="62%"
+                            android:text="@string/val_tech_percent"
                             android:textColor="@color/textSecondary"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -249,26 +216,26 @@
                         <com.google.android.material.progressindicator.LinearProgressIndicator
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="12dp"
                             android:progress="62"
                             app:indicatorColor="@color/primaryColor"
                             app:layout_constraintTop_toBottomOf="@id/cat1Title"
                             app:trackColor="@color/primaryLight"
-                            app:trackThickness="8dp"
-                            app:trackCornerRadius="4dp"/>
+                            app:trackThickness="10dp"
+                            app:trackCornerRadius="6dp"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <!-- Category 2 -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="24dp">
 
                         <TextView
                             android:id="@+id/cat2Title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mobiliario"
+                            android:text="@string/category_furniture"
                             android:textColor="@color/textPrimary"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
@@ -277,7 +244,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$6,300,000"
+                            android:text="@string/val_furniture_amount"
                             android:textColor="@color/textPrimary"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toStartOf="@id/cat2Percent"
@@ -288,7 +255,7 @@
                             android:id="@+id/cat2Percent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="26%"
+                            android:text="@string/val_furniture_percent"
                             android:textColor="@color/textSecondary"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -296,13 +263,13 @@
                         <com.google.android.material.progressindicator.LinearProgressIndicator
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="12dp"
                             android:progress="26"
                             app:indicatorColor="@color/primaryColor"
                             app:layout_constraintTop_toBottomOf="@id/cat2Title"
                             app:trackColor="@color/primaryLight"
-                            app:trackThickness="8dp"
-                            app:trackCornerRadius="4dp"/>
+                            app:trackThickness="10dp"
+                            app:trackCornerRadius="6dp"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
@@ -313,14 +280,12 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
+        style="@style/Widget.App.BottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="#FFFFFF"
-        app:elevation="8dp"
-        app:itemIconTint="@drawable/nav_item_color_state"
-        app:itemTextColor="@drawable/nav_item_color_state"
-        app:labelVisibilityMode="labeled"
+        android:layout_height="64dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_footer" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

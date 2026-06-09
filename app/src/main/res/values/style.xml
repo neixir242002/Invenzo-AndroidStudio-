@@ -12,22 +12,22 @@
         <item name="strokeWidth">0dp</item>
     </style>
 
-    <!-- ========================= -->
-    <!-- CARD SUPERIOR -->
-    <!-- ========================= -->
-
-    <style name="CardConEsquinasSuperiores"
-        parent="Widget.Material3.CardView.Elevated">
+    <!-- Card with rounded top corners for bottom sheet look -->
+    <style name="CardConEsquinasSuperiores" parent="Widget.Material3.CardView.Elevated">
         <item name="cardBackgroundColor">@color/cardColor</item>
-        <item name="cardElevation">3dp</item>
-        <item name="shapeAppearanceOverlay">@style/EsquinasSuperiores</item>
+        <item name="cardElevation">4dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.Card.TopRounded</item>
+        <item name="strokeWidth">0dp</item>
     </style>
 
-    <!-- ========================= -->
-    <!-- ESQUINAS -->
-    <!-- ========================= -->
+    <style name="ShapeAppearance.App.Card.TopRounded" parent="">
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeTopRight">32dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
 
-    <style name="EsquinasSuperiores">
+    <style name="EsquinasSuperiores" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">24dp</item>
         <item name="cornerSizeTopRight">24dp</item>
@@ -71,6 +71,25 @@
     </style>
 
     <!-- ========================= -->
+    <!-- BOTTOM NAVIGATION STYLE -->
+    <!-- ========================= -->
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/navBackground</item>
+        <item name="itemIconTint">@color/nav_item_color_state</item>
+        <item name="itemTextColor">@color/nav_item_color_state</item>
+        <item name="itemActiveIndicatorStyle">@style/App.TopLineIndicator</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemRippleColor">@android:color/transparent</item>
+    </style>
+
+    <style name="App.TopLineIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/navIndicator</item>
+        <item name="android:width">40dp</item>
+        <item name="android:height">3dp</item>
+    </style>
+
+    <!-- ========================= -->
     <!-- TITULOS -->
     <!-- ========================= -->
 
@@ -80,9 +99,12 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <!-- ========================= -->
-    <!-- SUBTEXTO -->
-    <!-- ========================= -->
+    <style name="SectionTitle">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 
     <style name="DashboardSubtitle">
         <item name="android:textColor">@color/textSecondary</item>
@@ -90,23 +112,11 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <!-- ========================= -->
-    <!-- NUMEROS GRANDES -->
-    <!-- ========================= -->
-
     <style name="DashboardBigNumber">
         <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif-black</item>
-    </style>
-
-    <!-- ========================= -->
-    <!-- ICONOS CIRCULARES -->
-    <!-- ========================= -->
-
-    <style name="DashboardIconContainer">
-        <item name="android:padding">10dp</item>
     </style>
 
     <style name="circleImage">
@@ -118,8 +128,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/grayBorder</item>
-        <item name="android:layout_marginStart">56dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
     </style>
 
 </resources>

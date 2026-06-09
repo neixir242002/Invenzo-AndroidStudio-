@@ -21,18 +21,7 @@ class ReportesActivity : AppCompatActivity() {
 
         setupBarChart()
         setupBottomNavigation()
-        val btnProductos = findViewById<Button>(R.id.btnTabProductos)
-        val btnMovimientos = findViewById<Button>(R.id.btnTabMovimientos)
-        
-        btnProductos.setOnClickListener {
-            val intent = Intent(this, ProductosActivity::class.java)
-            startActivity(intent)
-        }
 
-        btnMovimientos.setOnClickListener {
-            val intent = Intent(this, ControlInventarioActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun setupBarChart() {
@@ -65,6 +54,7 @@ class ReportesActivity : AppCompatActivity() {
             val intent = when (item.itemId) {
                 R.id.home -> Intent(this, ActivityInicio::class.java)
                 R.id.products -> Intent(this, ProductosActivity::class.java)
+                R.id.categoria -> Intent(this, CategoriaActivity::class.java)
                 R.id.more -> Intent(this, MasOpcionesActivity::class.java)
                 else -> null
             }

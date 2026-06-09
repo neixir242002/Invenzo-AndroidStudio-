@@ -54,10 +54,10 @@ class ActivityInicio : AppCompatActivity() {
             val intent = when (item.itemId) {
                 R.id.products -> Intent(this, ProductosActivity::class.java)
                 R.id.reports -> Intent(this, ReportesActivity::class.java)
+                R.id.categoria -> Intent(this, CategoriaActivity::class.java)
                 R.id.more -> Intent(this, MasOpcionesActivity::class.java)
                 else -> null
             }
-
             intent?.let {
                 it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(it)
