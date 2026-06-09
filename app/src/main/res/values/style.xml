@@ -96,6 +96,20 @@
         <item name="cornerSize">2dp</item>
     </style>
 
+    <style name="InvenzoInput" parent="">
+        <item name="android:background">@drawable/bg_input</item>
+        <item name="android:backgroundTint">@color/inputBackground</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="InvenzoLabel" parent="">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
     <!-- ========================= -->
     <!-- TITULOS -->
     <!-- ========================= -->

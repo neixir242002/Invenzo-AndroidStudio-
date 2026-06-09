@@ -78,11 +78,10 @@
                     android:padding="20dp">
 
                     <TextView
+                        style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/category_name"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
+                        android:layout_marginTop="0dp"
+                        android:text="@string/category_name" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/inputNombre"
@@ -95,23 +94,17 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editNombre"
+                            style="@style/InvenzoInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_input"
                             android:hint="@string/hint_category_name"
-                            android:inputType="text"
-                            android:padding="16dp"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="16sp" />
+                            android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
+                        style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/description"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
+                        android:text="@string/description" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/inputDescripcion"
@@ -124,16 +117,13 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editDescripcion"
+                            style="@style/InvenzoInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_input"
                             android:gravity="top"
                             android:hint="@string/hint_description"
                             android:inputType="textMultiLine"
-                            android:minLines="4"
-                            android:padding="16dp"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="16sp" />
+                            android:minLines="4" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -248,7 +238,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/preview_desc"
-                        android:textColor="#E3F2FD"
+                        android:textColor="@color/textLight"
                         android:textSize="13sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/tvPreviewTitle"
