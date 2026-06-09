@@ -1,6 +1,7 @@
 package com.example.invenzo_10
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
@@ -25,6 +26,16 @@ class NuevaCategoriaActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//
+//        val guardarCategoria = findViewById<Button>(R.id.buttonCrear)
+//        guardarCategoria.setOnClickListener {
+//            val intent = Intent(this, CategoriaActivity::class.java)
+//            startActivity(intent)
+//
+//            @Suppress("DEPRECATION")
+//            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+//            finish()
+//        }
 
         setContentView(R.layout.activity_nuevo_categoria)
 
@@ -46,12 +57,12 @@ class NuevaCategoriaActivity : AppCompatActivity() {
             icon.setOnClickListener {
                 // Reset todos
                 icons.forEach {
-                    it.setBackgroundResource(R.drawable.bg_input)
+                    it.setBackgroundResource(R.drawable.fondo_redondo)
                     it.setColorFilter(Color.GRAY)
                 }
 
                 // Seleccionado
-                icon.setBackgroundResource(R.drawable.bg_input)
+                icon.setBackgroundResource(R.drawable.fondo_redondo)
                 icon.setColorFilter(getColor(R.color.primaryColor))
 
                 selectedIcon = icon
@@ -91,10 +102,22 @@ class NuevaCategoriaActivity : AppCompatActivity() {
 
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.home -> { true }
-                R.id.products -> { true }
-                R.id.reports -> { true }
-                R.id.more -> { true }
+                R.id.home -> {
+                    startActivity(Intent(this, ActivityInicio::class.java))
+                    true
+                }
+                R.id.products -> {
+                    startActivity(Intent(this, ProductosActivity::class.java))
+                    true
+                }
+                R.id.reports -> {
+                    startActivity(Intent(this, ReportesActivity::class.java))
+                    true
+                }
+                R.id.more -> {
+                    startActivity(Intent(this, MasOpcionesActivity::class.java))
+                    true
+                }
                 else -> false
             }
         }

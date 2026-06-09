@@ -8,48 +8,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AgregarProductoActivity : AppCompatActivity() {
 
+    // En desarrollo.. agregar imagen y guardar profucto
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
-
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar_producto)
-
-        // Bottom Navigation
-//        val bottomNav =
-//            findViewById<BottomNavigationView>(
-//                R.id.bottomNav
-//            )
-//
-//        bottomNav.setOnItemSelectedListener { item ->
-//
-//            when (item.itemId) {
-//
-//                R.id.home -> {
-//
-//                    finish()
-//
-//                    true
-//                }
-//
-//                R.id.products -> {
-//
-//                    true
-//                }
-//
-//                R.id.reports -> {
-//
-//                    true
-//                }
-//
-//                R.id.more -> {
-//
-//                    true
-//                }
-//
-//                else -> false
-//            }
-//        }
     }
+
 }

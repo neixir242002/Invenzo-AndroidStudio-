@@ -39,14 +39,6 @@ class MasOpcionesActivity : AppCompatActivity() {
         findViewById<android.view.View>(R.id.optConfiguracion).setOnClickListener {
             startActivity(Intent(this, ConfiguracionActivity::class.java))
         }
-
-        // FAB
-        findViewById<android.view.View>(R.id.fab).setOnClickListener {
-            startActivity(Intent(this, AgregarProductoActivity::class.java))
-        }
-        findViewById<android.view.View>(R.id.optCategorias).setOnClickListener {
-            startActivity(Intent(this, CategoriaActivity::class.java))
-        }
     }
 
     private fun setupBottomNavigation() {
@@ -54,25 +46,24 @@ class MasOpcionesActivity : AppCompatActivity() {
         bottomNav.selectedItemId = R.id.more
 
         bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home -> {
-                    startActivity(Intent(this, ActivityInicio::class.java))
-                    finish()
-                    true
-                }
-                R.id.products -> {
-                    startActivity(Intent(this, ProductosActivity::class.java))
-                    finish()
-                    true
-                }
-                R.id.reports -> {
-                    startActivity(Intent(this, ReportesActivity::class.java))
-                    finish()
-                    true
-                }
-                R.id.more -> true
-                else -> false
+            if (item.itemId == R.id.more) return@setOnItemSelectedListener true
+
+            val intent = when (item.itemId) {
+                R.id.home -> Intent(this, ActivityInicio::class.java)
+                R.id.products -> Intent(this, ProductosActivity::class.java)
+                R.id.categoria -> Intent(this, CategoriaActivity::class.java)
+                R.id.reports -> Intent(this, ReportesActivity::class.java)
+                else -> null
             }
+
+            intent?.let {
+                it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                startActivity(it)
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0, 0)
+                finish()
+            }
+            true
         }
     }
 }
