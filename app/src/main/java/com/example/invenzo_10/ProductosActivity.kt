@@ -3,21 +3,56 @@ package com.example.invenzo_10
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProductosActivity : AppCompatActivity() {
+
+    private lateinit var recyclerProductos: RecyclerView
+    private lateinit var adapter: ProductoAdapter
+    private val listaProductos = mutableListOf<Producto>()
+
+    private val agregarProductoLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data ?: return@registerForActivityResult
+                val producto = Producto(
+                    nombre = data.getStringExtra("nombre") ?: "",
+                    categoria = data.getStringExtra("categoria") ?: "",
+                    cantidad = data.getIntExtra("cantidad", 0),
+                    precio = data.getDoubleExtra("precio", 0.0),
+                    rutaImagen = data.getStringExtra("rutaImagen") ?: ""
+                )
+                listaProductos.add(producto)
+                adapter.notifyItemInserted(listaProductos.size - 1)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Cambiado de R.layout.productos a R.layout.activity_productos
         setContentView(R.layout.activity_productos)
-        setupClickListeners()
 
+        recyclerProductos = findViewById(R.id.recyclerProductos)
+        adapter = ProductoAdapter(listaProductos)
+        recyclerProductos.layoutManager = LinearLayoutManager(this)
+        recyclerProductos.adapter = adapter
+
+        val agregarProducto = findViewById<FloatingActionButton>(R.id.agregarProducto)
+        agregarProducto.setOnClickListener {
+            val intent = Intent(this, AgregarProductoActivity::class.java)
+            agregarProductoLauncher.launch(intent)
+        }
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.products
-
         bottomNav.setOnItemSelectedListener { item ->
             if (item.itemId == R.id.products) return@setOnItemSelectedListener true
 
@@ -30,17 +65,10 @@ class ProductosActivity : AppCompatActivity() {
             }
 
             intent?.let {
-                it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(it)
-                @Suppress("DEPRECATION")
-                overridePendingTransition(0, 0)
                 finish()
             }
             true
         }
-    }
-    private fun setupClickListeners() {
-        findViewById<android.view.View>(R.id.agregarProducto).setOnClickListener {
-            startActivity(Intent(this, AgregarProductoActivity::class.java))        }
     }
 }

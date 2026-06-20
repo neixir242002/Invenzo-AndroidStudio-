@@ -8,9 +8,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/invenzo_v1"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/invenzo_v1"
         android:supportsRtl="true"
         android:theme="@style/Theme.Invenzo_10"
         android:usesCleartextTraffic="true">
@@ -31,7 +31,12 @@
         <activity android:name=".CategoriaActivity"/>
         <activity android:name=".NuevaCategoriaActivity"/>
         <activity android:name=".RegistroActivity"  android:exported="false"/>
-        <activity android:name=".AgregarProductoActivity"/>
+
+        <!-- Para que el scroll se acomode con el teclado       -->
+        <activity
+            android:name=".AgregarProductoActivity"
+            android:windowSoftInputMode="adjustResize"/>
+
         <activity android:name=".EditarCategoriaActivity"/>
         <activity android:name=".ConfiguracionActivity"/>
         <activity android:name=".EditarUsuarioActivity"/>
@@ -40,4 +45,6 @@
         <activity android:name=".RestablecerPasswordActivity"/>
     </application>
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 </manifest>
