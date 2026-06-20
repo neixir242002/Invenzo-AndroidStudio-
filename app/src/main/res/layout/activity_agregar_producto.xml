@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -40,36 +41,33 @@
         </LinearLayout>
 
         <!-- IMAGE BOX -->
+<!--        agregar Imagendel producto-->
         <LinearLayout
+            android:id="@+id/layoutSeleccionarImagen"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="190dp"
             android:layout_marginTop="25dp"
             android:background="@drawable/bg_upload"
             android:gravity="center"
             android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="20dp">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@android:drawable/ic_menu_gallery"
-                app:tint="#2962FF" />
+                android:id="@+id/imgProducto"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_gallery"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Agregar imagen"
+                android:layout_marginTop="5dp"
+                android:text="Seleccionar imagen"
                 android:textColor="#000000"
-                android:textSize="18sp"
                 android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PNG, JPG hasta 5MB"
-                android:textColor="#2962FF"
-                android:textSize="14sp"/>
         </LinearLayout>
 
         <!-- NOMBRE -->
@@ -83,6 +81,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/edtNombreProducto"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
@@ -103,6 +102,7 @@
             android:textStyle="bold"/>
 
         <Spinner
+            android:id="@+id/spCategoria"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
@@ -132,6 +132,7 @@
                     android:textStyle="bold"/>
 
                 <EditText
+                    android:id="@+id/edtCantidad"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="8dp"
@@ -146,32 +147,6 @@
                 android:layout_width="16dp"
                 android:layout_height="wrap_content"/>
 
-            <!-- UNIDAD -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Unidad"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_input"
-                    android:hint="Ej. Unidades"
-                    android:paddingHorizontal="16dp"
-                    android:textColor="#000000"
-                    android:textColorHint="#9E9E9E"/>
-            </LinearLayout>
-
         </LinearLayout>
 
         <!-- PRECIO -->
@@ -185,6 +160,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/edtPrecio"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
@@ -218,6 +194,7 @@
 
         <!-- BOTON -->
         <Button
+            android:id="@+id/btnGuardarProducto"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
