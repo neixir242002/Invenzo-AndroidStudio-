@@ -47,6 +47,15 @@ class AgregarProductoActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_agregar_producto)
 
+        setupClickListeners()
+
+
+    }
+    private fun setupClickListeners() {
+        findViewById<android.view.View>(R.id.btnBack).setOnClickListener {
+            startActivity(Intent(this, ProductosActivity::class.java))        }
+
+
         imgProducto = findViewById(R.id.imgProducto)
 
         edtNombre = findViewById(R.id.edtNombreProducto)
@@ -168,10 +177,11 @@ class AgregarProductoActivity : AppCompatActivity() {
                 "Producto guardado correctamente",
                 Toast.LENGTH_SHORT
             ).show()
-//Esta serrando la aplicacion y no lleba nueva mente a producto
+
             finish()
         }
     }
+
 
     private fun mostrarDialogoImagen() {
 
@@ -276,5 +286,7 @@ class AgregarProductoActivity : AppCompatActivity() {
             e.printStackTrace()
             null
         }
+
     }
 }
+

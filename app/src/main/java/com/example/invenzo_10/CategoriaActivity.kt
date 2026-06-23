@@ -2,6 +2,7 @@ package com.example.invenzo_10
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -13,18 +14,13 @@ class CategoriaActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_categoria)
         setupBottomNavigation()
+        setupClickListeners()
 
-        val agregarCategoria = findViewById<FloatingActionButton>(R.id.agregarCategoria)
-
-        agregarCategoria.setOnClickListener {
-            val intent = Intent(this, NuevaCategoriaActivity::class.java)
-            startActivity(intent)
-            // Transición suave de desvanecimiento
-            @Suppress("DEPRECATION")
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-            finish()
-        }
-
+    }
+    private fun setupClickListeners() {
+        // Perfil
+        findViewById<android.view.View>(R.id.agregarCategoria).setOnClickListener {
+            startActivity(Intent(this, NuevaCategoriaActivity::class.java))        }
     }
 
     private fun setupBottomNavigation() {
