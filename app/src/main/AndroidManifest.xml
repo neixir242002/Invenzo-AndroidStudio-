@@ -30,6 +30,7 @@
         <activity android:name=".ControlInventarioActivity"/>
         <activity android:name=".CategoriaActivity"/>
         <activity android:name=".NuevaCategoriaActivity"/>
+
         <activity android:name=".RegistroActivity"  android:exported="false"/>
 
         <!-- Para que el scroll se acomode con el teclado       -->

@@ -48,6 +48,8 @@ class AgregarProductoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_agregar_producto)
 
         setupClickListeners()
+
+
     }
     private fun setupClickListeners() {
         findViewById<android.view.View>(R.id.btnBack).setOnClickListener {
@@ -180,6 +182,7 @@ class AgregarProductoActivity : AppCompatActivity() {
         }
     }
 
+
     private fun mostrarDialogoImagen() {
 
         val vista = layoutInflater.inflate(
@@ -286,3 +289,4 @@ class AgregarProductoActivity : AppCompatActivity() {
 
     }
 }
+
