@@ -50,7 +50,7 @@ class AgregarProductoActivity : AppCompatActivity() {
         imgProducto = findViewById(R.id.imgProducto)
 
         edtNombre = findViewById(R.id.edtNombreProducto)
-        edtCantidad = findViewById(R.id.edtCantidad)
+        edtCantidad = findViewById(R.id.edtStock)
         edtPrecio = findViewById(R.id.edtPrecio)
         spCategoria = findViewById(R.id.spCategoria)
 
@@ -103,7 +103,7 @@ class AgregarProductoActivity : AppCompatActivity() {
             if (cantidadTexto.isEmpty()) {
                 Toast.makeText(
                     this,
-                    "Ingrese la cantidad",
+                    "Ingrese el stock",
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
