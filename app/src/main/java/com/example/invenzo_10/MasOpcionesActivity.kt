@@ -23,41 +23,17 @@ class MasOpcionesActivity : AppCompatActivity() {
         findViewById<android.view.View>(R.id.cardProfile).setOnClickListener {
             Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
         }
-
         // Administración
-        findViewById<android.view.View>(R.id.optCategorias).setOnClickListener {
-            Toast.makeText(this, "Categorías", Toast.LENGTH_SHORT).show()
-        }
         findViewById<android.view.View>(R.id.optInventarios).setOnClickListener {
-            Toast.makeText(this, "Inventarios", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ControlInventarioActivity::class.java))
         }
         findViewById<android.view.View>(R.id.optUsuarios).setOnClickListener {
-            Toast.makeText(this, "Usuarios", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, UsuariosActivity::class.java))
         }
 
         // Configuración
-        findViewById<android.view.View>(R.id.optPerfil).setOnClickListener {
-            Toast.makeText(this, "Ajustes de Perfil", Toast.LENGTH_SHORT).show()
-        }
-        findViewById<android.view.View>(R.id.optConfigApp).setOnClickListener {
-            Toast.makeText(this, "Configuración de la app", Toast.LENGTH_SHORT).show()
-        }
-        findViewById<android.view.View>(R.id.optNotificaciones).setOnClickListener {
-            Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
-        }
-        findViewById<android.view.View>(R.id.optAyuda).setOnClickListener {
-            Toast.makeText(this, "Ayuda y soporte", Toast.LENGTH_SHORT).show()
-        }
-
-        // Cerrar sesión
-        findViewById<android.view.View>(R.id.btnLogout).setOnClickListener {
-            Toast.makeText(this, "Cerrando sesión...", Toast.LENGTH_SHORT).show()
-            // Aquí iría la lógica de logout
-        }
-        
-        // FAB
-        findViewById<android.view.View>(R.id.fab).setOnClickListener {
-            startActivity(Intent(this, AgregarProductoActivity::class.java))
+        findViewById<android.view.View>(R.id.optConfiguracion).setOnClickListener {
+            startActivity(Intent(this, ConfiguracionActivity::class.java))
         }
     }
 
@@ -66,25 +42,24 @@ class MasOpcionesActivity : AppCompatActivity() {
         bottomNav.selectedItemId = R.id.more
 
         bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home -> {
-                    startActivity(Intent(this, ActivityInicio::class.java))
-                    finish()
-                    true
-                }
-                R.id.products -> {
-                    startActivity(Intent(this, ProductosActivity::class.java))
-                    finish()
-                    true
-                }
-                R.id.reports -> {
-                    startActivity(Intent(this, ReportesActivity::class.java))
-                    finish()
-                    true
-                }
-                R.id.more -> true
-                else -> false
+            if (item.itemId == R.id.more) return@setOnItemSelectedListener true
+
+            val intent = when (item.itemId) {
+                R.id.home -> Intent(this, ActivityInicio::class.java)
+                R.id.products -> Intent(this, ProductosActivity::class.java)
+                R.id.categoria -> Intent(this, CategoriaActivity::class.java)
+                R.id.reports -> Intent(this, ReportesActivity::class.java)
+                else -> null
             }
+
+            intent?.let {
+                it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                startActivity(it)
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0, 0)
+                finish()
+            }
+            true
         }
     }
 }

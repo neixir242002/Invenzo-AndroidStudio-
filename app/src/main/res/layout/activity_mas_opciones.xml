@@ -167,45 +167,6 @@
                     android:orientation="vertical">
 
                     <!-- Categorías -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/optCategorias"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:id="@+id/iconCat"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_categories"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="@string/categories"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/iconCat"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_arrow"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textSecondary" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View style="@style/Divider" />
 
@@ -321,9 +282,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- Perfil -->
+                    <!-- Ajustes Generales -->
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/optPerfil"
+                        android:id="@+id/optConfiguracion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -332,50 +293,7 @@
                         android:padding="16dp">
 
                         <ImageView
-                            android:id="@+id/iconProf"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_profile"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="@string/profile"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/iconProf"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_arrow"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textSecondary" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <View style="@style/Divider" />
-
-                    <!-- Configuración de la app -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/optConfigApp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:id="@+id/iconAppSet"
+                            android:id="@+id/iconConfig"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_settings"
@@ -388,11 +306,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:text="@string/app_settings"
+                            android:text="@string/settings"
                             android:textColor="@color/textPrimary"
                             android:textSize="15sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/iconAppSet"
+                            app:layout_constraintStart_toEndOf="@id/iconConfig"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
@@ -404,109 +322,6 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textSecondary" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <View style="@style/Divider" />
-
-                    <!-- Notificaciones -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/optNotificaciones"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:id="@+id/iconNotif"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_bell"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="@string/notifications"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/iconNotif"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_arrow"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textSecondary" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <View style="@style/Divider" />
-
-                    <!-- Ayuda y soporte -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/optAyuda"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:id="@+id/iconHelp"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_help"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="@string/help_support"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/iconHelp"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_arrow"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textSecondary" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <View style="@style/Divider" />
-
-                    <!-- Cerrar sesión -->
-                    <TextView
-                        android:id="@+id/btnLogout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="18dp"
-                        android:paddingStart="56dp"
-                        android:text="@string/logout"
-                        android:textColor="#D32F2F"
-                        android:textStyle="bold"
-                        tools:ignore="RtlSymmetry" />
 
                 </LinearLayout>
 
@@ -516,36 +331,18 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomBar"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/white"
-        app:fabAlignmentMode="center"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="50dp"
-        app:fabCradleVerticalOffset="6dp">
+        android:background="@color/white"
+        app:backgroundTint="@color/white"
+        android:elevation="8dp"
+        android:theme="@style/Theme.Material3.Light"
+        app:itemIconTint="@color/nav_item_color_state"
+        app:itemTextColor="@color/nav_item_color_state"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNav"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:itemIconTint="@color/nav_item_color_state"
-            app:itemTextColor="@color/nav_item_color_state"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_nav_menu"/>
-
-    </com.google.android.material.bottomappbar.BottomAppBar>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/bluePrimary"
-        app:layout_anchor="@id/bottomBar"
-        app:shapeAppearanceOverlay="@style/circleImage"
-        app:tint="@color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

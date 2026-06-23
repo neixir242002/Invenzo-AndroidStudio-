@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -10,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Invenzo_10" >
+        android:theme="@style/Theme.Invenzo_10"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true" >
@@ -22,9 +25,19 @@
         </activity>
         <activity android:name=".ActivityInicio"/>
         <activity android:name=".ProductosActivity"/>
-        <activity android:name=".AgregarProductoActivity"/>
         <activity android:name=".ReportesActivity"/>
         <activity android:name=".MasOpcionesActivity"/>
+        <activity android:name=".ControlInventarioActivity"/>
+        <activity android:name=".CategoriaActivity"/>
+        <activity android:name=".NuevaCategoriaActivity"/>
+        <activity android:name=".RegistroActivity"  android:exported="false"/>
+        <activity android:name=".AgregarProductoActivity"/>
+        <activity android:name=".EditarCategoriaActivity"/>
+        <activity android:name=".ConfiguracionActivity"/>
+        <activity android:name=".EditarUsuarioActivity"/>
+        <activity android:name=".NuevoUsuarioActivity"/>
+        <activity android:name=".UsuariosActivity"/>
+        <activity android:name=".RestablecerPasswordActivity"/>
     </application>
 
 </manifest>

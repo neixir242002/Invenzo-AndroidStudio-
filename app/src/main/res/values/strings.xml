@@ -1,58 +1,237 @@
 <resources>
-
-    <string name="app_name">INVENZO</string>
-
-<!--  textos de la aplicaccion inicio secion  -->
-    <string name="infobasica">Sistema de Inventario</string>
-    <string name="login">Inicio de secion</string>
-    <string name="welcom">Bienvenido de nuevo</string>
-    <string name="text_gmail">Correo electronico</string>
-    <string name="imput_gmail">pedrot777@gmail.com</string>
-    <string name="text_password">Contraseña</string>
-    <string name="imput_password">Contraseña</string>
-    <string name="self_saving">Recordar</string>
-    <string name="recover_password">¿Olvidaste tu contraseña?</string>
-    <string name="button_login">Iniciar Secion</string>
-    <string name="go_register">Registrate</string>
-    <string name="no_tienes_cuenta">¿No tienes una cuenta?</string>
-
-
+    <string name="app_name">Invenzo</string>
     <string name="more_options">Más opciones</string>
-
     <string name="admin">Administrador</string>
-
     <string name="david_garcia">David Garcia</string>
-
     <string name="administration">Administración</string>
-
     <string name="settings">Configuración</string>
-
     <string name="categories">Categorias</string>
-
-    <string name="inventories">Inventario</string>
-
+    <string name="inventories">Control Inventario</string>
     <string name="users">Usuarios</string>
-
     <string name="warehouses">Almacenes</string>
-
     <string name="profile">Perfil</string>
-
     <string name="app_settings">Configuración de la app</string>
-
     <string name="notifications">Notificaciones</string>
-
     <string name="help_support">Ayuda y soporte</string>
-
     <string name="logout">Cerrar sesión</string>
-
     <string name="home">Inicio</string>
-
     <string name="products">Productos</string>
-
     <string name="reports">Reportes</string>
-
     <string name="more">Más</string>
 
+    <!-- Configuration strings -->
+    <string name="edit">Editar</string>
+    <string name="account_section">CUENTA</string>
+    <string name="preferences_section">PREFERENCIAS</string>
+    <string name="system_section">SISTEMA</string>
+    <string name="support_section">SOPORTE</string>
 
+    <!-- New Configuration strings -->
+    <string name="security">Seguridad</string>
+    <string name="theme">Tema</string>
+    <string name="language">Idioma</string>
+    <string name="backup">Copia de Seguridad</string>
+    <string name="export_data">Exportar Datos</string>
+    <string name="terms_conditions">Términos y condiciones</string>
+    <string name="about_app">Acerca de la app</string>
 
+    <!-- Edit User strings -->
+    <string name="edit_user_title">Editar Usuario</string>
+    <string name="change_profile_picture">Cambiar foto de perfil</string>
+    <string name="email">Correo electrónico</string>
+    <string name="sample_user_email">alejandro.m@example.com</string>
+    <string name="system_role">Rol en el sistema</string>
+    <string name="sample_user_role_vendedor">Vendedor</string>
+    <string name="reset_password">Restablecer contraseña</string>
+    <string name="account_status">Estado de la cuenta</string>
+    <string name="account_status_desc">Activar o desactivar el acceso del usuario</string>
+    <string name="delete_user">Eliminar usuario</string>
+
+    <!-- Add Product strings -->
+    <string name="sale_price">Precio de venta</string>
+    <string name="hint_price">Ej. 150000</string>
+    <string name="description_optional">Descripción (opcional)</string>
+    <string name="hint_product_description">Descripción del producto&#8230;</string>
+
+    <!-- New User strings -->
+    <string name="new_user_title">Nuevo Usuario</string>
+    <string name="user_identity">Identidad del usuario</string>
+    <string name="user_identity_desc">Información básica para la identificación</string>
+    <string name="hint_full_name">Alejandro Mendoza</string>
+    <string name="role_security">Rol y Seguridad</string>
+    <string name="sample_user_role">Selecciona un rol</string>
+    <string name="temp_password">Contraseña temporal</string>
+    <string name="password_placeholder">••••••••</string>
+    <string name="allow_immediate_access">Permitir acceso inmediato</string>
+    <string name="collab_text">Colabora con tu equipo de manera eficiente</string>
+    <string name="save_user">Guardar Usuario</string>
+
+    <!-- Reset Password strings -->
+    <string name="reset_password_user_title">Restablecer Contraseña</string>
+    <string name="reset_password_desc">Ingresa tu nueva contraseña para recuperar el acceso a tu cuenta.</string>
+    <string name="new_password_label">Nueva Contraseña</string>
+    <string name="security_requirements_title">REQUISITOS DE SEGURIDAD</string>
+    <string name="req_min_chars">Mínimo 8 caracteres</string>
+    <string name="req_one_number">Al menos un número</string>
+    <string name="req_special_char">Un carácter especial</string>
+    <string name="confirm_password_label">Confirmar Contraseña</string>
+    <string name="update_password_button">Actualizar Contraseña</string>
+
+    <!-- Claves que causaban advertencias por estar solo en inglés -->
+    <string name="button_login">Iniciar Sesión</string>
+    <string name="go_register">Regístrate</string>
+    <string name="imput_gmail">ejemplo@correo.com</string>
+    <string name="imput_password">Contraseña</string>
+    <string name="login">Inicio de sesión</string>
+    <string name="no_tienes_cuenta">¿No tienes una cuenta?</string>
+    <string name="recover_password">¿Olvidaste tu contraseña?</string>
+    <string name="self_saving">Sistema de Inventario</string>
+    <string name="text_gmail">Correo electrónico</string>
+    <string name="text_password">Contraseña</string>
+    <string name="welcom">Bienvenido de nuevo</string>
+
+    <!-- Login strings -->
+    <string name="inventory_system">Sistema de Inventario</string>
+    <string name="welcome_back">Bienvenido de nuevo</string>
+    <string name="login_title">Inicio de sesión</string>
+    <string name="remember_me">Recuérdame</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="register_action">Regístrate</string>
+    <string name="no_account">¿No tienes una cuenta?</string>
+    <string name="login_button">Iniciar Sesión</string>
+    <string name="hint_email_example">ejemplo@correo.com</string>
+
+    <!-- Registration strings -->
+    <string name="registration">Registro</string>
+    <string name="create_account">Crea tu cuenta</string>
+    <string name="full_name">Nombre completo</string>
+    <string name="email_address">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="already_have_account">¿Ya tienes una cuenta?</string>
+    <string name="login_action">Inicia sesión</string>
+    <string name="hint_name">Juan Pérez</string>
+    <string name="hint_email">correo@gmail.com</string>
+
+    <!-- Categories strings -->
+    <string name="categories_title">Categorías</string>
+    <string name="users_title">Usuarios</string>
+    <string name="filter_all">Todos</string>
+    <string name="filter_recent">Recientes</string>
+    <string name="filter_favorites">Favoritos</string>
+    <string name="need_new_section">¿Necesitas una nueva sección?</string>
+    <string name="create_custom_category">Crea una categoría personalizada</string>
+    <string name="edit_category">Editar Categoría</string>
+    <string name="electronics">Electrónica</string>
+    <string name="electronics_desc">Dispositivos y accesorios electrónicos</string>
+    <string name="save_changes">Guardar cambios</string>
+    <string name="delete_category">Eliminar categoría</string>
+    <string name="total_value">Valor total</string>
+
+    <!-- Products strings -->
+    <string name="hint_search_products">Buscar productos&#8230;</string>
+    <string name="low_stock_title">Stock Bajo</string>
+    <string name="out_of_stock_title">Sin Stock</string>
+    <string name="add_product">Agregar producto</string>
+    <string name="add_image">Agregar imagen</string>
+    <string name="image_format_hint">PNG, JPG hasta 5MB</string>
+    <string name="product_name">Nombre del producto</string>
+    <string name="hint_product_name">Ej. Laptop HP 15\"</string>
+    <string name="category">Categoría</string>
+    <string name="quantity">Cantidad</string>
+    <string name="hint_quantity">Ej. 10</string>
+    <string name="unit">Unidad</string>
+    <string name="hint_unit">Ej. Unidades</string>
+    <string name="save_product">Guardar producto</string>
+
+    <!-- Reports strings -->
+    <string name="reports_title">Reportes</string>
+    <string name="tab_sales">Ventas</string>
+    <string name="tab_products">Productos</string>
+    <string name="tab_movements">Movimientos</string>
+    <string name="total_sales">Ventas totales</string>
+    <string name="monthly">Mensual</string>
+    <string name="top_categories">Categorías más vendidas</string>
+    <string name="category_tech">Tecnología</string>
+    <string name="category_furniture">Mobiliario</string>
+    <string name="sales_comparison">+ 15.3% vs. mes anterior</string>
+
+    <!-- Inventory Control strings -->
+    <string name="inventory_control_title">Control de Inventario</string>
+    <string name="inventory_control_desc">Registra entradas y salidas de productos</string>
+    <string name="register_movement">Registrar Movimiento</string>
+    <string name="hint_product_required">Producto *</string>
+    <string name="select_product">Selecciona un producto</string>
+    <string name="hint_type_required">Tipo *</string>
+    <string name="entry">Entrada</string>
+    <string name="exit">Salida</string>
+    <string name="hint_quantity_required">Cantidad *</string>
+    <string name="observations">Observations</string>
+    <string name="recent_movements">Movimientos Recientes</string>
+    <string name="view_history">Ver Historial</string>
+    <string name="stock_summary">Resumen de Stock</string>
+
+    <string name="infobasica">Información básica para tu cuenta</string>
+    <string name="new_category">Nueva Categoría</string>
+    <string name="category_name">Nombre de la categoría</string>
+    <string name="status">Estado</string>
+    <string name="status_tipe">Activo...Inactivo..</string>
+    <string name="hint_category_name">Ej. Electrónicos, Ropa&#8230;</string>
+    <string name="description">Descripción</string>
+    <string name="hint_description">Escribe una breve descripción aquí&#8230;</string>
+    <string name="select_icon">Selecciona un icono</string>
+    <string name="view_all">Ver todos</string>
+    <string name="preview">Vista previa</string>
+    <string name="preview_desc">Así es como se verá tu nueva categoría en la lista principal.</string>
+    <string name="create_category">Crear Categoría</string>
+
+    <!-- Users Activity strings -->
+    <string name="total_users">Total Usuarios</string>
+    <string name="sample_user_total">42</string>
+    <string name="this_week">Esta semana</string>
+    <string name="active_users">Usuarios activos</string>
+    <string name="sample_user_active">38</string>
+    <string name="total_percentage">+15% este mes</string>
+    <string name="hint_search_user">Buscar usuario&#8230;</string>
+    <string name="personnel_list">Lista de personal</string>
+
+    <!-- User Item Placeholders -->
+    <string name="sample_initials">AM</string>
+    <string name="sample_user_name">Alejandro Mendoza</string>
+    <string name="active">Activo</string>
+
+    <!-- Placeholders / Hardcoded values -->
+    <string name="val_80">80</string>
+    <string name="val_12">12</string>
+    <string name="val_248">248</string>
+    <string name="val_4_2m">$4.2M</string>
+    <string name="val_plus_25_mes">+25% este mes</string>
+    <string name="val_minus_10_mes">–10% este mes</string>
+    <string name="val_plus_5_2_hoy">+5.2% hoy</string>
+    <string name="val_plus_12_mensual">+12% mensual</string>
+    <string name="val_plus_10">+10</string>
+    <string name="val_total_sales_amount">$24,500,000</string>
+    <string name="val_tech_amount">$15,200,000</string>
+    <string name="val_furniture_amount">$6,300,000</string>
+    <string name="val_tech_percent">62%</string>
+    <string name="val_furniture_percent">26%</string>
+    <string name="val_date_range">01 May 2024 – 31 May 2024</string>
+    <string name="sample_products_count">124</string>
+    <string name="sample_total_value">$12.5M</string>
+    <string name="sample_product_count_text">42 productos</string>
+    <string name="sample_product_name">Laptop Dell XPS</string>
+    <string name="sample_date_time">2025-12-10 10:30</string>
+    <string name="sample_stock_text">Stock actual: 5</string>
+    <string name="available">Disponible</string>
+    <string name="sample_cant_text">Cant: 10</string>
+
+    <!-- Content Descriptions -->
+    <string name="desc_perfil">Imagen de perfil</string>
+    <string name="desc_notificaciones">Notificaciones</string>
+    <string name="desc_icon_productos">Icono de productos</string>
+    <string name="desc_icon_stock">Icono de stock bajo</string>
+    <string name="desc_icon_movimientos">Icono de movimientos</string>
+    <string name="desc_icon_valor">Icono de valor total</string>
+    <string name="desc_icon_carrito">Icono de carrito</string>
+    <string name="desc_back_button">Botón atrás</string>
 </resources>

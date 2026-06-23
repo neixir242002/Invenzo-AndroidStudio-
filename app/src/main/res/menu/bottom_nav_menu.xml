@@ -8,13 +8,13 @@
 
     <item
         android:id="@+id/products"
-        android:icon="@drawable/ic_shopping_cart"
+        android:icon="@drawable/icons8_caja_llena_24"
         android:title="@string/products"/>
 
     <item
-        android:id="@+id/placeholder"
-        android:title=""
-        android:enabled="false"/>
+        android:id="@+id/categoria"
+        android:icon="@drawable/icons8_categorias_24"
+        android:title="@string/categories"/>
 
     <item
         android:id="@+id/reports"

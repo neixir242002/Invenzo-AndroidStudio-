@@ -3,23 +3,45 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="colorPrimary">#1976D2</color>
-    <color name="colorPrimaryDark">#1565C0</color>
-    <color name="colorAccent">#FF5722</color>
+    <!-- UI Colors from the floating nav image -->
+    <color name="navBackgroundFloating">#FFFFFF</color>
+    <color name="navInactiveIcon">#9CA3AF</color>
+    <color name="navActiveIcon">#111827</color>
+    <color name="navIndicatorGreen">#84CC16</color>
+    <color name="navIndicator">#84CC16</color> <!-- Added to fix linking error and maintain style -->
 
-    <color name="ic_laun_background">#FFFFFF</color>
-    <color name="ic_launcherppp">#FF5722</color>
-    <color name="background">#FAFAFA</color>
-<!--    <color name="textPrimary">#212121</color>-->
+    <!-- Dashboard/Project Palette -->
+    <color name="primaryDark">#00002A</color>
+    <color name="primaryColor">#1A3F75</color>
+    <color name="blueMedium">#4E6A9C</color>
+    <color name="blueSoft">#4EA4CC</color>
+    <color name="blueVeryLight">#D5E2EC</color>
 
-<!--    <color name="textSecondary">#757575</color>-->
+    <color name="backgroundColor">#F1F5F9</color>
+    <color name="cardColor">#FFFFFF</color>
+    <color name="inputBackground">#FFFFFF</color>
+    <color name="iconBackground">#E3F2FD</color>
+    <color name="textLight">#E3F2FD</color>
+    <color name="white_4d">#4DFFFFFF</color>
 
-    <color name="bluePrimary">#2962FF</color>
+    <color name="textPrimary">#111827</color>
+    <color name="textSecondary">#6B7280</color>
+    <color name="grayBorder">#D5E2EC</color>
 
-    <color name="redBadge">#FF3B30</color>
+    <color name="successColor">#10B981</color>
+    <color name="successLight">#D1FAE5</color>
 
-    <color name="grayBorder">#EAEAEA</color>
+    <color name="dangerColor">#EF4444</color>
+    <color name="dangerLight">#FEE2E2</color>
 
-    <color name="blueLightIndicator">#E3F2FD</color>
+    <!-- Compatibility Aliases -->
+    <color name="colorPrimary">#1A3F75</color>
+    <color name="colorPrimaryDark">#00002A</color>
+    <color name="primaryLight">#D5E2EC</color>
+    <color name="bluePrimary">#1A3F75</color>
+    <color name="ic_launcherppp">#1A3F75</color>
 
+    <!-- Launcher Colors -->
+    <color name="ic_laun_background">#1A3F75</color>
+    <color name="ic_laun_categoria_background">#1A3F75</color>
 </resources>

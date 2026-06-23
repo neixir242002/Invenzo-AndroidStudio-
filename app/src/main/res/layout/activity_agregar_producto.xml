@@ -22,9 +22,13 @@
             android:layout_marginTop="10dp">
 
             <ImageView
+                android:id="@+id/btnBack"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@android:drawable/ic_media_previous"
+                android:contentDescription="@string/desc_back_button"
+                android:rotation="180"
+                android:rotationY="180"
+                android:src="@drawable/ic_arrow"
                 app:tint="#000000" />
 
             <TextView
@@ -32,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Agregar producto"
+                android:text="@string/add_product"
                 android:textColor="#000000"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -53,13 +57,14 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@android:drawable/ic_menu_gallery"
+                android:contentDescription="@string/add_image"
                 app:tint="#2962FF" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Agregar imagen"
+                android:text="@string/add_image"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
@@ -67,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PNG, JPG hasta 5MB"
+                android:text="@string/image_format_hint"
                 android:textColor="#2962FF"
                 android:textSize="14sp"/>
         </LinearLayout>
@@ -77,36 +82,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Nombre del producto"
+            android:text="@string/product_name"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/editProductName"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:hint='Ej. Laptop HP 15"'
+            android:background="@drawable/fondo_redondo"
+            android:backgroundTint="#F3F4F6"
+            android:hint="@string/hint_product_name"
             android:paddingHorizontal="16dp"
             android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
+            android:textColorHint="#9E9E9E"
+            android:autofillHints="name"
+            android:inputType="text" />
 
         <!-- CATEGORIA -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Categoría"
+            android:text="@string/category"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
         <Spinner
+            android:id="@+id/spinnerCategory"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
+            android:background="@drawable/fondo_redondo"
+            android:backgroundTint="#F3F4F6"
             android:paddingHorizontal="12dp"/>
 
         <!-- ROW -->
@@ -126,20 +137,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cantidad"
+                    android:text="@string/quantity"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
 
                 <EditText
+                    android:id="@+id/editQuantity"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_input"
-                    android:hint="Ej. 10"
+                    android:background="@drawable/fondo_redondo"
+                    android:backgroundTint="#F3F4F6"
+                    android:hint="@string/hint_quantity"
                     android:paddingHorizontal="16dp"
                     android:textColor="#000000"
-                    android:textColorHint="#9E9E9E"/>
+                    android:textColorHint="#9E9E9E"
+                    android:inputType="number" />
             </LinearLayout>
 
             <Space
@@ -156,20 +170,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Unidad"
+                    android:text="@string/unit"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
 
                 <EditText
+                    android:id="@+id/editUnit"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_input"
-                    android:hint="Ej. Unidades"
+                    android:background="@drawable/fondo_redondo"
+                    android:backgroundTint="#F3F4F6"
+                    android:hint="@string/hint_unit"
                     android:paddingHorizontal="16dp"
                     android:textColor="#000000"
-                    android:textColorHint="#9E9E9E"/>
+                    android:textColorHint="#9E9E9E"
+                    android:inputType="text" />
             </LinearLayout>
 
         </LinearLayout>
@@ -179,18 +196,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Precio de venta"
+            android:text="@string/sale_price"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/editPrice"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:hint="Ej. 150000"
-            android:inputType="number"
+            android:background="@drawable/fondo_redondo"
+            android:backgroundTint="#F3F4F6"
+            android:hint="@string/hint_price"
+            android:inputType="numberDecimal"
             android:paddingHorizontal="16dp"
             android:textColor="#000000"
             android:textColorHint="#9E9E9E"/>
@@ -200,30 +219,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Descripción (opcional)"
+            android:text="@string/description_optional"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/editDescription"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
+            android:background="@drawable/fondo_redondo"
+            android:backgroundTint="#F3F4F6"
             android:gravity="top"
-            android:hint="Descripción del producto..."
+            android:hint="@string/hint_product_description"
             android:padding="16dp"
             android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
+            android:textColorHint="#9E9E9E"
+            android:inputType="textMultiLine" />
 
         <!-- BOTON -->
         <Button
+            android:id="@+id/btnSaveProduct"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="40dp"
             android:backgroundTint="#2196F3"
-            android:text="Guardar producto"
+            android:text="@string/save_product"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="18sp"

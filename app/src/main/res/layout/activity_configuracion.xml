@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
+
+    <!-- TOP BAR -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_light_background"
+        android:padding="20dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:contentDescription="@string/app_name"
+            android:rotation="180"
+            android:rotationY="180"
+            android:src="@drawable/ic_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primaryColor" />
+        <include
+            layout="@layout/layout_user_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Profile Summary Card -->
+            <TextView
+                style="@style/InvenzoLabel"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/settings"
+                android:textColor="@color/primaryColor"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <!-- FILTERS -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="20dp"/>
+            </HorizontalScrollView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/DashboardCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/imgProfileContainer"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        app:cardCornerRadius="32dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+                        <ImageView
+                            android:id="@+id/imgProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:contentDescription="@string/profile"
+                            android:src="@drawable/ic_user" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/david_garcia"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/imgProfileContainer"
+                        app:layout_constraintTop_toTopOf="@id/imgProfileContainer"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toTopOf="@id/txtRole"/>
+
+                    <TextView
+                        android:id="@+id/txtRole"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/admin"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@id/txtName"
+                        app:layout_constraintTop_toBottomOf="@id/txtName"
+                        app:layout_constraintBottom_toBottomOf="@id/imgProfileContainer"/>
+
+                    <TextView
+                        android:id="@+id/btnEditProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CUENTA Section -->
+            <TextView
+                style="@style/InvenzoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account_section"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryColor" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/DashboardCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!-- Perfil -->
+                    <include layout="@layout/item_config_option" android:id="@+id/optPerfil" android:layout_width="match_parent" android:layout_height="wrap_content" />
+                    <View style="@style/Divider" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" />
+                    <!-- Seguridad -->
+                    <include layout="@layout/item_config_option" android:id="@+id/optSeguridad" android:layout_width="match_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- PREFERENCIAS Section -->
+            <TextView
+                style="@style/InvenzoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_section"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryColor" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/DashboardCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!-- Notificaciones -->
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optNotif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
+                    <!-- Tema -->
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optTema"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
+                    <!-- Idioma -->
+                    <include layout="@layout/item_config_option" android:id="@+id/optIdioma" android:layout_width="match_parent" android:layout_height="wrap_content" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- SISTEMA Section -->
+            <TextView
+                style="@style/InvenzoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/system_section"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryColor" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/DashboardCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!-- Copia de Seguridad -->
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optBackup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
+                    <!-- Exportar Datos -->
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optExport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- SOPORTE Section -->
+            <TextView
+                style="@style/InvenzoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/support_section"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/primaryColor" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/DashboardCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <!-- Ayuda y soporte -->
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optAyuda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
+                    <!-- Términos y condiciones -->
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optTerms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
+                    <!-- Acerca de la app -->
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optAbout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Logout Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:text="@string/logout"
+                android:textColor="@color/dangerColor"
+                app:backgroundTint="@color/dangerLight"
+                app:cornerRadius="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                app:icon="@drawable/ic_launcher_foreground"
+                app:iconGravity="textStart"
+                app:iconTint="@color/dangerColor" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- BOTTOM NAV -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:theme="@style/Theme.Material3.Light"
+        app:itemIconTint="@color/nav_item_color_state"
+        app:itemTextColor="@color/nav_item_color_state"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
