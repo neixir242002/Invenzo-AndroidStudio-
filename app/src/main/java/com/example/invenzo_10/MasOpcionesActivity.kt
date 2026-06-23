@@ -23,13 +23,9 @@ class MasOpcionesActivity : AppCompatActivity() {
         findViewById<android.view.View>(R.id.cardProfile).setOnClickListener {
             Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
         }
-
         // Administración
-        findViewById<android.view.View>(R.id.optCategorias).setOnClickListener {
-            startActivity(Intent(this, CategoriaActivity::class.java))
-        }
         findViewById<android.view.View>(R.id.optInventarios).setOnClickListener {
-            Toast.makeText(this, "Inventarios", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, ControlInventarioActivity::class.java))
         }
         findViewById<android.view.View>(R.id.optUsuarios).setOnClickListener {
             startActivity(Intent(this, UsuariosActivity::class.java))

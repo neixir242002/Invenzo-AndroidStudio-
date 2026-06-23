@@ -11,6 +11,7 @@
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/cardview_light_background"
         android:padding="20dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -19,42 +20,20 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_arrow"
             android:rotation="180"
+            android:rotationY="180"
+            android:src="@drawable/ic_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/primaryColor" />
-
-        <TextView
+        <include
+            layout="@layout/layout_user_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/settings"
-            android:textColor="@color/primaryColor"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btnBack"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/primaryColor"
-            app:strokeWidth="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_user"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerCrop" />
-        </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -74,6 +53,32 @@
             android:padding="20dp">
 
             <!-- Profile Summary Card -->
+            <TextView
+                style="@style/InvenzoLabel"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/settings"
+                android:textColor="@color/primaryColor"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <!-- FILTERS -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="20dp"/>
+            </HorizontalScrollView>
+
             <com.google.android.material.card.MaterialCardView
                 style="@style/DashboardCard"
                 android:layout_width="match_parent"
@@ -190,11 +195,23 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <!-- Notificaciones -->
-                    <include layout="@layout/item_config_option" android:id="@+id/optNotif" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                    <View style="@style/Divider" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" />
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optNotif"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
                     <!-- Tema -->
-                    <include layout="@layout/item_config_option" android:id="@+id/optTema" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                    <View style="@style/Divider" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" />
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optTema"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
                     <!-- Idioma -->
                     <include layout="@layout/item_config_option" android:id="@+id/optIdioma" android:layout_width="match_parent" android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -220,10 +237,19 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <!-- Copia de Seguridad -->
-                    <include layout="@layout/item_config_option" android:id="@+id/optBackup" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                    <View style="@style/Divider" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" />
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optBackup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
                     <!-- Exportar Datos -->
-                    <include layout="@layout/item_config_option" android:id="@+id/optExport" android:layout_width="match_parent" android:layout_height="wrap_content" />
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optExport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -247,13 +273,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <!-- Ayuda y soporte -->
-                    <include layout="@layout/item_config_option" android:id="@+id/optAyuda" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                    <View style="@style/Divider" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" />
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optAyuda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
                     <!-- Términos y condiciones -->
-                    <include layout="@layout/item_config_option" android:id="@+id/optTerms" android:layout_width="match_parent" android:layout_height="wrap_content" />
-                    <View style="@style/Divider" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="64dp" />
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optTerms"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View style="@style/Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp" />
                     <!-- Acerca de la app -->
-                    <include layout="@layout/item_config_option" android:id="@+id/optAbout" android:layout_width="match_parent" android:layout_height="wrap_content" />
+                    <include layout="@layout/item_config_option"
+                        android:id="@+id/optAbout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

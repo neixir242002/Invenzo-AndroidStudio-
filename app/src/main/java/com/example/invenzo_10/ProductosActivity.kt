@@ -13,7 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class ProductosActivity : AppCompatActivity() {
 
     private lateinit var recyclerProductos: RecyclerView
-
     private lateinit var adapter: ProductoAdapter
 
     private val listaProductos = mutableListOf<Producto>()
@@ -22,9 +21,7 @@ class ProductosActivity : AppCompatActivity() {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-
             if (result.resultCode == RESULT_OK) {
-
                 val data = result.data ?: return@registerForActivityResult
 
                 val producto = Producto(
@@ -36,10 +33,8 @@ class ProductosActivity : AppCompatActivity() {
                 )
 
                 listaProductos.add(producto)
+                adapter.notifyItemInserted(listaProductos.size - 1)
 
-                adapter.notifyItemInserted(
-                    listaProductos.size - 1
-                )
             }
         }
 
@@ -48,48 +43,22 @@ class ProductosActivity : AppCompatActivity() {
 
         enableEdgeToEdge()
 
-        setContentView(R.layout.productos)
+        // Cambiado de R.layout.productos a R.layout.activity_productos
+        setContentView(R.layout.activity_productos)
 
-        recyclerProductos =
-            findViewById(R.id.recyclerProductos)
-
-        adapter =
-            ProductoAdapter(listaProductos)
-
-        recyclerProductos.layoutManager =
-            LinearLayoutManager(this)
-
+        recyclerProductos = findViewById(R.id.recyclerProductos)
+        adapter = ProductoAdapter(listaProductos)
+        recyclerProductos.layoutManager = LinearLayoutManager(this)
         recyclerProductos.adapter = adapter
 
-        val agregarProducto =
-            findViewById<FloatingActionButton>(
-                R.id.agregarProducto
-            )
-
+        val agregarProducto = findViewById<FloatingActionButton>(R.id.agregarProducto)
         agregarProducto.setOnClickListener {
-
-            val intent =
-                Intent(
-                    this,
-                    AgregarProductoActivity::class.java
-                )
-
+            val intent = Intent(this, AgregarProductoActivity::class.java)
             agregarProductoLauncher.launch(intent)
-
-            @Suppress("DEPRECATION")
-            overridePendingTransition(
-                R.anim.fade_in,
-                R.anim.fade_out
-            )
         }
 
-        val bottomNav =
-            findViewById<BottomNavigationView>(
-                R.id.bottomNav
-            )
-
-        bottomNav.selectedItemId =
-            R.id.products
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNav.selectedItemId = R.id.products
 
         bottomNav.setOnItemSelectedListener { item ->
 

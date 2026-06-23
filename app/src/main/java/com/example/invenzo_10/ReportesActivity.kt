@@ -18,31 +18,10 @@ class ReportesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_reportes)
-
-        setupBarChart()
         setupBottomNavigation()
 
     }
 
-    private fun setupBarChart() {
-        val barChart = findViewById<BarChart>(R.id.barChart)
-        val entries = ArrayList<BarEntry>()
-        entries.add(BarEntry(1f, 10f))
-        entries.add(BarEntry(2f, 20f))
-        entries.add(BarEntry(3f, 15f))
-        entries.add(BarEntry(4f, 25f))
-        entries.add(BarEntry(5f, 18f))
-        entries.add(BarEntry(6f, 22f))
-
-        val dataSet = BarDataSet(entries, "Ventas")
-        dataSet.color = Color.parseColor("#2563EB")
-        val data = BarData(dataSet)
-        
-        barChart.data = data
-        barChart.description.isEnabled = false
-        barChart.animateY(1000)
-        barChart.invalidate()
-    }
 
     private fun setupBottomNavigation() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)

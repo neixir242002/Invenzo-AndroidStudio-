@@ -25,7 +25,11 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_back"
+                android:contentDescription="@string/desc_back_button"
+                android:rotation="180"
+                android:rotationY="180"
+                android:src="@drawable/ic_arrow"
+
                 app:tint="#000000" />
 
             <TextView
