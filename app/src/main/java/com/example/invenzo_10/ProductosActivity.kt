@@ -65,7 +65,10 @@ class ProductosActivity : AppCompatActivity() {
             }
 
             intent?.let {
+                it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(it)
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0, 0)
                 finish()
             }
             true
