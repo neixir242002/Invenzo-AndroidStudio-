@@ -6,6 +6,40 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
+    <!-- TOP BAR -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_light_background"
+        android:padding="20dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:contentDescription="@string/desc_back_button"
+            android:rotation="900"
+            android:rotationX="6"
+            android:rotationY="180"
+            android:src="@drawable/ic_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primaryColor" />
+
+
+        <include
+            layout="@layout/layout_user_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -13,7 +47,7 @@
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/topBar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,49 +55,18 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- HEADER -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/btnBack"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/icons8_men_"
-                    android:contentDescription="@string/app_name"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/textPrimary" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/inventory_control_title"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btnBack"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
-                    android:src="@drawable/icons8_notificaci_n_24"
-                    android:contentDescription="@string/desc_notificaciones"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/textPrimary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/inventory_control_title"
+                android:textColor="@color/primaryColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:text="@string/inventory_control_desc"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -90,7 +93,7 @@
                         android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/LoginTextInputLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -100,8 +103,7 @@
                             android:id="@+id/spinnerProducto"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none"
-                            android:text="@string/select_product" />
+                            android:inputType="none" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
@@ -111,7 +113,7 @@
                         android:weightSum="2">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/LoginTextInputLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
@@ -122,12 +124,11 @@
                                 android:id="@+id/spinnerTipo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="none"
-                                android:text="@string/entry" />
+                                android:inputType="none" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/LoginTextInputLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -135,6 +136,7 @@
                             android:hint="@string/hint_quantity_required">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etCantidad"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="number" />
@@ -142,12 +144,14 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/LoginTextInputLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:hint="@string/observations">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etObservaciones"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top"
@@ -156,6 +160,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRegistrar"
                         style="@style/InvenzoButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -207,10 +212,8 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <!-- Item 1 -->
                     <include layout="@layout/item_movimiento_control" />
                     <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginVertical="8dp"/>
-                    <!-- Item 2 -->
                     <include layout="@layout/item_movimiento_control" />
 
                 </LinearLayout>
@@ -251,11 +254,18 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- BOTTOM NAV -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
-        style="@style/Widget.App.BottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:backgroundTint="@color/white"
+        android:elevation="8dp"
+        android:theme="@style/Theme.Material3.Light"
+        app:itemIconTint="@color/nav_item_color_state"
+        app:itemTextColor="@color/nav_item_color_state"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

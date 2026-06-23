@@ -167,45 +167,6 @@
                     android:orientation="vertical">
 
                     <!-- Categorías -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/optCategorias"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:id="@+id/iconCat"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_categories"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="@string/categories"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/iconCat"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_arrow"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textSecondary" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View style="@style/Divider" />
 

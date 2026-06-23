@@ -47,4 +47,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // Retrofit para las peticiones al servidor
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Converter para transformar el JSON de PHP a objetos de Kotlin
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }

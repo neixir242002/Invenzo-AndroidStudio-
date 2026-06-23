@@ -6,276 +6,194 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-    <!-- TOP BAR -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/topBar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_arrow"
-            android:rotation="180"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primaryColor" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/new_category"
-            android:textColor="@color/primaryColor"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btnBack"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/icons8_notificaci_n_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primaryColor" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBar">
-
+        <!-- HEADER -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginTop="1dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <!-- MAIN FORM CARD -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/desc_back_button"
+                android:rotation="180"
+                android:rotationY="180"
+                android:src="@drawable/ic_arrow"
+                app:tint="#000000" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/new_category"
+                android:textColor="#000000"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- FILTERS -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="20dp" />
+        </HorizontalScrollView>
+
+        <!-- MAIN FORM CARD -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/DashboardCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <LinearLayout
+                <TextView
+                    style="@style/InvenzoLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/category_name" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputNombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:layout_marginTop="8dp"
+                    app:boxBackgroundMode="none"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false">
 
                     <TextView
                         style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="0dp"
-                        android:text="@string/category_name" />
+                        android:text="@string/status" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputNombre"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:hintEnabled="false"
-                        app:boxBackgroundMode="none"
-                        app:errorEnabled="true">
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editNombre"
-                            style="@style/InvenzoInput"
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/hint_category_name"
-                            android:inputType="text" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:hint="@string/hint_type_required">
 
-                    <TextView
-                        style="@style/InvenzoLabel"
-                        android:layout_width="wrap_content"
-                        android:text="@string/description" />
+                            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                android:id="@+id/status_tipe"
+                                style="@style/InvenzoInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/fondo_redondo"
+                                android:backgroundTint="#F3F4F6"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/inputDescripcion"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editNombre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:hintEnabled="false"
-                        app:boxBackgroundMode="none"
-                        app:errorEnabled="true">
+                        android:background="@drawable/fondo_redondo"
+                        android:backgroundTint="#F3F4F6"
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editDescripcion"
-                            style="@style/InvenzoInput"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="top"
-                            android:hint="@string/hint_description"
-                            android:inputType="textMultiLine"
-                            android:minLines="4" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:hint="@string/hint_category_name"
+                        android:inputType="text" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/InvenzoLabel"
+                    android:layout_width="wrap_content"
+                    android:text="@string/description" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:boxBackgroundMode="none"
+                    app:errorEnabled="true"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editDescripcion"
+                        style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp">
-
-                        <TextView
-                            android:id="@+id/tvSelectIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/select_icon"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/view_all"
-                            android:textColor="@color/primaryColor"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:columnCount="5"
-                        android:rowCount="2">
-
-                        <ImageView
-                            android:id="@+id/icon1"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="4dp"
-                            android:background="@drawable/bg_input"
-                            android:padding="12dp"
-                            android:src="@drawable/icons8_caja_llena_24"
-                            app:tint="@color/textPrimary" />
-
-                        <ImageView
-                            android:id="@+id/icon2"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="4dp"
-                            android:background="@drawable/bg_input"
-                            android:padding="12dp"
-                            android:src="@drawable/ic_categories"
-                            app:tint="@color/textPrimary" />
-
-                        <!-- Otros iconos según sea necesario -->
-
-                    </GridLayout>
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- PREVIEW CARD -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/primaryColor">
+                        android:background="@drawable/fondo_redondo"
+                        android:backgroundTint="#F3F4F6"
+                        android:gravity="top"
+                        android:hint="@string/hint_description"
+                        android:inputType="textMultiLine"
+                        android:minLines="4" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp">
+                    android:layout_marginTop="20dp" />
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/iconPreview"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="#4DFFFFFF"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="@string/app_name"
-                            android:padding="10dp"
-                            android:src="@drawable/ic_categories"
-                            app:tint="@color/white" />
-                    </com.google.android.material.card.MaterialCardView>
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:columnCount="5"
+                    android:rowCount="2" />
 
-                    <TextView
-                        android:id="@+id/tvPreviewTitle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="@string/preview"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iconPreview"
-                        app:layout_constraintTop_toTopOf="@id/iconPreview" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/preview_desc"
-                        android:textColor="@color/textLight"
-                        android:textSize="13sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/tvPreviewTitle"
-                        app:layout_constraintTop_toBottomOf="@id/tvPreviewTitle" />
+        <!-- PREVIEW CARD -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/primaryColor"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- CREATE BUTTON -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonCrear"
+            style="@style/InvenzoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/create_category"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="textEnd" />
 
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- CREATE BUTTON -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonCrear"
-                style="@style/InvenzoButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="@string/create_category"
-                app:icon="@drawable/ic_add"
-                app:iconGravity="textEnd" />
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <!-- BOTTOM NAV -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:theme="@style/Theme.Material3.Light"
-        app:itemIconTint="@color/nav_item_color_state"
-        app:itemTextColor="@color/nav_item_color_state"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
-
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

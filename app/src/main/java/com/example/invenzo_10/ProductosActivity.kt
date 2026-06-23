@@ -5,25 +5,15 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProductosActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.productos)
+        setContentView(R.layout.activity_productos)
+        setupClickListeners()
 
-        val agregarCategoria = findViewById<FloatingActionButton>(R.id.agregarProducto)
-
-        agregarCategoria.setOnClickListener {
-            val intent = Intent(this, AgregarProductoActivity::class.java)
-            startActivity(intent)
-            // Transición suave de desvanecimiento
-            @Suppress("DEPRECATION")
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-            finish()
-        }
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.products
@@ -48,5 +38,9 @@ class ProductosActivity : AppCompatActivity() {
             }
             true
         }
+    }
+    private fun setupClickListeners() {
+        findViewById<android.view.View>(R.id.agregarProducto).setOnClickListener {
+            startActivity(Intent(this, AgregarProductoActivity::class.java))        }
     }
 }
