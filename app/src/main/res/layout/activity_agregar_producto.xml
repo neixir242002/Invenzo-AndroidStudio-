@@ -95,6 +95,25 @@
             android:textColor="#000000"
             android:textColorHint="#9E9E9E"/>
 
+        <!-- Codigo -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Codigo"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/edtcodigo"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input"
+            android:hint="123-jdls"
+            android:paddingHorizontal="16dp"
+            android:textColor="#000000"
+            android:textColorHint="#9E9E9E"/>
+
         <!-- CATEGORIA -->
         <TextView
             android:layout_width="wrap_content"
@@ -113,45 +132,6 @@
             android:background="@drawable/bg_input"
             android:paddingHorizontal="12dp"/>
 
-        <!-- ROW -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-            <!-- CANTIDAD -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cantidad"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
-
-                <EditText
-                    android:id="@+id/edtCantidad"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_input"
-                    android:hint="Ej. 10"
-                    android:paddingHorizontal="16dp"
-                    android:textColor="#000000"
-                    android:textColorHint="#9E9E9E"/>
-            </LinearLayout>
-
-            <Space
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
 
         <!-- PRECIO -->
         <TextView
@@ -174,6 +154,49 @@
             android:paddingHorizontal="16dp"
             android:textColor="#000000"
             android:textColorHint="#9E9E9E"/>
+        <!-- ROW -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stock"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/edtStock"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input"
+                    android:hint="Ej. 10"
+                    android:inputType="number"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#9E9E9E"/>
+
+        <!-- Stock Minimo -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Stock Minimo"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/edit_stockmini"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input"
+            android:hint="2"
+            android:inputType="number"
+            android:paddingHorizontal="16dp"
+            android:textColor="#000000"
+            android:textColorHint="#9E9E9E"/>
+
 
         <!-- DESCRIPCION -->
         <TextView
