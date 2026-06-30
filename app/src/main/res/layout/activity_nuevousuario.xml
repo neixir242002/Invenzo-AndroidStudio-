@@ -19,8 +19,9 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_arrow"
             android:rotation="180"
+            android:rotationY="184"
+            android:src="@drawable/ic_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -67,53 +68,7 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/iconContainer"
-                            android:layout_width="56dp"
-                            android:layout_height="56dp"
-                            app:cardCornerRadius="28dp"
-                            app:cardElevation="0dp"
-                            app:cardBackgroundColor="@color/iconBackground"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:padding="14dp"
-                                android:src="@drawable/ic_user"
-                                android:contentDescription="@string/user_identity"
-                                app:tint="@color/primaryColor" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <TextView
-                            android:id="@+id/tvTitleIdentity"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="@string/user_identity"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/iconContainer"
-                            app:layout_constraintTop_toTopOf="@id/iconContainer" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/user_identity_desc"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="14sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@id/tvTitleIdentity"
-                            app:layout_constraintTop_toBottomOf="@id/tvTitleIdentity" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         style="@style/InvenzoLabel"
@@ -127,6 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:backgroundTint="#F3F4F6"
                         android:autofillHints="name"
                         android:hint="@string/hint_full_name"
                         android:inputType="textPersonName" />
@@ -143,149 +99,53 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:autofillHints="emailAddress"
+                        android:backgroundTint="#F3F4F6"
                         android:hint="@string/hint_email"
                         android:inputType="textEmailAddress" />
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- CARD 2: ROLE & SECURITY -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/role_security"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
 
                     <TextView
                         style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:text="@string/system_role" />
+                        android:text="@string/temp_password" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <EditText
+                        style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_input"
-                        android:backgroundTint="@color/inputBackground"
-                        android:padding="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sample_user_role"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_arrow"
-                            android:rotation="270"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/textSecondary"
-                            android:contentDescription="@string/system_role" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:backgroundTint="#F3F4F6"
+                        android:text="@string/password_placeholder"
+                        android:autofillHints="emailAddress"
+                        android:inputType="textEmailAddress" />
 
                     <TextView
+                        style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/temp_password"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
+                        android:text="@string/rol" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_input"
-                        android:backgroundTint="@color/inputBackground"
-                        android:padding="16dp">
+                        android:hint="@string/hint_type_required">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/Edit_rol"
+                            style="@style/InvenzoInput"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/password_placeholder"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/lupa_inactiva"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/primaryColor"
-                            android:contentDescription="@string/temp_password" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp">
-
-                        <TextView
-                            android:id="@+id/tvStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/account_status"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/allow_immediate_access"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="13sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tvStatus" />
-
-                        <com.google.android.material.switchmaterial.SwitchMaterial
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:thumbTint="@color/white"
-                            app:trackTint="@color/primaryColor" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:background="@drawable/fondo_redondo"
+                            android:backgroundTint="#F3F4F6"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- CARD 3: BLUE COLLAB -->
+            <!-- CARD 2: ROLE & SECURITY -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

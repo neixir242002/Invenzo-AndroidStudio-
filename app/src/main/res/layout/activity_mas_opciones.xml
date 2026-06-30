@@ -211,7 +211,12 @@
                             app:tint="@color/textSecondary" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View style="@style/Divider" />
+                    <!-- Divisor -->
+                    <View
+                        style="@style/Divider"
+                        android:layout_width="340dp"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="16dp" />
 
                     <!-- Usuarios -->
                     <androidx.constraintlayout.widget.ConstraintLayout

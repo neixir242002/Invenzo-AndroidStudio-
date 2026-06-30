@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.LineChart
@@ -20,6 +21,27 @@ class ActivityInicio : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_inicio)
+
+
+        //Se puede ver el nombre de usuario en el TopBar
+        val txtNombre = findViewById<TextView>(
+            R.id.txtUserNameHeader
+        )
+
+
+        val datos = getSharedPreferences(
+            "usuario_prueba",
+            MODE_PRIVATE
+        )
+
+
+        val nombre = datos.getString(
+            "nombre",
+            "Usuario"
+        )
+
+
+        txtNombre.text = nombre
 
         val lineChart = findViewById<LineChart>(R.id.lineChart)
 

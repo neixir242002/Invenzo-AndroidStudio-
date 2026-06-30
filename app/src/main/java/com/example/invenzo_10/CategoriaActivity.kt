@@ -2,6 +2,7 @@ package com.example.invenzo_10
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +14,33 @@ class CategoriaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_categoria)
+
+        mostrarNombre()
         setupBottomNavigation()
         setupClickListeners()
 
+    }
+    private fun mostrarNombre(){
+
+        //Se puede ver el nombre de usuario en el TopBar
+        val txtNombre = findViewById<TextView>(
+            R.id.txtUserNameHeader
+        )
+
+
+        val datos = getSharedPreferences(
+            "usuario_prueba",
+            MODE_PRIVATE
+        )
+
+
+        val nombre = datos.getString(
+            "nombre",
+            "Usuario"
+        )
+
+
+        txtNombre.text = nombre
     }
     private fun setupClickListeners() {
         // Perfil

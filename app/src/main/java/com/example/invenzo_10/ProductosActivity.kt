@@ -2,6 +2,7 @@ package com.example.invenzo_10
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -16,30 +17,13 @@ class ProductosActivity : AppCompatActivity() {
     private lateinit var adapter: ProductoAdapter
     private val listaProductos = mutableListOf<Producto>()
 
-    private val agregarProductoLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data = result.data ?: return@registerForActivityResult
-                val producto = Producto(
-                    nombre = data.getStringExtra("nombre") ?: "",
-                    categoria = data.getStringExtra("categoria") ?: "",
-                    cantidad = data.getIntExtra("cantidad", 0),
-                    precio = data.getDoubleExtra("precio", 0.0),
-                    rutaImagen = data.getStringExtra("rutaImagen") ?: ""
-                )
-                listaProductos.add(producto)
-                adapter.notifyItemInserted(listaProductos.size - 1)
-            }
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         // Cambiado de R.layout.productos a R.layout.activity_productos
         setContentView(R.layout.activity_productos)
 
+        mostrarNombre()
         recyclerProductos = findViewById(R.id.recyclerProductos)
         adapter = ProductoAdapter(listaProductos)
         recyclerProductos.layoutManager = LinearLayoutManager(this)
@@ -74,4 +58,46 @@ class ProductosActivity : AppCompatActivity() {
             true
         }
     }
+    private fun mostrarNombre(){
+
+        //Se puede ver el nombre de usuario en el TopBar
+        val txtNombre = findViewById<TextView>(
+            R.id.txtUserNameHeader
+        )
+
+
+        val datos = getSharedPreferences(
+            "usuario_prueba",
+            MODE_PRIVATE
+        )
+
+
+        val nombre = datos.getString(
+            "nombre",
+            "Usuario"
+        )
+
+
+        txtNombre.text = nombre
+    }
+
+    private val agregarProductoLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data ?: return@registerForActivityResult
+                val producto = Producto(
+                    nombre = data.getStringExtra("nombre") ?: "",
+                    categoria = data.getStringExtra("categoria") ?: "",
+                    cantidad = data.getIntExtra("cantidad", 0),
+                    precio = data.getDoubleExtra("precio", 0.0),
+                    rutaImagen = data.getStringExtra("rutaImagen") ?: ""
+                )
+                listaProductos.add(producto)
+                adapter.notifyItemInserted(listaProductos.size - 1)
+            }
+        }
+
+
 }

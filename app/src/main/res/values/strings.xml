@@ -39,9 +39,10 @@
     <string name="edit_user_title">Editar Usuario</string>
     <string name="change_profile_picture">Cambiar foto de perfil</string>
     <string name="email">Correo electrónico</string>
+    <string name="company">Empresa</string>
+    <string name="rol">Rol</string>
     <string name="sample_user_email">alejandro.m@example.com</string>
-    <string name="system_role">Rol en el sistema</string>
-    <string name="sample_user_role_vendedor">Vendedor</string>
+    <string name="sample_user_company">Empresa</string>
     <string name="reset_password">Restablecer contraseña</string>
     <string name="account_status">Estado de la cuenta</string>
     <string name="account_status_desc">Activar o desactivar el acceso del usuario</string>
@@ -58,7 +59,6 @@
     <string name="user_identity">Identidad del usuario</string>
     <string name="user_identity_desc">Información básica para la identificación</string>
     <string name="hint_full_name">Alejandro Mendoza</string>
-    <string name="role_security">Rol y Seguridad</string>
     <string name="sample_user_role">Selecciona un rol</string>
     <string name="temp_password">Contraseña temporal</string>
     <string name="password_placeholder">••••••••</string>
@@ -176,7 +176,7 @@
     <string name="category_name">Nombre de la categoría</string>
     <string name="status">Estado</string>
     <string name="status_tipe">Activo...Inactivo..</string>
-    <string name="hint_category_name">Ej. Electrónicos, Ropa&#8230;</string>
+    <string name="hint_category_name">Ej. Electrónicos, Ropa...</string>
     <string name="description">Descripción</string>
     <string name="hint_description">Escribe una breve descripción aquí&#8230;</string>
     <string name="select_icon">Selecciona un icono</string>

@@ -23,63 +23,148 @@ class RegistroActivity : AppCompatActivity() {
         setupClickListeners()
     }
 
+
     private fun setupClickListeners() {
+
         val inputNombre = findViewById<TextInputLayout>(R.id.inputNombre)
         val inputEmpresa = findViewById<TextInputLayout>(R.id.inputEmpresa)
         val inputCorreo = findViewById<TextInputLayout>(R.id.inputCorreo)
         val inputPass = findViewById<TextInputLayout>(R.id.inputPassword)
         val inputConfirmar = findViewById<TextInputLayout>(R.id.inputConfirmar)
+
         val btnRegistrar = findViewById<Button>(R.id.buttonRegistro)
         val textLogin = findViewById<TextView>(R.id.textLogin)
 
+
         btnRegistrar.setOnClickListener {
+
             val nombre = inputNombre.editText?.text.toString().trim()
             val empresa = inputEmpresa.editText?.text.toString().trim()
             val email = inputCorreo.editText?.text.toString().trim()
             val pass = inputPass.editText?.text.toString().trim()
             val confirmPass = inputConfirmar.editText?.text.toString().trim()
 
-            if (nombre.isNotEmpty() && empresa.isNotEmpty() && email.isNotEmpty() && pass.isNotEmpty() && confirmPass.isNotEmpty()) {
-                if (pass == confirmPass) {
-                    if (pass.length >= 8) {
-                        ejecutarRegistroEnLaravel(nombre, email, pass, confirmPass, empresa)
-                    } else {
-                        Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres", Toast.LENGTH_SHORT).show()
+
+            if(nombre.isNotEmpty() &&
+                empresa.isNotEmpty() &&
+                email.isNotEmpty() &&
+                pass.isNotEmpty() &&
+                confirmPass.isNotEmpty()
+            ){
+
+                if(pass == confirmPass){
+
+                    if(pass.length >= 3){
+
+                        registrarPrueba(
+                            nombre,
+                            empresa,
+                            email,
+                            pass
+                        )
+
+
+                    }else{
+
+                        Toast.makeText(
+                            this,
+                            "La contraseña debe tener mínimo 8 caracteres",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
                     }
-                } else {
-                    Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
+
+
+                }else{
+
+                    Toast.makeText(
+                        this,
+                        "Las contraseñas no coinciden",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
-            } else {
-                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+
+
+            }else{
+
+                Toast.makeText(
+                    this,
+                    "Completa todos los campos",
+                    Toast.LENGTH_SHORT
+                ).show()
+
             }
+
         }
+
 
         textLogin.setOnClickListener {
             irALogin()
         }
+
     }
 
-    private fun ejecutarRegistroEnLaravel(nombre: String, email: String, pass: String, confirmPass: String, empresa: String) {
-//        val request = RegisterRequest(nombre, email, pass, confirmPass, empresa)
-//
-//        RetrofitClient.instance.register(request).enqueue(object : Callback<GenericResponse> {
-//            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
-//                if (response.isSuccessful) {
-//                    Toast.makeText(this@RegistroActivity, "¡Usuario creado correctamente!", Toast.LENGTH_SHORT).show()
-//                    irALogin()
-//                } else {
-//                    val errorBody = response.errorBody()?.string()
-//                    Log.e("RegistroError", "Error: $errorBody")
-//                    Toast.makeText(this@RegistroActivity, "Error del servidor: Verifique los datos o si el correo ya existe", Toast.LENGTH_LONG).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-//                Log.e("RegistroError", "Fallo de conexión", t)
-//                Toast.makeText(this@RegistroActivity, "No se pudo conectar: ${t.message}", Toast.LENGTH_SHORT).show()
-//            }
-//        })
+
+
+    private fun registrarPrueba(
+        nombre:String,
+        empresa:String,
+        correo:String,
+        password:String
+    ){
+
+        val datos = getSharedPreferences(
+            "usuario_prueba",
+            MODE_PRIVATE
+        )
+
+
+        datos.edit().apply {
+
+            putString("nombre", nombre)
+            putString("empresa", empresa)
+            putString("correo", correo)
+            putString("password", password)
+            putBoolean("registrado", true)
+
+            apply()
+        }
+
+
+
+        Toast.makeText(
+            this,
+            "Usuario registrado correctamente",
+            Toast.LENGTH_SHORT
+        ).show()
+
+
+        irALogin()
+
     }
+//
+//    private fun ejecutarRegistroEnLaravel(nombre: String, email: String, pass: String, confirmPass: String, empresa: String) {
+////        val request = RegisterRequest(nombre, email, pass, confirmPass, empresa)
+////
+////        RetrofitClient.instance.register(request).enqueue(object : Callback<GenericResponse> {
+////            override fun onResponse(call: Call<GenericResponse>, response: Response<GenericResponse>) {
+////                if (response.isSuccessful) {
+////                    Toast.makeText(this@RegistroActivity, "¡Usuario creado correctamente!", Toast.LENGTH_SHORT).show()
+////                    irALogin()
+////                } else {
+////                    val errorBody = response.errorBody()?.string()
+////                    Log.e("RegistroError", "Error: $errorBody")
+////                    Toast.makeText(this@RegistroActivity, "Error del servidor: Verifique los datos o si el correo ya existe", Toast.LENGTH_LONG).show()
+////                }
+////            }
+////
+////            override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+////                Log.e("RegistroError", "Fallo de conexión", t)
+////                Toast.makeText(this@RegistroActivity, "No se pudo conectar: ${t.message}", Toast.LENGTH_SHORT).show()
+////            }
+////        })
+//    }
 
     private fun irALogin() {
         val intent = Intent(this, MainActivity::class.java)

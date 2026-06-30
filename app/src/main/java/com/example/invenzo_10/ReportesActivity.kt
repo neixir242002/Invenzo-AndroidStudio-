@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.BarChart
@@ -19,7 +20,30 @@ class ReportesActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_reportes)
         setupBottomNavigation()
+        mostrarNombre()
 
+    }
+    private fun mostrarNombre(){
+
+        //Se puede ver el nombre de usuario en el TopBar
+        val txtNombre = findViewById<TextView>(
+            R.id.txtUserNameHeader
+        )
+
+
+        val datos = getSharedPreferences(
+            "usuario_prueba",
+            MODE_PRIVATE
+        )
+
+
+        val nombre = datos.getString(
+            "nombre",
+            "Usuario"
+        )
+
+
+        txtNombre.text = nombre
     }
 
 
