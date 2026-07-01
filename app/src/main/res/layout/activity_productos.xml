@@ -114,7 +114,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
+<!-- Sin Funcionalidad-->
             <LinearLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
@@ -125,32 +125,32 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/tabTodos"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/filter_all"
                     android:textColor="@color/primaryColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/tabStockBajo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/low_stock_title"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="14sp" />
+                    android:textColor="@color/textSecondary"/>
 
                 <TextView
+                    android:id="@+id/tabSinStock"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/out_of_stock_title"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="14sp" />
+                    android:textColor="@color/textSecondary"/>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
