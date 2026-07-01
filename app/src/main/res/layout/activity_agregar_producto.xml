@@ -23,13 +23,14 @@
             android:layout_marginTop="10dp">
 
             <ImageView
+                android:id="@+id/btnBack"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:contentDescription="@string/desc_back_button"
+                android:contentDescription="Atrás"
                 android:rotation="180"
-                android:rotationY="180"
                 android:src="@drawable/ic_arrow"
-
+                android:clickable="true"
+                android:focusable="true"
                 app:tint="#000000" />
 
             <TextView
@@ -45,7 +46,6 @@
         </LinearLayout>
 
         <!-- IMAGE BOX -->
-<!--        agregar Imagendel producto-->
         <LinearLayout
             android:id="@+id/layoutSeleccionarImagen"
             android:layout_width="match_parent"
@@ -85,7 +85,7 @@
             android:textStyle="bold"/>
 
         <EditText
-            android:id="@+id/edtNombreProducto"
+            android:id="@+id/edtNombre"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
@@ -93,23 +93,25 @@
             android:hint='Ej. Laptop HP 15"'
             android:paddingHorizontal="16dp"
             android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
+            android:textColorHint="#9E9E9E"
+            android:inputType="textCapWords"/>
 
-        <!-- Codigo -->
+        <!-- CODIGO -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Codigo"
+            android:layout_marginTop="20dp"
+            android:text="Código"
             android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold"/>
         <EditText
-            android:id="@+id/edtcodigo"
+            android:id="@+id/edtCodigo"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_input"
-            android:hint="123-jdls"
+            android:hint="Ej. 123-ABC"
             android:paddingHorizontal="16dp"
             android:textColor="#000000"
             android:textColorHint="#9E9E9E"/>
@@ -132,7 +134,6 @@
             android:background="@drawable/bg_input"
             android:paddingHorizontal="12dp"/>
 
-
         <!-- PRECIO -->
         <TextView
             android:layout_width="wrap_content"
@@ -149,52 +150,54 @@
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_input"
-            android:hint="Ej. 150000"
-            android:inputType="number"
+            android:hint="Ej. 1500.00"
+            android:inputType="numberDecimal"
             android:paddingHorizontal="16dp"
             android:textColor="#000000"
             android:textColorHint="#9E9E9E"/>
-        <!-- ROW -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Stock"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
 
-                <EditText
-                    android:id="@+id/edtStock"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_input"
-                    android:hint="Ej. 10"
-                    android:inputType="number"
-                    android:paddingHorizontal="16dp"
-                    android:textColor="#000000"
-                    android:textColorHint="#9E9E9E"/>
-
+        <!-- STOCK -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Stock Minimo"
-            android:textSize="16sp"
+            android:text="Stock"
             android:textColor="#000000"
+            android:textSize="16sp"
             android:textStyle="bold"/>
+
         <EditText
-            android:id="@+id/edit_stockmini"
+            android:id="@+id/edtStock"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_input"
-            android:hint="2"
+            android:hint="Ej. 10"
             android:inputType="number"
             android:paddingHorizontal="16dp"
             android:textColor="#000000"
             android:textColorHint="#9E9E9E"/>
 
+        <!-- STOCK MINIMO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Stock Mínimo"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/edtStockMinimo"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input"
+            android:hint="Ej. 2"
+            android:inputType="number"
+            android:paddingHorizontal="16dp"
+            android:textColor="#000000"
+            android:textColorHint="#9E9E9E"/>
 
         <!-- DESCRIPCION -->
         <TextView
@@ -207,6 +210,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/edtDescripcion"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginTop="8dp"
@@ -215,7 +219,8 @@
             android:hint="Descripción del producto..."
             android:padding="16dp"
             android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
+            android:textColorHint="#9E9E9E"
+            android:inputType="textMultiLine"/>
 
         <!-- BOTON -->
         <Button

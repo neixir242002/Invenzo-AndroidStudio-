@@ -1,23 +1,24 @@
 package com.example.invenzo_10
 
+import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-<<<<<<< HEAD
-=======
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.getColor
->>>>>>> 9f9f11d (Styles Producto)
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
 import kotlin.random.Random
 
 class ProductoAdapter(
-    private val lista: MutableList<Producto>
-) : RecyclerView.Adapter<ProductoAdapter.ViewHolder>() {
+    private val lista: MutableList<Producto>,
+    private val onEditar: (Producto, Int) -> Unit
+): RecyclerView.Adapter<ProductoAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -28,14 +29,22 @@ class ProductoAdapter(
         val nombre: TextView =
             itemView.findViewById(R.id.txtNombre)
 
+        val codigo: TextView =
+            itemView.findViewById(R.id.txtCodigo)
+
         val categoria: TextView =
             itemView.findViewById(R.id.txtCategoria)
 
-        val cantidad: TextView =
-            itemView.findViewById(R.id.txtCantidad)
+        val stock: TextView =
+            itemView.findViewById(R.id.txtStock)
 
         val precio: TextView =
             itemView.findViewById(R.id.txtPrecio)
+
+        val estado: TextView =
+            itemView.findViewById(R.id.txtEstado)
+        val accion: TextView =
+            itemView.findViewById(R.id.txtAcciones)
     }
 
     override fun onCreateViewHolder(
@@ -53,7 +62,7 @@ class ProductoAdapter(
         return ViewHolder(view)
     }
 
-    override fun getItemCount() = lista.size
+    override fun getItemCount(): Int = lista.size
 
     override fun onBindViewHolder(
         holder: ViewHolder,
@@ -63,23 +72,20 @@ class ProductoAdapter(
         val producto = lista[position]
 
         holder.nombre.text = producto.nombre
+        holder.codigo.text = producto.codigo
         holder.categoria.text = producto.categoria
-        holder.cantidad.text = "Cantidad: ${producto.cantidad}"
+        holder.stock.text = "Stock: ${producto.stock}"
         holder.precio.text = "$ ${producto.precio}"
 
         val archivo = File(producto.rutaImagen)
 
         if (archivo.exists()) {
-
-            val bitmap =
+            holder.imagen.setImageBitmap(
                 BitmapFactory.decodeFile(
                     archivo.absolutePath
                 )
-
-            holder.imagen.setImageBitmap(bitmap)
+            )
         }
-<<<<<<< HEAD
-=======
 
         //==============================
         // Estado del Stock
@@ -150,6 +156,5 @@ class ProductoAdapter(
                 .setTextColor(holder.itemView.context.getColor(R.color.dangerColor))
         }
 
->>>>>>> 9f9f11d (Styles Producto)
     }
 }
