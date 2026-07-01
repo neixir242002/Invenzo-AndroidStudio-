@@ -1,5 +1,6 @@
 package com.example.invenzo_10
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -20,26 +21,11 @@ class CategoriaActivity : AppCompatActivity() {
         setupClickListeners()
 
     }
-    private fun mostrarNombre(){
-
-        //Se puede ver el nombre de usuario en el TopBar
-        val txtNombre = findViewById<TextView>(
-            R.id.txtUserNameHeader
-        )
-
-
-        val datos = getSharedPreferences(
-            "usuario_prueba",
-            MODE_PRIVATE
-        )
-
-
-        val nombre = datos.getString(
-            "nombre",
-            "Usuario"
-        )
-
-
+    private fun mostrarNombre() {
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        // Usamos "auth" que es donde MainActivity guarda el nombre
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val nombre = prefs.getString("user_name", "Usuario")
         txtNombre.text = nombre
     }
     private fun setupClickListeners() {

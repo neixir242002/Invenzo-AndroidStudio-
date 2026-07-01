@@ -81,141 +81,92 @@
                     android:textStyle="bold" />
 
                 <!-- NOMBRE -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:text="@string/full_name"
-                    android:textColor="#696969"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputNombre"
                     style="@style/LoginTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="25dp"
                     app:boxBackgroundMode="outline">
-
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_name"
-                        android:textColor="#000000"
-                        android:textColorHint="#A9A9A9"
                         android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- EMPRESA (NUEVO) -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:text="Nombre de la Empresa"
-                    android:textColor="#696969"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
+                <!-- EMPRESA -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputEmpresa"
                     style="@style/LoginTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     app:boxBackgroundMode="outline">
-
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Ej. Invenzo S.A."
-                        android:textColor="#000000"
-                        android:textColorHint="#A9A9A9"
+                        android:hint="Nombre de la Empresa"
                         android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- EMAIL -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:text="@string/email_address"
-                    android:textColor="#696969"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputCorreo"
                     style="@style/LoginTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     app:boxBackgroundMode="outline">
-
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_email"
-                        android:textColor="#000000"
-                        android:textColorHint="#A9A9A9"
                         android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- PASSWORD -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:text="@string/password"
-                    android:textColor="#696969"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputPassword"
                     style="@style/LoginTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:boxBackgroundMode="outline">
-
+                    android:layout_marginTop="12dp"
+                    app:boxBackgroundMode="outline"
+                    app:passwordToggleEnabled="true">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/password"
                         android:inputType="textPassword"
-                        android:textColor="#000000"
-                        android:textColorHint="#A9A9A9"
                         android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- CONFIRM PASSWORD -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:text="@string/confirm_password"
-                    android:textColor="#696969"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputConfirmar"
                     style="@style/LoginTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:boxBackgroundMode="outline">
-
+                    android:layout_marginTop="12dp"
+                    app:boxBackgroundMode="outline"
+                    app:passwordToggleEnabled="true">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/confirm_password"
                         android:inputType="textPassword"
-                        android:textColor="#000000"
-                        android:textColorHint="#A9A9A9"
                         android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- BARRA DE CARGA -->
+                <ProgressBar
+                    android:id="@+id/progressRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone" />
 
                 <!-- BOTON -->
                 <Button
@@ -226,22 +177,19 @@
                     android:layout_marginTop="30dp"
                     android:text="@string/create_account" />
 
-                <!-- LOGIN -->
+                <!-- LOGIN LINK -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:orientation="horizontal">
-
                     <TextView
-                        android:id="@+id/textYaCuenta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/already_have_account"
                         android:textColor="#696969"
                         android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/textLogin"
                         android:layout_width="wrap_content"
@@ -250,7 +198,6 @@
                         android:text="@string/login_action"
                         android:textColor="#1976D2"
                         android:textStyle="bold" />
-
                 </LinearLayout>
 
             </LinearLayout>

@@ -3,217 +3,83 @@ package com.example.invenzo_10
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
-
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        if (!prefs.getString("token", null).isNullOrEmpty()) {
+            navigateTo(ActivityInicio::class.java, true)
+            return
+        }
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-
-
-        val inputCorreo = findViewById<TextInputLayout>(
-            R.id.inputCorreo
-        )
-
-
-        val inputPassword = findViewById<TextInputLayout>(
-            R.id.inputPassword
-        )
-
-
-        val btnLogin = findViewById<Button>(
-            R.id.inicioSecion
-        )
-
-
-        val tvRegister = findViewById<TextView>(
-            R.id.register
-        )
-
-
+        val inputCorreo = findViewById<TextInputLayout>(R.id.inputCorreo)
+        val inputPassword = findViewById<TextInputLayout>(R.id.inputPassword)
+        val btnLogin = findViewById<Button>(R.id.inicioSecion)
+        val tvRegister = findViewById<TextView>(R.id.register)
 
         btnLogin.setOnClickListener {
+            val correo = inputCorreo.editText?.text.toString().trim()
+            val password = inputPassword.editText?.text.toString().trim()
 
-
-
-            val correo =
-                inputCorreo.editText?.text.toString().trim()
-
-
-            val password =
-                inputPassword.editText?.text.toString().trim()
-
-
-
-            // VALIDAR CAMPOS VACÍOS
-
-            if(correo.isEmpty() || password.isEmpty()){
-
-
-                Toast.makeText(
-                    this,
-                    "Completa todos los campos",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-
+            if (correo.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-
             }
-
-
-
-
-            // OBTENER DATOS REGISTRADOS
-
-            val datos = getSharedPreferences(
-                "usuario_prueba",
-                Context.MODE_PRIVATE
-            )
-
-
-            val correoGuardado =
-                datos.getString("correo","")
-
-
-            val passwordGuardada =
-                datos.getString("password","")
-
-
-
-
-
-            // COMPARAR DATOS
-
-
-            if(
-                correo == correoGuardado &&
-                password == passwordGuardada
-            ){
-
-
-
-                Toast.makeText(
-                    this,
-                    "Bienvenido",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-
-
-                val intent = Intent(
-                    this,
-                    ActivityInicio::class.java
-                )
-
-
-                startActivity(intent)
-
-                finish()
-
-
-
-            }else{
-
-
-                Toast.makeText(
-                    this,
-                    "Correo o contraseña incorrectos",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-
-            }
-
-
-
+            ejecutarLogin(correo, password)
         }
-
-
-
-
-        // IR A REGISTRO
-
 
         tvRegister.setOnClickListener {
-
-
-            val intent = Intent(
-                this,
-                RegistroActivity::class.java
-            )
-
-
-            startActivity(intent)
-
-
+            startActivity(Intent(this, RegistroActivity::class.java))
         }
-
-
-
     }
 
+    private fun ejecutarLogin(email: String, pass: String) {
+        val request = LoginRequest(email, pass)
+        
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance.login(request)
+                if (response.isSuccessful) {
+                    val loginResponse = response.body()
+                    val token = loginResponse?.token
 
-
-//    private fun setupClickListeners() {
-//        // IDs corregidos según tu XML original
-//        val btnInicio: Button = findViewById(R.id.inicioSecion)
-//
-//        // CAMBIO AQUÍ: El ID en tu XML era textView4, no "register"
-//        val tvRegister: TextView = findViewById(R.id.register)
-//
-//        val inputCorreo: TextInputLayout = findViewById(R.id.inputCorreo)
-//        val inputPass: TextInputLayout = findViewById(R.id.inputPassword)
-//
-//        btnInicio.setOnClickListener {
-//            val email = inputCorreo.editText?.text.toString().trim()
-//            val pass = inputPass.editText?.text.toString().trim()
-//
-//            if (email.isNotEmpty() && pass.isNotEmpty()) {
-//                ejecutarLogin(email, pass)
-//            } else {
-//                Toast.makeText(this, "Completa los campos", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//        // Al hacer clic en "Regístrate" (textView4)
-//        tvRegister.setOnClickListener {
-//            navigateTo(RegistroActivity::class.java)
-//        }
-//    }
-
-
-//    private fun ejecutarLogin(email: String, pass: String) {
-////        val request = LoginRequest(email, pass)
-////
-////        RetrofitClient.instance.login(request).enqueue(object : Callback<LoginResponse> {
-////            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-////                if (response.isSuccessful) {
-////                    val token = response.body()?.accessToken
-////                    Toast.makeText(this@MainActivity, "Bienvenido", Toast.LENGTH_SHORT).show()
-////                    navigateTo(ActivityInicio::class.java, true)
-////                } else {
-////                    Toast.makeText(this@MainActivity, "Error: Credenciales inválidas", Toast.LENGTH_SHORT).show()
-////                }
-////            }
-////
-////            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-////                Toast.makeText(this@MainActivity, "Error de red: ${t.message}", Toast.LENGTH_SHORT).show()
-////            }
-////        })
-//    }
+                    if (!token.isNullOrEmpty()) {
+                        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+                        prefs.edit().apply {
+                            putString("token", token)
+                            putString("user_name", loginResponse.user?.nombre)
+                            apply()
+                        }
+                        Toast.makeText(this@MainActivity, "Bienvenido ${loginResponse.user?.nombre}", Toast.LENGTH_SHORT).show()
+                        navigateTo(ActivityInicio::class.java, true)
+                    }
+                } else {
+                    val errorMsg = response.errorBody()?.string() ?: "Error desconocido"
+                    Log.e("LoginError", "Error servidor: $errorMsg")
+                    Toast.makeText(this@MainActivity, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                // AQUÍ VERÁS EL ERROR REAL EN LOGCAT
+                Log.e("LoginError", "Fallo de conexión: ${e.message}", e)
+                Toast.makeText(this@MainActivity, "Error: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 
     private fun navigateTo(destination: Class<*>, finishCurrent: Boolean = false) {
         val intent = Intent(this, destination)

@@ -1,6 +1,7 @@
 package com.example.invenzo_10
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -22,30 +23,18 @@ class ActivityInicio : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_inicio)
 
+        // Se puede ver el nombre de usuario en el TopBar
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
 
-        //Se puede ver el nombre de usuario en el TopBar
-        val txtNombre = findViewById<TextView>(
-            R.id.txtUserNameHeader
-        )
-
-
-        val datos = getSharedPreferences(
-            "usuario_prueba",
-            MODE_PRIVATE
-        )
-
-
-        val nombre = datos.getString(
-            "nombre",
-            "Usuario"
-        )
-
+        // Obtener datos del usuario autenticado
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val nombre = prefs.getString("user_name", "Usuario")
 
         txtNombre.text = nombre
 
         val lineChart = findViewById<LineChart>(R.id.lineChart)
 
-        // 🔹 Datos aleatorios
+        // 🔹 Datos aleatorios para el gráfico
         val entries = ArrayList<Entry>()
         for (i in 0..9) {
             val yValue = Random.nextInt(1, 10).toFloat()
@@ -66,7 +55,7 @@ class ActivityInicio : AppCompatActivity() {
         lineChart.animateY(1000)
         lineChart.invalidate()
 
-        // 🔹 Bottom Navigation con navegación fluida
+        // 🔹 Bottom Navigation
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.home
 

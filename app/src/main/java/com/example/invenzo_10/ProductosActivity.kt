@@ -1,5 +1,6 @@
 package com.example.invenzo_10
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -20,26 +21,36 @@ class ProductosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // Cambiado de R.layout.productos a R.layout.activity_productos
         setContentView(R.layout.activity_productos)
 
         mostrarNombre()
+        
         recyclerProductos = findViewById(R.id.recyclerProductos)
         adapter = ProductoAdapter(listaProductos)
         recyclerProductos.layoutManager = LinearLayoutManager(this)
         recyclerProductos.adapter = adapter
 
-        val agregarProducto = findViewById<FloatingActionButton>(R.id.agregarProducto)
-        agregarProducto.setOnClickListener {
+        findViewById<FloatingActionButton>(R.id.agregarProducto).setOnClickListener {
             val intent = Intent(this, AgregarProductoActivity::class.java)
             agregarProductoLauncher.launch(intent)
         }
 
+        configurarNavegacion()
+    }
+
+    private fun mostrarNombre() {
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        // Usamos "auth" que es donde MainActivity guarda el nombre
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val nombre = prefs.getString("user_name", "Usuario")
+        txtNombre.text = nombre
+    }
+
+    private fun configurarNavegacion() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.products
         bottomNav.setOnItemSelectedListener { item ->
             if (item.itemId == R.id.products) return@setOnItemSelectedListener true
-
             val intent = when (item.itemId) {
                 R.id.home -> Intent(this, ActivityInicio::class.java)
                 R.id.categoria -> Intent(this, CategoriaActivity::class.java)
@@ -47,57 +58,27 @@ class ProductosActivity : AppCompatActivity() {
                 R.id.more -> Intent(this, MasOpcionesActivity::class.java)
                 else -> null
             }
-
             intent?.let {
                 it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(it)
-                @Suppress("DEPRECATION")
-                overridePendingTransition(0, 0)
                 finish()
             }
             true
         }
     }
-    private fun mostrarNombre(){
 
-        //Se puede ver el nombre de usuario en el TopBar
-        val txtNombre = findViewById<TextView>(
-            R.id.txtUserNameHeader
-        )
-
-
-        val datos = getSharedPreferences(
-            "usuario_prueba",
-            MODE_PRIVATE
-        )
-
-
-        val nombre = datos.getString(
-            "nombre",
-            "Usuario"
-        )
-
-
-        txtNombre.text = nombre
-    }
-
-    private val agregarProductoLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data = result.data ?: return@registerForActivityResult
-                val producto = Producto(
-                    nombre = data.getStringExtra("nombre") ?: "",
-                    categoria = data.getStringExtra("categoria") ?: "",
-                    cantidad = data.getIntExtra("cantidad", 0),
-                    precio = data.getDoubleExtra("precio", 0.0),
-                    rutaImagen = data.getStringExtra("rutaImagen") ?: ""
-                )
-                listaProductos.add(producto)
-                adapter.notifyItemInserted(listaProductos.size - 1)
-            }
+    private val agregarProductoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val data = result.data ?: return@registerForActivityResult
+            val producto = Producto(
+                nombre = data.getStringExtra("nombre") ?: "",
+                categoria = data.getStringExtra("categoria") ?: "",
+                cantidad = data.getIntExtra("cantidad", 0),
+                precio = data.getDoubleExtra("precio", 0.0),
+                rutaImagen = data.getStringExtra("rutaImagen") ?: ""
+            )
+            listaProductos.add(producto)
+            adapter.notifyItemInserted(listaProductos.size - 1)
         }
-
-
+    }
 }
