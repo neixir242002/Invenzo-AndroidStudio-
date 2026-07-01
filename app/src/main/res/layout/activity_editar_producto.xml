@@ -1,87 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".EditarProductoActivity">
 
     <LinearLayout
-        android:padding="20dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/imgProducto"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"/>
+        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:rotation="180"
+                android:rotationY="180"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_arrow"
+                android:contentDescription="Volver"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Editar producto"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginEnd="24dp"/>
+        </LinearLayout>
+
+        <!-- IMAGEN -->
+        <LinearLayout
+            android:id="@+id/layoutImagen"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/bg_upload"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgProducto"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_gallery"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Imagen del producto"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+        <!-- NOMBRE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del producto"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="24dp"/>
 
         <EditText
             android:id="@+id/edtNombre"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:hint="Nombre"/>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input"
+            android:paddingHorizontal="16dp"/>
+
+        <!-- CODIGO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Código"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
 
         <EditText
             android:id="@+id/edtCodigo"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:hint="Código"/>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input"
+            android:paddingHorizontal="16dp"/>
+
+        <!-- CATEGORIA -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Categoría"
             android:textStyle="bold"
-            android:layout_marginTop="15dp"/>
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
 
         <Spinner
             android:id="@+id/spCategoria"
             android:layout_width="match_parent"
-            android:layout_height="55dp"/>
+            android:layout_height="55dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginTop="8dp"/>
+
+        <!-- PRECIO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Precio"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
 
         <EditText
             android:id="@+id/edtPrecio"
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input"
             android:inputType="numberDecimal"
-            android:hint="Precio"/>
+            android:paddingHorizontal="16dp"/>
+
+        <!-- STOCK -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stock"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
 
         <EditText
             android:id="@+id/edtStock"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:hint="Stock"/>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input"
+            android:inputType="number"
+            android:paddingHorizontal="16dp"/>
+
+        <!-- STOCK MINIMO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stock mínimo"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
 
         <EditText
             android:id="@+id/edtStockMinimo"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:hint="Stock mínimo"/>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input"
+            android:inputType="number"
+            android:paddingHorizontal="16dp"/>
+
+        <!-- ESTADO -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estado"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
 
         <TextView
             android:id="@+id/txtEstado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Activo"
+            android:textColor="#4CAF50"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="8dp"/>
 
         <Button
             android:id="@+id/btnEstado"
             style="@style/InvenzoButton"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:text="Desactivar producto" />
+            android:layout_height="60dp"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/dangerColor"
+            android:text="Desactivar producto"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnGuardar"
             style="@style/InvenzoButton"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="15dp"
-            android:text="Guardar cambios" />
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:text="Guardar cambios"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

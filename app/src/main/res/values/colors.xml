@@ -24,6 +24,10 @@
     <color name="textLight">#E3F2FD</color>
     <color name="white_4d">#4DFFFFFF</color>
 
+    <!--Activar y desactivar -->
+    <color name="activar">#018C1A</color>
+    <color name="desactivar">#FF0000</color>
+
     <color name="textPrimary">#111827</color>
     <color name="textSecondary">#6B7280</color>
     <color name="grayBorder">#D5E2EC</color>
