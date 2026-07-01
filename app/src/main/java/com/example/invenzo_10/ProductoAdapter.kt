@@ -6,8 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+<<<<<<< HEAD
+=======
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getColor
+>>>>>>> 9f9f11d (Styles Producto)
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
+import kotlin.random.Random
 
 class ProductoAdapter(
     private val lista: MutableList<Producto>
@@ -72,5 +78,78 @@ class ProductoAdapter(
 
             holder.imagen.setImageBitmap(bitmap)
         }
+<<<<<<< HEAD
+=======
+
+        //==============================
+        // Estado del Stock
+        //==============================
+
+        when {
+
+            producto.stock == 0 -> {
+
+                holder.estado.text = "Sin stock"
+                holder.estado.setTextColor(Color.RED)
+
+            }
+
+            producto.stock <= producto.stockmini -> {
+
+                holder.estado.text = "Stock bajo"
+                holder.estado.setTextColor(
+                    Color.parseColor("#FF9800")
+                )
+
+            }
+
+            else -> {
+
+                holder.estado.text = "Disponible"
+                holder.estado.setTextColor(
+                    Color.parseColor("#4CAF50")
+                )
+
+            }
+
+        }
+
+        //==============================
+        // Estado del producto
+        //==============================
+
+        if (producto.activo) {
+
+            holder.accion.text = "Activo"
+            holder.accion.setTextColor(
+                Color.parseColor("#4CAF50")
+            )
+
+        } else {
+
+            holder.accion.text = "Inactivo"
+            holder.accion.setTextColor(Color.RED)
+
+        }
+        holder.imagen.setOnClickListener {
+
+            val dialog = AlertDialog.Builder(holder.itemView.context)
+                .setTitle(producto.nombre)
+                .setMessage("¿Qué desea hacer?")
+                .setPositiveButton("Editar producto") { _, _ ->
+                    onEditar(producto, position)
+                }
+                .setNegativeButton("Cancelar", null)
+                .create()
+
+            dialog.show()
+
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(holder.itemView.context.getColor(R.color.primaryColor))
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                .setTextColor(holder.itemView.context.getColor(R.color.dangerColor))
+        }
+
+>>>>>>> 9f9f11d (Styles Producto)
     }
 }

@@ -46,6 +46,11 @@ class AgregarProductoActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_agregar_producto)
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            finish()
+        }
 
         setupClickListeners()
     }
@@ -239,6 +244,13 @@ class AgregarProductoActivity : AppCompatActivity() {
         }
 
         dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(getColor(R.color.primaryColor))
+
+
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            .setTextColor(getColor(R.color.dangerColor))
+
     }
 
     private fun guardarImagenLocal(uri: Uri): String? {
