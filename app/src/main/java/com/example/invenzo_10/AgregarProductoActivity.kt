@@ -18,9 +18,13 @@ class AgregarProductoActivity : AppCompatActivity() {
     private lateinit var imgProducto: ImageView
 
     private lateinit var edtNombre: EditText
-    private lateinit var edtCantidad: EditText
+
     private lateinit var edtPrecio: EditText
     private lateinit var spCategoria: Spinner
+
+    private lateinit var edtCodigo: EditText
+    private lateinit var edtStock: EditText
+    private lateinit var edtStockMinimo: EditText
 
     private var rutaImagenGuardada: String? = null
     private var imagenTemporalUri: Uri? = null
@@ -59,7 +63,9 @@ class AgregarProductoActivity : AppCompatActivity() {
         imgProducto = findViewById(R.id.imgProducto)
 
         edtNombre = findViewById(R.id.edtNombreProducto)
-        edtCantidad = findViewById(R.id.edtStock)
+        edtStock = findViewById(R.id.edtStock)
+        edtCodigo = findViewById(R.id.edtcodigo)
+        edtStockMinimo = findViewById(R.id.edit_stockmini)
         edtPrecio = findViewById(R.id.edtPrecio)
         spCategoria = findViewById(R.id.spCategoria)
 
@@ -94,36 +100,38 @@ class AgregarProductoActivity : AppCompatActivity() {
 
             val nombreProducto = edtNombre.text.toString().trim()
 
-            val cantidadTexto = edtCantidad.text.toString().trim()
+            val stockTexto = edtStock.text.toString().trim()
+
+            val stockMinimoTexto = edtStockMinimo.text.toString().trim()
+
+            val codigo = edtCodigo.text.toString().trim()
 
             val precioTexto = edtPrecio.text.toString().trim()
 
             val categoria = spCategoria.selectedItem.toString()
 
             if (nombreProducto.isEmpty()) {
-                Toast.makeText(
-                    this,
-                    "Ingrese el nombre del producto",
-                    Toast.LENGTH_SHORT
-                ).show()
+                edtNombre.error = "Ingrese el nombre"
                 return@setOnClickListener
             }
 
-            if (cantidadTexto.isEmpty()) {
-                Toast.makeText(
-                    this,
-                    "Ingrese el stock",
-                    Toast.LENGTH_SHORT
-                ).show()
+            if (codigo.isEmpty()) {
+                edtCodigo.error = "Ingrese el código"
+                return@setOnClickListener
+            }
+
+            if (stockTexto.isEmpty()) {
+                edtStock.error = "Ingrese el stock"
+                return@setOnClickListener
+            }
+
+            if (stockMinimoTexto.isEmpty()) {
+                edtStockMinimo.error = "Ingrese el stock mínimo"
                 return@setOnClickListener
             }
 
             if (precioTexto.isEmpty()) {
-                Toast.makeText(
-                    this,
-                    "Ingrese el precio",
-                    Toast.LENGTH_SHORT
-                ).show()
+                edtPrecio.error = "Ingrese el precio"
                 return@setOnClickListener
             }
 
@@ -136,9 +144,11 @@ class AgregarProductoActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val cantidad = cantidadTexto.toIntOrNull() ?: 0
+            val stock = stockTexto.toIntOrNull() ?: 0
 
             val precio = precioTexto.toDoubleOrNull() ?: 0.0
+
+            val stockMinimo = stockMinimoTexto.toInt()
 
             val intent = Intent()
 
@@ -147,15 +157,19 @@ class AgregarProductoActivity : AppCompatActivity() {
                 nombreProducto
             )
 
+            intent.putExtra("codigo", codigo)
+
             intent.putExtra(
                 "categoria",
                 categoria
             )
 
             intent.putExtra(
-                "cantidad",
-                cantidad
+                "stock",
+                stock
             )
+
+            intent.putExtra("stockmini", stockMinimo)
 
             intent.putExtra(
                 "precio",
