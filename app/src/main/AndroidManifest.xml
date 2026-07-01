@@ -37,6 +37,7 @@
         <activity
             android:name=".AgregarProductoActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".EditarProductoActivity"/>
 
         <activity android:name=".EditarCategoriaActivity"/>
         <activity android:name=".ConfiguracionActivity"/>
