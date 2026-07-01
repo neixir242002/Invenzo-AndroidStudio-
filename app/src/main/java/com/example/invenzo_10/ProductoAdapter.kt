@@ -10,8 +10,10 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
+import kotlin.random.Random
 
 class ProductoAdapter(
     private val lista: MutableList<Producto>,
@@ -137,16 +139,21 @@ class ProductoAdapter(
         }
         holder.imagen.setOnClickListener {
 
-            AlertDialog.Builder(holder.itemView.context)
+            val dialog = AlertDialog.Builder(holder.itemView.context)
                 .setTitle(producto.nombre)
                 .setMessage("¿Qué desea hacer?")
                 .setPositiveButton("Editar producto") { _, _ ->
-
                     onEditar(producto, position)
-
                 }
                 .setNegativeButton("Cancelar", null)
-                .show()
+                .create()
+
+            dialog.show()
+
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setTextColor(holder.itemView.context.getColor(R.color.primaryColor))
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                .setTextColor(holder.itemView.context.getColor(R.color.dangerColor))
         }
 
     }

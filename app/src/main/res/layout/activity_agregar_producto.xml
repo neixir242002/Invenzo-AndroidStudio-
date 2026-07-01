@@ -21,16 +21,16 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:layout_marginTop="10dp">
-
-            <ImageView
+<!--sin funcionalidad-->
+            <ImageButton
+                android:id="@+id/btnBack"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/desc_back_button"
                 android:rotation="180"
                 android:rotationY="180"
-                android:src="@drawable/ic_arrow"
 
-                app:tint="#000000" />
+                android:src="@drawable/ic_arrow" />
 
             <TextView
                 android:layout_width="0dp"
@@ -220,11 +220,11 @@
         <!-- BOTON -->
         <Button
             android:id="@+id/btnGuardarProducto"
+            style="@style/InvenzoButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="40dp"
-            android:backgroundTint="#2196F3"
             android:text="Guardar producto"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"

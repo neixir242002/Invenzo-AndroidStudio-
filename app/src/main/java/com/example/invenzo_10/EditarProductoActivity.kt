@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
@@ -51,6 +52,11 @@ class EditarProductoActivity : AppCompatActivity() {
 
         btnEstado = findViewById(R.id.btnEstado)
         btnGuardar = findViewById(R.id.btnGuardar)
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            finish()
+        }
 
         //--------------------------------------------------
         // Categorías
@@ -208,6 +214,9 @@ class EditarProductoActivity : AppCompatActivity() {
             )
 
             btnEstado.text = "Desactivar producto"
+            btnEstado.setBackgroundColor(getColor(R.color.desactivar))
+
+
 
         } else {
 
@@ -218,6 +227,7 @@ class EditarProductoActivity : AppCompatActivity() {
             )
 
             btnEstado.text = "Activar producto"
+            btnEstado.setBackgroundColor(getColor(R.color.activar))
 
         }
 
