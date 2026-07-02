@@ -79,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_card"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
@@ -90,6 +91,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
                     android:padding="16dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -164,6 +166,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
                     android:orientation="vertical">
 
                     <!-- Categorías -->
@@ -175,7 +178,7 @@
                         android:id="@+id/optInventarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@drawable/bg_card"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
@@ -218,7 +221,7 @@
                         android:id="@+id/optUsuarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@drawable/bg_card"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
@@ -272,6 +275,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
+                android:background="@drawable/bg_card"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/grayBorder"
@@ -280,6 +284,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
                     android:orientation="vertical">
 
                     <!-- Ajustes Generales -->
@@ -287,7 +292,7 @@
                         android:id="@+id/optConfiguracion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@drawable/bg_bottom_nav_floating"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
