@@ -26,6 +26,7 @@ class AgregarProductoActivity : AppCompatActivity() {
     private lateinit var edtStock: EditText
     private lateinit var edtStockMinimo: EditText
 
+//    Imagen del Producto
     private var rutaImagenGuardada: String? = null
     private var imagenTemporalUri: Uri? = null
 

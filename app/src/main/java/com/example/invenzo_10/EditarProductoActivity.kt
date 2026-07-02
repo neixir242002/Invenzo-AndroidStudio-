@@ -1,6 +1,7 @@
 package com.example.invenzo_10
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
@@ -9,9 +10,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 
@@ -34,11 +37,55 @@ class EditarProductoActivity : AppCompatActivity() {
 
     private var activo = true
 
+    private lateinit var layoutSeleccionarImagen: LinearLayout
+    private var rutaImagenSeleccionada = ""
+
+    private val seleccionarImagenLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.GetContent()
+        ) { uri ->
+
+            uri?.let {
+
+                val input =
+                    contentResolver.openInputStream(it)
+
+                val bitmap =
+                    BitmapFactory.decodeStream(input)
+
+                imgProducto.setImageBitmap(bitmap)
+
+                input?.close()
+
+                val archivo = File(
+                    filesDir,
+                    "IMG_${System.currentTimeMillis()}.jpg"
+                )
+
+                archivo.outputStream().use { output ->
+                    bitmap.compress(
+                        Bitmap.CompressFormat.JPEG,
+                        90,
+                        output
+                    )
+                }
+
+                rutaImagenSeleccionada = archivo.absolutePath
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_producto)
 
         imgProducto = findViewById(R.id.imgProducto)
+        layoutSeleccionarImagen = findViewById(R.id.layoutSeleccionarImagen)
+
+        layoutSeleccionarImagen.setOnClickListener {
+
+            seleccionarImagenLauncher.launch("image/*")
+
+        }
 
         edtNombre = findViewById(R.id.edtNombre)
         edtCodigo = findViewById(R.id.edtCodigo)
@@ -93,6 +140,8 @@ class EditarProductoActivity : AppCompatActivity() {
         val stockMinimo = intent.getIntExtra("stockmini",0)
         val rutaImagen = intent.getStringExtra("rutaImagen") ?: ""
 
+        rutaImagenSeleccionada = rutaImagen
+
         activo = intent.getBooleanExtra("activo",true)
 
         //--------------------------------------------------
@@ -111,16 +160,14 @@ class EditarProductoActivity : AppCompatActivity() {
             spCategoria.setSelection(posicion)
         }
 
-        if (rutaImagen.isNotEmpty()) {
+        if (rutaImagenSeleccionada.isNotEmpty()) {
 
-            val archivo = File(rutaImagen)
+            val archivo = File(rutaImagenSeleccionada)
 
             if (archivo.exists()) {
 
                 imgProducto.setImageBitmap(
-                    BitmapFactory.decodeFile(
-                        archivo.absolutePath
-                    )
+                    BitmapFactory.decodeFile(archivo.absolutePath)
                 )
             }
         }
@@ -183,7 +230,7 @@ class EditarProductoActivity : AppCompatActivity() {
 
             resultado.putExtra(
                 "rutaImagen",
-                rutaImagen
+                rutaImagenSeleccionada
             )
 
             resultado.putExtra(
