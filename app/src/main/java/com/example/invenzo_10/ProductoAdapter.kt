@@ -1,6 +1,6 @@
 package com.example.invenzo_10
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -61,6 +61,7 @@ class ProductoAdapter(
 
     override fun getItemCount(): Int = lista.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int

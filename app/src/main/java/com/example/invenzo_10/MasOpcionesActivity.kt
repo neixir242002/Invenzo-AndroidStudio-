@@ -1,7 +1,9 @@
 package com.example.invenzo_10
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +18,15 @@ class MasOpcionesActivity : AppCompatActivity() {
 
         setupClickListeners()
         setupBottomNavigation()
+        mostrarNombre()
+    }
+
+    private fun mostrarNombre() {
+        val txtNombre = findViewById<TextView>(R.id.txtName)
+        // Usamos "auth" que es donde MainActivity guarda el nombre
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val nombre = prefs.getString("user_name", "Usuario")
+        txtNombre.text = nombre
     }
 
     private fun setupClickListeners() {

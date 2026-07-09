@@ -1,36 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:background="?attr/selectableItemBackground"
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="0dp">
 
+    <!-- Indicador visual izquierdo (Icono circular) -->
+    <View
+        android:id="@+id/iconContainer"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:background="@drawable/bg_circle_light_blue"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgTipoIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_arrow"
+        android:contentDescription="@string/inventory_control_title"
+        app:layout_constraintBottom_toBottomOf="@id/iconContainer"
+        app:layout_constraintEnd_toEndOf="@id/iconContainer"
+        app:layout_constraintStart_toStartOf="@id/iconContainer"
+        app:layout_constraintTop_toTopOf="@id/iconContainer"
+        app:tint="@color/primaryColor" />
+
+    <!-- Información central (Producto y Fecha) -->
     <TextView
         android:id="@+id/txtProducto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/sample_product_name"
         android:textColor="@color/textPrimary"
-        android:textSize="14sp"
+        android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/txtTipo"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/txtStock"
+        app:layout_constraintStart_toEndOf="@id/iconContainer"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtFecha"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:text="@string/sample_date_time"
         android:textColor="@color/textSecondary"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/txtTipo"
+        app:layout_constraintStart_toStartOf="@id/txtProducto"
         app:layout_constraintTop_toBottomOf="@id/txtProducto" />
+
+    <!-- Información derecha (Cantidad y Badge de tipo) -->
+    <TextView
+        android:id="@+id/txtStock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_cant_text"
+        android:textColor="@color/textPrimary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtTipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:background="@drawable/bg_green_icon"
         android:backgroundTint="@color/successLight"
         android:paddingHorizontal="8dp"
@@ -40,18 +87,18 @@
         android:textSize="11sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/txtStock" />
 
-    <TextView
-        android:id="@+id/txtStock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/sample_cant_text"
-        android:textColor="@color/textPrimary"
-        android:textSize="13sp"
-        android:textStyle="bold"
+    <!-- Línea divisoria inferior elegante -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="#F1F5F9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtTipo" />
+        app:layout_constraintStart_toStartOf="@id/txtProducto"
+        app:layout_constraintTop_toBottomOf="@id/txtFecha" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
