@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -37,6 +38,13 @@ class ProductoAdapter(
     }
 
     override fun getItemCount(): Int = lista.size
+
+
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int
+    ) {
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val producto = lista[position]
@@ -108,7 +116,9 @@ class ProductoAdapter(
                 }
                 .setNegativeButton("Cerrar", null)
                 .show()
+
         }
+
     }
 
     private fun construirUrlImagen(foto: String?): String? {

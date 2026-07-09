@@ -1,11 +1,14 @@
 package com.example.invenzo_10
 
+
 import android.app.Activity
 import android.content.Context
+
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
+
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
