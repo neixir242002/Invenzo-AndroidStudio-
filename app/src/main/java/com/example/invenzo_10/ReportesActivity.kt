@@ -1,27 +1,184 @@
 package com.example.invenzo_10
 
+import android.content.Context
 import android.content.Intent
-import android.graphics.Color
+import android.content.res.ColorStateList
 import android.os.Bundle
-import android.widget.Button
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 
 class ReportesActivity : AppCompatActivity() {
+    private lateinit var viewPager: ViewPager2
+    private lateinit var txtPagina: TextView
+    private lateinit var pagerAdapter: ReporteProductoPagerAdapter
+    private var listaCompleta = listOf<Producto>()
+    private var filtroActual = "Todo"
+    private var queryActual = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_reportes)
-        setupBottomNavigation()
 
+        viewPager = findViewById(R.id.viewPagerProductosReporte)
+        txtPagina = findViewById(R.id.txtPagina)
+        
+        pagerAdapter = ReporteProductoPagerAdapter(emptyList())
+        viewPager.adapter = pagerAdapter
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                actualizarIndicadorPagina(position)
+            }
+        })
+
+        mostrarNombre()
+        setupBottomNavigation()
+        cargarProductosReporte()
+        setupSearch()
+        setupFilters()
     }
 
+    private fun actualizarIndicadorPagina(position: Int) {
+        val totalPaginas = pagerAdapter.itemCount
+        if (totalPaginas > 0) {
+            txtPagina.text = "${position + 1} / $totalPaginas"
+        } else {
+            txtPagina.text = "0 / 0"
+        }
+    }
+
+    private fun mostrarNombre() {
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val nombre = prefs.getString("user_name", "Usuario")
+        txtNombre.text = nombre
+    }
+
+    private fun setupSearch() {
+        val etBuscar = findViewById<EditText>(R.id.etBuscarReporte)
+        etBuscar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                queryActual = s.toString()
+                aplicarFiltros()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    private fun setupFilters() {
+        val btnTodo = findViewById<TextView>(R.id.btnFiltroTodo)
+        val btnCritico = findViewById<TextView>(R.id.btnFiltroCritico)
+        val btnBajo = findViewById<TextView>(R.id.btnFiltroBajo)
+
+        btnTodo.setOnClickListener {
+            filtroActual = "Todo"
+            actualizarUIFiltros(btnTodo, btnCritico, btnBajo)
+            aplicarFiltros()
+        }
+
+        btnCritico.setOnClickListener {
+            filtroActual = "Crítico"
+            actualizarUIFiltros(btnCritico, btnTodo, btnBajo)
+            aplicarFiltros()
+        }
+
+        btnBajo.setOnClickListener {
+            filtroActual = "Bajo"
+            actualizarUIFiltros(btnBajo, btnTodo, btnCritico)
+            aplicarFiltros()
+        }
+    }
+
+    private fun actualizarUIFiltros(seleccionado: TextView, varall: TextView, varall2: TextView) {
+        // Estilo seleccionado
+        seleccionado.setTextColor(ContextCompat.getColor(this, R.color.primaryColor))
+        seleccionado.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primaryLight))
+        seleccionado.setTypeface(null, android.graphics.Typeface.BOLD)
+
+        // Estilo no seleccionado
+        val gris = ContextCompat.getColor(this, R.color.textSecondary)
+        varall.setTextColor(gris)
+        varall.backgroundTintList = null
+        varall.setTypeface(null, android.graphics.Typeface.NORMAL)
+
+        varall2.setTextColor(gris)
+        varall2.backgroundTintList = null
+        varall2.setTypeface(null, android.graphics.Typeface.NORMAL)
+    }
+
+    private fun aplicarFiltros() {
+        var listaFiltrada = listaCompleta
+
+        // Filtro por búsqueda
+        if (queryActual.isNotEmpty()) {
+            listaFiltrada = listaFiltrada.filter { 
+                it.nombre.contains(queryActual, ignoreCase = true) || 
+                it.codigo.contains(queryActual, ignoreCase = true) 
+            }
+        }
+
+        // Filtro por estado de stock
+        listaFiltrada = when (filtroActual) {
+            "Crítico" -> listaFiltrada.filter { it.cantidad == 0 }
+            "Bajo" -> listaFiltrada.filter { it.cantidad > 0 && it.cantidad <= it.stockMinimo }
+            else -> listaFiltrada
+        }
+
+        actualizarViewPager(listaFiltrada)
+    }
+
+    private fun cargarProductosReporte() {
+        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
+        val token = prefs.getString("token", "") ?: ""
+
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance.getProductos("Bearer $token")
+                if (response.isSuccessful) {
+                    listaCompleta = response.body() ?: emptyList()
+                    actualizarResumenCards()
+                    aplicarFiltros()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun actualizarResumenCards() {
+        val criticos = listaCompleta.count { it.cantidad == 0 }
+        val bajos = listaCompleta.count { it.cantidad > 0 && it.cantidad <= it.stockMinimo }
+        
+        findViewById<TextView>(R.id.productsNumber).text = criticos.toString()
+        findViewById<TextView>(R.id.stockNumber).text = bajos.toString()
+        
+        // Calcular valor estimado (suma de precio * cantidad)
+        val valorTotal = listaCompleta.sumOf { (it.precio.toDoubleOrNull() ?: 0.0) * it.cantidad }
+        findViewById<TextView>(R.id.valueNumber).text = "$${String.format("%.2f", valorTotal)}"
+    }
+
+    private fun actualizarViewPager(lista: List<Producto>) {
+        pagerAdapter.actualizar(lista)
+        if (lista.isNotEmpty()) {
+            viewPager.post { 
+                viewPager.setCurrentItem(0, false)
+                actualizarIndicadorPagina(0) 
+            }
+        } else {
+            txtPagina.text = "0 / 0"
+        }
+    }
 
     private fun setupBottomNavigation() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
