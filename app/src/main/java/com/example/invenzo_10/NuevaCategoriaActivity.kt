@@ -2,14 +2,17 @@ package com.example.invenzo_10
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
 
 class NuevaCategoriaActivity : AppCompatActivity() {
     private lateinit var inputNombre: TextInputLayout
@@ -85,7 +88,53 @@ class NuevaCategoriaActivity : AppCompatActivity() {
     }
 
     private fun crearCategoria() {
-        Toast.makeText(this, "Categoría creada correctamente", Toast.LENGTH_SHORT).show()
-        finish()
+
+        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
+        val token = prefs.getString("token", "") ?: ""
+
+        val request = CategoriaRequest(
+            nombre = editNombre.text.toString(),
+            descripcion = editDescripcion.text.toString()
+        )
+
+        lifecycleScope.launch {
+
+            try {
+
+                val response = RetrofitClient.instance.agregarCategoria(
+                    "Bearer $token",
+                    request
+                )
+
+                if (response.isSuccessful) {
+
+                    Toast.makeText(
+                        this@NuevaCategoriaActivity,
+                        "Categoría creada",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    finish()
+
+                } else {
+
+                    Log.e("CATEGORIA", response.errorBody()?.string() ?: "")
+
+                    Toast.makeText(
+                        this@NuevaCategoriaActivity,
+                        "Error al crear categoría",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            } catch (e: Exception) {
+
+                Log.e("CATEGORIA", e.toString())
+
+            }
+
+        }
+
     }
 }

@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     val token = loginResponse?.token
+                    Log.d("TOKEN", token ?: "TOKEN NULO")
 
                     if (!token.isNullOrEmpty()) {
                         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)

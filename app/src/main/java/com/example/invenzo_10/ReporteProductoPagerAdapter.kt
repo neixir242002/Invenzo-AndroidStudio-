@@ -6,20 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class ProductoPagerAdapter(
-    private var todosLosProductos: List<Producto>,
-    private val onAction: (Producto, Int, String) -> Unit
-) : RecyclerView.Adapter<ProductoPagerAdapter.PageViewHolder>() {
+class ReporteProductoPagerAdapter(private var todosLosProductos: List<Producto>) :
+    RecyclerView.Adapter<ReporteProductoPagerAdapter.PageViewHolder>() {
 
     private val itemsPorPagina = 5
 
     class PageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val rvPage: RecyclerView = view.findViewById(R.id.rvProductosPage)
+        val recycler: RecyclerView = view.findViewById(R.id.recyclerProductos)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_productos_page, parent, false)
+            .inflate(R.layout.page_reporte_productos, parent, false)
         return PageViewHolder(view)
     }
 
@@ -28,11 +26,8 @@ class ProductoPagerAdapter(
         val fin = minOf(inicio + itemsPorPagina, todosLosProductos.size)
         val subLista = todosLosProductos.subList(inicio, fin)
 
-        holder.rvPage.layoutManager = LinearLayoutManager(holder.itemView.context)
-        // Pasamos la acción al adaptador de la página, ajustando el índice global si es necesario
-        // Pero para simplificar, el adaptador recibe el objeto Producto y su índice en la sublista.
-        // Usaremos el objeto Producto para las acciones de API.
-        holder.rvPage.adapter = ProductoAdapter(subLista.toMutableList(), onAction)
+        holder.recycler.layoutManager = LinearLayoutManager(holder.itemView.context)
+        holder.recycler.adapter = ReporteProductoAdapter(subLista)
     }
 
     override fun getItemCount(): Int {

@@ -10,7 +10,7 @@
     android:paddingEnd="16dp"
     android:paddingBottom="0dp">
 
-    <!-- Indicador visual izquierdo (Icono circular) -->
+    <!-- Indicador visual izquierdo -->
     <View
         android:id="@+id/iconContainer"
         android:layout_width="42dp"
@@ -21,27 +21,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imgTipoIcon"
+        android:id="@+id/imgStatusIcon"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/ic_arrow"
-        android:contentDescription="@string/inventory_control_title"
+        android:src="@drawable/icons8_caja_llena_24"
+        android:contentDescription="@string/products"
         app:layout_constraintBottom_toBottomOf="@id/iconContainer"
         app:layout_constraintEnd_toEndOf="@id/iconContainer"
         app:layout_constraintStart_toStartOf="@id/iconContainer"
         app:layout_constraintTop_toTopOf="@id/iconContainer"
         app:tint="@color/primaryColor" />
 
-    <!-- Información central (Producto y Fecha) -->
+    <!-- Información central -->
     <TextView
-        android:id="@+id/txtProducto"
+        android:id="@+id/txtNombre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@string/sample_product_name"
+        tools:text="Cámara Sony Alpha"
         android:textColor="@color/textPrimary"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -50,23 +50,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtFecha"
+        android:id="@+id/txtCategoria"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="@string/sample_date_time"
+        tools:text="Electrónica"
         android:textColor="@color/textSecondary"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtTipo"
-        app:layout_constraintStart_toStartOf="@id/txtProducto"
-        app:layout_constraintTop_toBottomOf="@id/txtProducto" />
+        app:layout_constraintEnd_toStartOf="@+id/txtNivel"
+        app:layout_constraintStart_toStartOf="@id/txtNombre"
+        app:layout_constraintTop_toBottomOf="@id/txtNombre" />
 
-    <!-- Información derecha (Cantidad y Badge de tipo) -->
+    <!-- Información derecha -->
     <TextView
         android:id="@+id/txtStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sample_cant_text"
+        tools:text="Stock: 10"
         android:textColor="@color/textPrimary"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -74,22 +74,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txtTipo"
+        android:id="@+id/txtNivel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@drawable/bg_green_icon"
-        android:backgroundTint="@color/successLight"
         android:paddingHorizontal="8dp"
         android:paddingVertical="2dp"
-        android:text="@string/entry"
+        tools:text="Normal"
         android:textColor="@color/successColor"
         android:textSize="11sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtStock" />
 
-    <!-- Línea divisoria inferior elegante -->
+    <!-- Línea divisoria -->
     <View
         android:id="@+id/divider"
         android:layout_width="0dp"
@@ -98,7 +97,7 @@
         android:background="#F1F5F9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/txtProducto"
-        app:layout_constraintTop_toBottomOf="@id/txtFecha" />
+        app:layout_constraintStart_toStartOf="@id/txtNombre"
+        app:layout_constraintTop_toBottomOf="@id/txtCategoria" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
