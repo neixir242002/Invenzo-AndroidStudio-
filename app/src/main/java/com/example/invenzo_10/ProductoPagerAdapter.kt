@@ -32,7 +32,9 @@ class ProductoPagerAdapter(
         // Pasamos la acción al adaptador de la página, ajustando el índice global si es necesario
         // Pero para simplificar, el adaptador recibe el objeto Producto y su índice en la sublista.
         // Usaremos el objeto Producto para las acciones de API.
-        holder.rvPage.adapter = ProductoAdapter(subLista.toMutableList(), onAction)
+        holder.rvPage.adapter = ProductoAdapter(subLista.toMutableList(),
+            onAction as (Producto, Int) -> Unit
+        )
     }
 
     override fun getItemCount(): Int {

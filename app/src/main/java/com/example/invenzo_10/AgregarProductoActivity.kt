@@ -1,6 +1,4 @@
 package com.example.invenzo_10
-
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -33,11 +31,6 @@ class AgregarProductoActivity : AppCompatActivity() {
     private lateinit var edtStock: EditText
     private lateinit var edtStockMinimo: EditText
 
-    private lateinit var edtCodigo: EditText
-    private lateinit var edtStock: EditText
-    private lateinit var edtStockMinimo: EditText
-
-//    Imagen del Producto
     private var rutaImagenGuardada: String? = null
     private var imagenTemporalUri: Uri? = null
 
@@ -91,7 +84,7 @@ class AgregarProductoActivity : AppCompatActivity() {
 
             if (nombreProducto.isEmpty() || codigo.isEmpty() || stockTexto.isEmpty() || stockMinimoTexto.isEmpty() || precioTexto.isEmpty()) {
                 Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_SHORT).show()
-    return@setOnClickListener
+                return@setOnClickListener
             }
 
             if (rutaImagenGuardada == null) {
@@ -243,4 +236,3 @@ class AgregarProductoActivity : AppCompatActivity() {
         }
     }
 }
-
