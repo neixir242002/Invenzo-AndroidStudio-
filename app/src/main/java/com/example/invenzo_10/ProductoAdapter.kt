@@ -44,7 +44,8 @@ class ProductoAdapter(
 
         holder.nombre.text = producto.nombre
         holder.codigo.text = "#${producto.codigo}"
-        holder.categoria.text = producto.categoria.nombre
+        // Corregido: Uso de safe call para categoría nula
+        holder.categoria.text = producto.categoria?.nombre ?: "Sin categoría"
         holder.stock.text = "Stock: ${producto.cantidad}"
         holder.precio.text = "$${producto.precio}"
 

@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -41,7 +42,7 @@ class ReportesActivity : AppCompatActivity() {
             }
         })
 
-        mostrarNombre()
+        mostrarDatosUsuario()
         setupBottomNavigation()
         cargarProductosReporte()
         setupSearch()
@@ -57,11 +58,17 @@ class ReportesActivity : AppCompatActivity() {
         }
     }
 
-    private fun mostrarNombre() {
+    private fun mostrarDatosUsuario() {
         val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
-        txtNombre.text = nombre
+        val rol = prefs.getString("user_role", "Administrador")
+        val empresa = prefs.getString("user_company", "Empresa")
+
+        txtNombre?.text = nombre
+        txtRoleCompany?.text = "$rol • $empresa"
     }
 
     private fun setupSearch() {
@@ -101,12 +108,10 @@ class ReportesActivity : AppCompatActivity() {
     }
 
     private fun actualizarUIFiltros(seleccionado: TextView, varall: TextView, varall2: TextView) {
-        // Estilo seleccionado
         seleccionado.setTextColor(ContextCompat.getColor(this, R.color.primaryColor))
         seleccionado.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primaryLight))
         seleccionado.setTypeface(null, android.graphics.Typeface.BOLD)
 
-        // Estilo no seleccionado
         val gris = ContextCompat.getColor(this, R.color.textSecondary)
         varall.setTextColor(gris)
         varall.backgroundTintList = null
@@ -119,22 +124,17 @@ class ReportesActivity : AppCompatActivity() {
 
     private fun aplicarFiltros() {
         var listaFiltrada = listaCompleta
-
-        // Filtro por búsqueda
         if (queryActual.isNotEmpty()) {
             listaFiltrada = listaFiltrada.filter { 
                 it.nombre.contains(queryActual, ignoreCase = true) || 
                 it.codigo.contains(queryActual, ignoreCase = true) 
             }
         }
-
-        // Filtro por estado de stock
         listaFiltrada = when (filtroActual) {
             "Crítico" -> listaFiltrada.filter { it.cantidad == 0 }
             "Bajo" -> listaFiltrada.filter { it.cantidad > 0 && it.cantidad <= it.stockMinimo }
             else -> listaFiltrada
         }
-
         actualizarViewPager(listaFiltrada)
     }
 
@@ -163,7 +163,6 @@ class ReportesActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.productsNumber).text = criticos.toString()
         findViewById<TextView>(R.id.stockNumber).text = bajos.toString()
         
-        // Calcular valor estimado (suma de precio * cantidad)
         val valorTotal = listaCompleta.sumOf { (it.precio.toDoubleOrNull() ?: 0.0) * it.cantidad }
         findViewById<TextView>(R.id.valueNumber).text = "$${String.format("%.2f", valorTotal)}"
     }
@@ -184,9 +183,14 @@ class ReportesActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.reports
 
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val rol = prefs.getString("user_role", "Administrador")
+        if (rol == "Auxiliar") {
+            bottomNav.menu.findItem(R.id.categoria)?.isVisible = false
+        }
+
         bottomNav.setOnItemSelectedListener { item ->
             if (item.itemId == R.id.reports) return@setOnItemSelectedListener true
-
             val intent = when (item.itemId) {
                 R.id.home -> Intent(this, ActivityInicio::class.java)
                 R.id.products -> Intent(this, ProductosActivity::class.java)
@@ -194,7 +198,6 @@ class ReportesActivity : AppCompatActivity() {
                 R.id.more -> Intent(this, MasOpcionesActivity::class.java)
                 else -> null
             }
-
             intent?.let {
                 it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(it)

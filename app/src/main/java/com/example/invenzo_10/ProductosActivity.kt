@@ -48,18 +48,25 @@ class ProductosActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_productos)
 
-        mostrarNombre()
+        mostrarDatosUsuario()
         
         etBuscar = findViewById(R.id.editTextText)
         btnExportar = findViewById(R.id.imageView5)
         txtPageIndicator = findViewById(R.id.txtPageIndicator)
         vpProductos = findViewById(R.id.vpProductos)
 
+        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
+        val rol = prefs.getString("user_role", "Administrador")
+
         pagerAdapter = ProductoPagerAdapter(listaProductosAMostrar) { producto, _, action ->
-            when (action) {
-                "EDIT" -> abrirEditarProducto(producto)
-                "TOGGLE" -> toggleEstado(producto)
-                "DELETE" -> eliminarProductoDefinitivo(producto)
+            if (rol == "Auxiliar" && (action == "EDIT" || action == "TOGGLE" || action == "DELETE")) {
+                Toast.makeText(this, "No tienes permisos para esta acción", Toast.LENGTH_SHORT).show()
+            } else {
+                when (action) {
+                    "EDIT" -> abrirEditarProducto(producto)
+                    "TOGGLE" -> toggleEstado(producto)
+                    "DELETE" -> eliminarProductoDefinitivo(producto)
+                }
             }
         }
         vpProductos.adapter = pagerAdapter
@@ -90,13 +97,26 @@ class ProductosActivity : AppCompatActivity() {
         configurarNavegacion()
     }
 
+    private fun mostrarDatosUsuario() {
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        
+        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
+        val nombre = prefs.getString("user_name", "Usuario")
+        val rol = prefs.getString("user_role", "Administrador")
+        val empresa = prefs.getString("user_company", "Empresa")
+
+        txtNombre?.text = nombre
+        txtRoleCompany?.text = "$rol • $empresa"
+    }
+
     private fun abrirEditarProducto(producto: Producto) {
         try {
             val intent = Intent(this, EditarProductoActivity::class.java)
             intent.putExtra("id", producto.id)
             intent.putExtra("nombre", producto.nombre)
             intent.putExtra("codigo", producto.codigo)
-            intent.putExtra("categoria", producto.categoria.nombre)
+            intent.putExtra("categoria", producto.categoria?.nombre)
             intent.putExtra("precio", producto.precio.toDoubleOrNull() ?: 0.0)
             intent.putExtra("stock", producto.cantidad)
             intent.putExtra("stockmini", producto.stockMinimo)
@@ -126,10 +146,10 @@ class ProductosActivity : AppCompatActivity() {
                     Toast.makeText(this@ProductosActivity, "Estado actualizado", Toast.LENGTH_SHORT).show()
                     cargarProductos()
                 } else {
-                    Toast.makeText(this@ProductosActivity, "El servidor rechazó el cambio: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ProductosActivity, "Error al actualizar estado", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@ProductosActivity, "Error de conexión: Revisa el servidor", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ProductosActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -158,13 +178,6 @@ class ProductosActivity : AppCompatActivity() {
         } else {
             txtPageIndicator.text = "0 / 0"
         }
-    }
-
-    private fun mostrarNombre() {
-        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
-        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
-        val nombre = prefs.getString("user_name", "Usuario")
-        txtNombre.text = nombre
     }
 
     private fun setupBuscador() {
@@ -263,7 +276,7 @@ class ProductosActivity : AppCompatActivity() {
                 val row = sheet.createRow(rowNum++)
                 row.createCell(0).setCellValue(prod.nombre)
                 row.createCell(1).setCellValue(prod.codigo)
-                row.createCell(2).setCellValue(prod.categoria.nombre)
+                row.createCell(2).setCellValue(prod.categoria?.nombre ?: "Sin categoría")
                 row.createCell(3).setCellValue(prod.cantidad.toDouble())
                 row.createCell(4).setCellValue(prod.precio.toDoubleOrNull() ?: 0.0)
             }
@@ -295,6 +308,13 @@ class ProductosActivity : AppCompatActivity() {
     private fun configurarNavegacion() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.products
+        
+        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
+        val rol = prefs.getString("user_role", "Administrador")
+        if (rol == "Auxiliar") {
+            bottomNav.menu.findItem(R.id.categoria)?.isVisible = false
+        }
+
         bottomNav.setOnItemSelectedListener { item ->
             if (item.itemId == R.id.products) return@setOnItemSelectedListener true
             val intent = when (item.itemId) {

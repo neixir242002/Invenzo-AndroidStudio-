@@ -8,7 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class CategoriaAdapter(
-    private var lista: List<Categoria>
+    private var lista: List<Categoria>,
+    private val onItemClick: (Categoria) -> Unit
 ) : RecyclerView.Adapter<CategoriaAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -56,6 +57,10 @@ class CategoriaAdapter(
             holder.estado.text = "Inactivo"
             holder.estado.setBackgroundResource(R.drawable.bg_user_pill)
             holder.estado.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.context, android.R.color.darker_gray)
+        }
+
+        holder.itemView.setOnClickListener {
+            onItemClick(item)
         }
     }
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-    <!-- TOP BAR -->
+    <!-- BARRA SUPERIOR -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -19,8 +19,8 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_arrow"
             android:rotation="180"
+            android:src="@drawable/ic_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -37,17 +37,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnBack"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/btnSearch"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/search_24dp_000000_fill0_wght400_grad0_opsz24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/primaryColor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -66,18 +55,20 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- PROFILE PHOTO SECTION -->
+            <!-- FOTO DE PERFIL -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="32dp">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/profileContainer"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:cardCornerRadius="50dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    app:cardCornerRadius="60dp"
                     app:cardElevation="0dp"
+                    app:strokeColor="@color/grayBorder"
+                    app:strokeWidth="1dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -92,18 +83,19 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:id="@+id/btnChangePhoto"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
                     app:cardBackgroundColor="@color/primaryColor"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="2dp"
+                    app:cardCornerRadius="19dp"
+                    app:cardElevation="4dp"
                     app:layout_constraintBottom_toBottomOf="@id/profileContainer"
                     app:layout_constraintEnd_toEndOf="@id/profileContainer">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="8dp"
+                        android:padding="10dp"
                         android:src="@drawable/ic_add"
                         app:tint="@color/white"
                         android:contentDescription="@string/change_profile_picture" />
@@ -112,7 +104,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/change_profile_picture"
                     android:textColor="@color/primaryColor"
                     android:textSize="14sp"
@@ -123,7 +115,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- CARD 1: PERSONAL INFO -->
+            <!-- INFORMACIÓN PERSONAL -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/DashboardCard"
                 android:layout_width="match_parent"
@@ -138,108 +130,55 @@
                     <TextView
                         style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:text="@string/full_name" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/full_name"
+                        android:textAllCaps="true" />
 
                     <EditText
+                        android:id="@+id/etName"
                         style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:background="@drawable/fondo_redondo"
                         android:backgroundTint="#F3F4F6"
-                        android:text="Alejandro Mendoza"
-                        android:inputType="textPersonName" />
+                        android:hint="@string/hint_full_name"
+                        android:inputType="textPersonName"
+                        android:padding="14dp" />
 
                     <TextView
                         style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/email" />
+                        android:layout_marginTop="20dp"
+                        android:text="@string/email"
+                        android:textAllCaps="true" />
 
                     <EditText
+                        android:id="@+id/etEmail"
                         style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:background="@drawable/fondo_redondo"
                         android:backgroundTint="#F3F4F6"
-                        android:text="@string/sample_user_email"
-                        android:inputType="textEmailAddress" />
-
-                    <TextView
-                        style="@style/InvenzoLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/company" />
-
-                    <EditText
-                        style="@style/InvenzoInput"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:backgroundTint="#F3F4F6"
-                        android:text="@string/sample_user_company"
-                        android:inputType="none" />
-
-
-                    <TextView
-                        style="@style/InvenzoLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rol" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:hint="@string/hint_type_required">
-
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/Edit_rol"
-                            style="@style/InvenzoInput"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/fondo_redondo"
-                            android:backgroundTint="#F3F4F6"
-                            android:inputType="none" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
+                        android:hint="@string/hint_email"
+                        android:inputType="textEmailAddress"
+                        android:padding="14dp" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- CARD 2: ROLE & SECURITY -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"/>
-
-            <!-- ACTION BUTTONS -->
+            <!-- BOTÓN GUARDAR -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
                 style="@style/InvenzoButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="40dp"
                 android:text="@string/save_changes"
-                app:icon="@drawable/ic_launcher_foreground"
-                app:iconGravity="textStart" />
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="32dp"
-                android:text="@string/delete_user"
-                android:textColor="@color/dangerColor"
-                app:strokeColor="@color/dangerLight"
-                app:icon="@drawable/icons8_alerta_24"
-                app:iconTint="@color/dangerColor"
-                app:iconGravity="textStart"
-                android:paddingTop="14dp"
-                android:paddingBottom="14dp"
-                app:cornerRadius="18dp" />
+                android:textStyle="bold"
+                app:cornerRadius="16dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

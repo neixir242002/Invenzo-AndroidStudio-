@@ -16,9 +16,9 @@ import kotlinx.coroutines.launch
 
 class NuevaCategoriaActivity : AppCompatActivity() {
     private lateinit var inputNombre: TextInputLayout
-    private lateinit var inputDescripcion: TextInputLayout
     private lateinit var editNombre: TextInputEditText
     private lateinit var editDescripcion: TextInputEditText
+    private lateinit var statusTipe: MaterialAutoCompleteTextView
     private lateinit var btnCrear: Button
 
     @SuppressLint("MissingInflatedId")
@@ -28,113 +28,77 @@ class NuevaCategoriaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_nuevo_categoria)
 
         initViews()
+        setupStatusDropdown()
         setupValidation()
         setupClickListeners()
-        setupStatusDropdown()
     }
 
     private fun initViews() {
+        // Asegúrate de que estos IDs coincidan exactamente con el XML
         inputNombre = findViewById(R.id.inputNombre)
-        inputDescripcion = findViewById(R.id.inputDescripcion)
         editNombre = findViewById(R.id.editNombre)
         editDescripcion = findViewById(R.id.editDescripcion)
+        statusTipe = findViewById(R.id.status_tipe)
         btnCrear = findViewById(R.id.buttonCrear)
     }
 
-    private fun setupClickListeners() {
-        findViewById<android.view.View>(R.id.btnBack).setOnClickListener {
-            finish()
-        }
-    }
-
     private fun setupStatusDropdown() {
-        val statusTipe = findViewById<MaterialAutoCompleteTextView>(R.id.status_tipe)
         val items = arrayOf("Activo", "Inactivo")
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
         statusTipe.setAdapter(adapter)
-        statusTipe.setText(items[0], false)
+        statusTipe.setText(items[0], false) // Por defecto "Activo"
     }
 
     private fun setupValidation() {
         btnCrear.setOnClickListener {
-            if (validateFields()) {
+            val nombre = editNombre.text.toString().trim()
+            if (nombre.isEmpty()) {
+                inputNombre.error = "El nombre es obligatorio"
+            } else {
+                inputNombre.error = null
                 crearCategoria()
             }
         }
     }
 
-    private fun validateFields(): Boolean {
-        var valid = true
-        val nombre = editNombre.text.toString().trim()
-        val descripcion = editDescripcion.text.toString().trim()
-
-        if (nombre.isEmpty()) {
-            inputNombre.error = "El nombre es obligatorio"
-            valid = false
-        } else {
-            inputNombre.error = null
+    private fun setupClickListeners() {
+        findViewById<android.view.View>(R.id.btnBack)?.setOnClickListener {
+            finish()
         }
-
-        if (descripcion.isEmpty()) {
-            inputDescripcion.error = "La descripción es obligatoria"
-            valid = false
-        } else if (descripcion.length < 5) {
-            inputDescripcion.error = "Descripción muy corta"
-            valid = false
-        } else {
-            inputDescripcion.error = null
-        }
-        return valid
     }
 
     private fun crearCategoria() {
-
         val prefs = getSharedPreferences("auth", MODE_PRIVATE)
         val token = prefs.getString("token", "") ?: ""
 
+        val isActive = if (statusTipe.text.toString() == "Activo") 1 else 0
+
+        // El modelo CategoriaRequest usa 'activa' (en femenino)
         val request = CategoriaRequest(
-            nombre = editNombre.text.toString(),
-            descripcion = editDescripcion.text.toString()
+            nombre = editNombre.text.toString().trim(),
+            descripcion = editDescripcion.text.toString().trim(),
+            activa = isActive
         )
 
         lifecycleScope.launch {
-
             try {
-
-                val response = RetrofitClient.instance.agregarCategoria(
-                    "Bearer $token",
-                    request
-                )
+                btnCrear.isEnabled = false
+                val response = RetrofitClient.instance.agregarCategoria("Bearer $token", request)
 
                 if (response.isSuccessful) {
-
-                    Toast.makeText(
-                        this@NuevaCategoriaActivity,
-                        "Categoría creada",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
+                    Toast.makeText(this@NuevaCategoriaActivity, "Categoría creada con éxito", Toast.LENGTH_SHORT).show()
                     finish()
-
                 } else {
-
-                    Log.e("CATEGORIA", response.errorBody()?.string() ?: "")
-
-                    Toast.makeText(
-                        this@NuevaCategoriaActivity,
-                        "Error al crear categoría",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
+                    val error = response.errorBody()?.string() ?: "Error desconocido"
+                    Log.e("API_ERROR", error)
+                    Toast.makeText(this@NuevaCategoriaActivity, "Error al guardar en el servidor", Toast.LENGTH_LONG).show()
                 }
-
             } catch (e: Exception) {
-
-                Log.e("CATEGORIA", e.toString())
-
+                Log.e("API_EXCEPTION", e.toString())
+                Toast.makeText(this@NuevaCategoriaActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+            } finally {
+                btnCrear.isEnabled = true
             }
-
         }
-
     }
 }

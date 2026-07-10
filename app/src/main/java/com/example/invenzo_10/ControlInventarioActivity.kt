@@ -1,262 +1,142 @@
 package com.example.invenzo_10
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.util.Log
+import android.view.View
+import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 
 class ControlInventarioActivity : AppCompatActivity() {
-    private lateinit var vpMovimientos: ViewPager2
-    private lateinit var pagerAdapter: MovimientoPagerAdapter
-    private lateinit var txtPageIndicator: TextView
-    private var todosMovimientos = mutableListOf<Movimiento>()
-    private val movimientosPorPagina = 5
+
     private lateinit var spinnerProducto: MaterialAutoCompleteTextView
     private lateinit var spinnerTipo: MaterialAutoCompleteTextView
     private lateinit var etCantidad: TextInputEditText
     private lateinit var etObservaciones: TextInputEditText
-    private lateinit var btnRegistrar: MaterialButton
-    private lateinit var btnBack: ImageView
-    private var listaProductos = mutableListOf<Producto>()
-
+    private lateinit var btnRegistrar: Button
+    
+    // ViewPagers y Adapters
+    private lateinit var vpMovimientos: ViewPager2
     private lateinit var vpResumenStock: ViewPager2
-    private lateinit var resumenAdapter: ResumenStockPageAdapter
+    private lateinit var txtPageIndicator: TextView
     private lateinit var txtResumenPage: TextView
+    
+    private lateinit var movimientoPagerAdapter: MovimientoPagerAdapter
+    private lateinit var resumenStockPagerAdapter: ResumenStockPageAdapter
 
-    private val listaResumen = mutableListOf<Producto>()
+    private var listaProductos = mutableListOf<Producto>()
+    private var productoSeleccionadoId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_control_inventario)
 
-        vpResumenStock = findViewById(R.id.vpResumenStock)
-        txtResumenPage = findViewById(R.id.txtResumenPage)
-        resumenAdapter = ResumenStockPageAdapter(mutableListOf())
-        vpResumenStock.adapter = resumenAdapter
+        mostrarDatosUsuario()
+        initViews()
+        setupSpinners()
+        setupViewPagers()
+        setupBottomNavigation() // <-- Agregado para que funcione el Navbar
+        cargarDatos()
 
-        vpMovimientos = findViewById(R.id.vpMovimientos)
-        txtPageIndicator = findViewById(R.id.txtPageIndicator)
+        btnRegistrar.setOnClickListener { registrarMovimiento() }
+        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
+    }
+
+    private fun mostrarDatosUsuario() {
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
         
-        pagerAdapter = MovimientoPagerAdapter(mutableListOf())
-        vpMovimientos.adapter = pagerAdapter
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val nombre = prefs.getString("user_name", "Usuario")
+        val rol = prefs.getString("user_role", "Administrador")
+        val empresa = prefs.getString("user_company", "Empresa")
 
-        vpMovimientos.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                actualizarIndicadorPagina(position)
-            }
-        })
+        txtNombre?.text = nombre
+        txtRoleCompany?.text = "$rol • $empresa"
+    }
 
-        vpResumenStock.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                if (resumenAdapter.itemCount > 0) {
-                    txtResumenPage.text = "${position + 1} / ${resumenAdapter.itemCount}"
-                } else {
-                    txtResumenPage.text = "0 / 0"
-                }
-            }
-        })
-
+    private fun initViews() {
         spinnerProducto = findViewById(R.id.spinnerProducto)
         spinnerTipo = findViewById(R.id.spinnerTipo)
         etCantidad = findViewById(R.id.etCantidad)
         etObservaciones = findViewById(R.id.etObservaciones)
         btnRegistrar = findViewById(R.id.btnRegistrar)
-        btnBack = findViewById(R.id.btnBack)
-
-        btnRegistrar.setOnClickListener {
-            registrarMovimiento()
-        }
-
-        btnBack.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
-
-        setupSpinners()
-        mostrarNombre()
-        cargarProductos()
-        cargarMovimientos()
-        setupBottomNavigation()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        cargarProductos()
-        cargarMovimientos()
-    }
-
-    private fun actualizarIndicadorPagina(position: Int) {
-        val totalPaginas = pagerAdapter.itemCount
-        if (totalPaginas > 0) {
-            txtPageIndicator.text = "${position + 1} / $totalPaginas"
-        } else {
-            txtPageIndicator.text = "0 / 0"
-        }
-    }
-
-    private fun mostrarNombre() {
-        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
-        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
-        val nombre = prefs.getString("user_name", "Usuario")
-        txtNombre.text = nombre
-    }
-
-    private fun cargarProductos() {
-        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
-        val token = prefs.getString("token", "")
-        lifecycleScope.launch {
-            try {
-                val response = RetrofitClient.instance.getProductos("Bearer $token")
-                if (response.isSuccessful) {
-                    listaProductos.clear()
-                    response.body()?.let { list ->
-                        listaProductos.addAll(list)
-                        
-                        val nombres = listaProductos.map { it.nombre }
-                        val adapter = ArrayAdapter(this@ControlInventarioActivity, android.R.layout.simple_dropdown_item_1line, nombres)
-                        spinnerProducto.setAdapter(adapter)
-
-                        listaResumen.clear()
-                        listaResumen.addAll(listaProductos)
-                        resumenAdapter.actualizar(listaResumen)
-
-                        if (listaResumen.isNotEmpty()) {
-                            vpResumenStock.post {
-                                txtResumenPage.text = "${vpResumenStock.currentItem + 1} / ${resumenAdapter.itemCount}"
-                            }
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    private fun registrarMovimiento() {
-        val prodNombre = spinnerProducto.text.toString()
-        val tipoStr = spinnerTipo.text.toString()
-        val cantStr = etCantidad.text.toString()
-
-        if (prodNombre.isEmpty() || tipoStr.isEmpty() || cantStr.isEmpty()) {
-            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val producto = listaProductos.find { it.nombre == prodNombre }
-        if (producto == null) {
-            Toast.makeText(this, "Seleccione un producto válido de la lista", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val cantidadNum = cantStr.toIntOrNull() ?: 0
-        if (cantidadNum <= 0) {
-            Toast.makeText(this, "La cantidad debe ser mayor a 0", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val movimientoReq = MovimientoRequest(
-            producto_id = producto.id,
-            tipo = tipoStr.lowercase(),
-            cantidad = cantidadNum,
-            observacion = etObservaciones.text.toString()
-        )
-
-        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
-        val token = prefs.getString("token", "") ?: ""
-
-        lifecycleScope.launch {
-            try {
-                val response = RetrofitClient.instance.registrarMovimiento("Bearer $token", movimientoReq)
-                if (response.isSuccessful) {
-                    // ACTUALIZACIÓN EN TIEMPO REAL
-                    val movResp = response.body()
-                    movResp?.movimiento?.producto?.let { prodActualizado ->
-                        // Actualizar en la lista local para respuesta inmediata
-                        val index = listaProductos.indexOfFirst { it.id == prodActualizado.id }
-                        if (index != -1) {
-                            listaProductos[index] = prodActualizado
-                            listaResumen.clear()
-                            listaResumen.addAll(listaProductos)
-                            resumenAdapter.actualizar(listaResumen)
-                        }
-                    }
-
-                    Toast.makeText(this@ControlInventarioActivity, "Movimiento registrado con éxito", Toast.LENGTH_SHORT).show()
-                    limpiarFormulario()
-                    cargarMovimientos()
-                    // cargarProductos() // Opcional, ya actualizamos localmente lo más importante
-                } else {
-                    val errorMsg = response.errorBody()?.string() ?: "Error del servidor"
-                    Toast.makeText(this@ControlInventarioActivity, "Error: $errorMsg", Toast.LENGTH_LONG).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this@ControlInventarioActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun cargarMovimientos() {
-        val prefs = getSharedPreferences("auth", MODE_PRIVATE)
-        val token = prefs.getString("token", "") ?: ""
-        lifecycleScope.launch {
-            try {
-                val response = RetrofitClient.instance.getMovimientos("Bearer $token")
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        todosMovimientos.clear()
-                        todosMovimientos.addAll(it)
-                        pagerAdapter.actualizar(todosMovimientos)
-                        if (todosMovimientos.isNotEmpty()) {
-                            vpMovimientos.post { actualizarIndicadorPagina(vpMovimientos.currentItem) }
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        
+        vpMovimientos = findViewById(R.id.vpMovimientos)
+        vpResumenStock = findViewById(R.id.vpResumenStock)
+        txtPageIndicator = findViewById(R.id.txtPageIndicator)
+        txtResumenPage = findViewById(R.id.txtResumenPage)
     }
 
     private fun setupSpinners() {
         val tipos = arrayOf("Entrada", "Salida")
-        spinnerTipo.setAdapter(ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, tipos))
+        val adapterTipo = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, tipos)
+        spinnerTipo.setAdapter(adapterTipo)
+        spinnerTipo.setText(tipos[0], false)
+
+        spinnerProducto.setOnItemClickListener { parent, _, position, _ ->
+            val nombreSeleccionado = parent.getItemAtPosition(position) as String
+            productoSeleccionadoId = listaProductos.find { it.nombre == nombreSeleccionado }?.id ?: -1
+        }
     }
 
-    private fun limpiarFormulario() {
-        spinnerProducto.setText("", false)
-        spinnerTipo.setText("", false)
-        etCantidad.setText("")
-        etObservaciones.setText("")
-        spinnerProducto.clearFocus()
-        spinnerTipo.clearFocus()
+    private fun setupViewPagers() {
+        movimientoPagerAdapter = MovimientoPagerAdapter(emptyList())
+        vpMovimientos.adapter = movimientoPagerAdapter
+
+        resumenStockPagerAdapter = ResumenStockPageAdapter(mutableListOf())
+        vpResumenStock.adapter = resumenStockPagerAdapter
+
+        vpMovimientos.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                val total = movimientoPagerAdapter.itemCount
+                txtPageIndicator.text = "${position + 1} / ${if (total == 0) 1 else total}"
+            }
+        })
+
+        vpResumenStock.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                val total = resumenStockPagerAdapter.itemCount
+                txtResumenPage.text = "${position + 1} / ${if (total == 0) 1 else total}"
+            }
+        })
     }
 
     private fun setupBottomNavigation() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.selectedItemId = R.id.more 
-        bottomNav.setOnItemSelectedListener { item ->
-            if (item.itemId == bottomNav.selectedItemId && item.itemId != R.id.more) return@setOnItemSelectedListener true
+        
+        // Marcar "Más" como seleccionado
+        bottomNav?.selectedItemId = R.id.more
+
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val rol = prefs.getString("user_role", "Administrador")
+        
+        // Restricción para Auxiliar
+        if (rol == "Auxiliar") {
+            bottomNav?.menu?.findItem(R.id.categoria)?.isVisible = false
+        }
+
+        bottomNav?.setOnItemSelectedListener { item ->
+            // Si ya estamos en una subsección de "More", y pulsan "More" de nuevo, 
+            // volvemos al menú principal de opciones.
             val intent = when (item.itemId) {
                 R.id.home -> Intent(this, ActivityInicio::class.java)
                 R.id.products -> Intent(this, ProductosActivity::class.java)
+                R.id.categoria -> Intent(this, CategoriaActivity::class.java)
                 R.id.reports -> Intent(this, ReportesActivity::class.java)
                 R.id.more -> Intent(this, MasOpcionesActivity::class.java)
                 else -> null
             }
+
             intent?.let {
                 it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(it)
@@ -265,6 +145,72 @@ class ControlInventarioActivity : AppCompatActivity() {
                 finish()
             }
             true
+        }
+    }
+
+    private fun cargarDatos() {
+        val token = getSharedPreferences("auth", MODE_PRIVATE).getString("token", "") ?: ""
+        val authHeader = "Bearer $token"
+
+        lifecycleScope.launch {
+            try {
+                val resProd = RetrofitClient.instance.getProductos(authHeader)
+                if (resProd.isSuccessful && resProd.body() != null) {
+                    listaProductos.clear()
+                    listaProductos.addAll(resProd.body()!!)
+                    
+                    val nombres = listaProductos.map { it.nombre }
+                    val adapterProd = ArrayAdapter(this@ControlInventarioActivity, android.R.layout.simple_dropdown_item_1line, nombres)
+                    spinnerProducto.setAdapter(adapterProd)
+                    
+                    resumenStockPagerAdapter.actualizar(listaProductos.toMutableList())
+                    txtResumenPage.text = "1 / ${resumenStockPagerAdapter.itemCount}"
+                }
+
+                val resMov = RetrofitClient.instance.getMovimientos(authHeader)
+                if (resMov.isSuccessful && resMov.body() != null) {
+                    val movimientos = resMov.body()!!.reversed()
+                    movimientoPagerAdapter.actualizar(movimientos)
+                    txtPageIndicator.text = "1 / ${movimientoPagerAdapter.itemCount}"
+                }
+
+            } catch (e: Exception) {
+                Log.e("CONTROL", "Error: ${e.message}")
+            }
+        }
+    }
+
+    private fun registrarMovimiento() {
+        val cantStr = etCantidad.text.toString()
+        if (productoSeleccionadoId == -1 || cantStr.isEmpty()) {
+            Toast.makeText(this, "Seleccione un producto y cantidad", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val request = MovimientoRequest(
+            producto_id = productoSeleccionadoId,
+            tipo = spinnerTipo.text.toString(),
+            cantidad = cantStr.toInt(),
+            observacion = etObservaciones.text.toString()
+        )
+
+        val token = getSharedPreferences("auth", MODE_PRIVATE).getString("token", "") ?: ""
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance.registrarMovimiento("Bearer $token", request)
+                if (response.isSuccessful) {
+                    Toast.makeText(this@ControlInventarioActivity, "Movimiento registrado", Toast.LENGTH_SHORT).show()
+                    etCantidad.text?.clear()
+                    etObservaciones.text?.clear()
+                    spinnerProducto.text?.clear()
+                    productoSeleccionadoId = -1
+                    cargarDatos() // Recargar para ver cambios
+                } else {
+                    Toast.makeText(this@ControlInventarioActivity, "Error al registrar", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@ControlInventarioActivity, "Error de red", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

@@ -3,9 +3,11 @@ package com.example.invenzo_10
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -18,41 +20,96 @@ class MasOpcionesActivity : AppCompatActivity() {
 
         setupClickListeners()
         setupBottomNavigation()
-        mostrarNombre()
+        mostrarDatosUsuario()
+        aplicarRestricciones()
     }
 
-    private fun mostrarNombre() {
+    override fun onResume() {
+        super.onResume()
+        // Refrescar datos por si se editaron en la otra pantalla
+        mostrarDatosUsuario()
+    }
+
+    private fun aplicarRestricciones() {
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val rol = prefs.getString("user_role", "Administrador")
+
+        if (rol == "Auxiliar") {
+            findViewById<View>(R.id.optUsuarios)?.visibility = View.GONE
+            findViewById<View>(R.id.optCategorias)?.visibility = View.GONE
+            
+            val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+            bottomNav?.menu?.findItem(R.id.categoria)?.isVisible = false
+        }
+    }
+
+    private fun mostrarDatosUsuario() {
         val txtNombre = findViewById<TextView>(R.id.txtName)
-        // Usamos "auth" que es donde MainActivity guarda el nombre
+        val txtRole = findViewById<TextView>(R.id.txtRole)
+        
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
-        txtNombre.text = nombre
+        val rol = prefs.getString("user_role", "Administrador")
+        val empresa = prefs.getString("user_company", "Empresa")
+
+        txtNombre?.text = nombre
+        txtRole?.text = "$rol • $empresa"
     }
 
     private fun setupClickListeners() {
-        // Perfil
-        findViewById<android.view.View>(R.id.cardProfile).setOnClickListener {
-            Toast.makeText(this, "Perfil", Toast.LENGTH_SHORT).show()
+        // Card de Perfil para editar
+        findViewById<View>(R.id.cardProfileHeader).setOnClickListener {
+            mostrarDialogoEditar()
         }
-        // Administración
-        findViewById<android.view.View>(R.id.optInventarios).setOnClickListener {
+
+        findViewById<View>(R.id.optCategorias).setOnClickListener {
+            startActivity(Intent(this, CategoriaActivity::class.java))
+        }
+        findViewById<View>(R.id.optInventarios).setOnClickListener {
             startActivity(Intent(this, ControlInventarioActivity::class.java))
         }
-        findViewById<android.view.View>(R.id.optUsuarios).setOnClickListener {
+        findViewById<View>(R.id.optUsuarios).setOnClickListener {
             startActivity(Intent(this, UsuariosActivity::class.java))
         }
 
-        // Configuración
-        findViewById<android.view.View>(R.id.optConfiguracion).setOnClickListener {
-            startActivity(Intent(this, ConfiguracionActivity::class.java))
+        findViewById<View>(R.id.optPerfil).setOnClickListener {
+            mostrarDialogoEditar()
         }
+        findViewById<View>(R.id.optNotificaciones).setOnClickListener {
+            Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+        }
+
+        findViewById<View>(R.id.btnCerrarSesion).setOnClickListener {
+            logout()
+        }
+    }
+
+    private fun mostrarDialogoEditar() {
+        AlertDialog.Builder(this)
+            .setTitle("Editar Usuario")
+            .setMessage("¿Deseas editar tu información de usuario?")
+            .setPositiveButton("Sí") { _, _ ->
+                startActivity(Intent(this, EditarUsuarioActivity::class.java))
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun logout() {
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        prefs.edit().clear().apply()
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 
     private fun setupBottomNavigation() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.selectedItemId = R.id.more
+        bottomNav?.selectedItemId = R.id.more
 
-        bottomNav.setOnItemSelectedListener { item ->
+        bottomNav?.setOnItemSelectedListener { item ->
             if (item.itemId == R.id.more) return@setOnItemSelectedListener true
 
             val intent = when (item.itemId) {

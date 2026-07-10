@@ -5,9 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,25 +28,76 @@ class CategoriaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_categoria)
 
         setupRecyclerView()
-        cargarCategorias()
-        mostrarNombre()
+        mostrarDatosUsuario()
         setupBottomNavigation()
         setupClickListeners()
         setupSearch()
+        aplicarRestricciones()
+    }
+
+    private fun aplicarRestricciones() {
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val rol = prefs.getString("user_role", "Administrador")
+
+        if (rol == "Auxiliar") {
+            // Ocultar botón de agregar categoría para Auxiliar
+            findViewById<View>(R.id.agregarCategoria)?.visibility = View.GONE
+            // También deshabilitar edición en el adapter si es necesario, 
+            // pero por ahora ocultamos el punto de entrada principal.
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarCategorias()
     }
 
     private fun setupRecyclerView() {
         val recycler = findViewById<RecyclerView>(R.id.rvCategorias)
         recycler.layoutManager = LinearLayoutManager(this)
-        adapter = CategoriaAdapter(emptyList())
+        
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val rol = prefs.getString("user_role", "Administrador")
+
+        adapter = CategoriaAdapter(emptyList()) { categoria ->
+            if (rol != "Auxiliar") {
+                mostrarDialogoEditar(categoria)
+            }
+        }
         recycler.adapter = adapter
     }
 
-    private fun mostrarNombre() {
+    private fun mostrarDialogoEditar(categoria: Categoria) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Editar Categoría")
+        builder.setMessage("¿Deseas editar la categoría \"${categoria.nombre}\"?")
+        
+        builder.setPositiveButton("Sí") { _, _ ->
+            val intent = Intent(this, EditarCategoriaActivity::class.java)
+            intent.putExtra("ID_CATEGORIA", categoria.id)
+            intent.putExtra("NOMBRE_CATEGORIA", categoria.nombre)
+            intent.putExtra("DESCRIPCION_CATEGORIA", categoria.descripcion)
+            startActivity(intent)
+        }
+        
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.create().show()
+    }
+
+    private fun mostrarDatosUsuario() {
         val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
-        txtNombre.text = nombre
+        val rol = prefs.getString("user_role", "Administrador")
+        val empresa = prefs.getString("user_company", "Empresa")
+
+        txtNombre?.text = nombre
+        txtRoleCompany?.text = "$rol • $empresa"
     }
 
     private fun setupClickListeners() {
@@ -53,7 +106,7 @@ class CategoriaActivity : AppCompatActivity() {
         }
         
         findViewById<android.view.View>(R.id.btnBack).setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            finish()
         }
     }
 
@@ -81,25 +134,28 @@ class CategoriaActivity : AppCompatActivity() {
     private fun cargarCategorias() {
         val prefs = getSharedPreferences("auth", MODE_PRIVATE)
         val token = prefs.getString("token", "") ?: ""
-        lifecycleScope.launch { try {
-            val responseCategorias = RetrofitClient.instance.getCategorias("Bearer $token")
-            val responseProductos = RetrofitClient.instance.getProductos("Bearer $token")
-            if (responseCategorias.isSuccessful && responseProductos.isSuccessful) {
-                val categorias = responseCategorias.body() ?: emptyList()
-                val productos = responseProductos.body() ?: emptyList()
-                listaCompleta = categorias.map { categoria ->
-                    val cantidad = productos.count { it.categoria.id == categoria.id }
-                    categoria.copy(productosCount = cantidad) }
-                adapter.updateData(listaCompleta)
-                actualizarContador(listaCompleta.size)
+        lifecycleScope.launch { 
+            try {
+                val responseCategorias = RetrofitClient.instance.getCategorias("Bearer $token")
+                val responseProductos = RetrofitClient.instance.getProductos("Bearer $token")
+                if (responseCategorias.isSuccessful && responseProductos.isSuccessful) {
+                    val categorias = responseCategorias.body() ?: emptyList()
+                    val productos = responseProductos.body() ?: emptyList()
+                    listaCompleta = categorias.map { categoria ->
+                        val cantidad = productos.count { it.categoria?.id == categoria.id }
+                        categoria.copy(productosCount = cantidad) 
+                    }
+                    adapter.updateData(listaCompleta)
+                    actualizarContador(listaCompleta.size)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace() 
             }
-        } catch (e: Exception) {
-            e.printStackTrace() }
         }
     }
 
     private fun actualizarContador(total: Int) {
-        findViewById<TextView>(R.id.txtPageIndicator).text = "Total: $total"
+        findViewById<TextView>(R.id.txtPageIndicator)?.text = "Total: $total"
     }
 
     private fun setupBottomNavigation() {

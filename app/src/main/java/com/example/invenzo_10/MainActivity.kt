@@ -57,27 +57,38 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     val token = loginResponse?.token
-                    Log.d("TOKEN", token ?: "TOKEN NULO")
+                    val user = loginResponse?.user
 
-                    if (!token.isNullOrEmpty()) {
+                    if (!token.isNullOrEmpty() && user != null) {
+                        // Normalización de roles para compatibilidad con las restricciones de la app
+                        val rolOriginal = user.rol ?: "Usuario"
+                        val rolNormalizado = when {
+                            rolOriginal.contains("admin", ignoreCase = true) -> "Administrador"
+                            rolOriginal.contains("aux", ignoreCase = true) -> "Auxiliar"
+                            else -> rolOriginal
+                        }
+
                         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
                         prefs.edit().apply {
                             putString("token", token)
-                            putString("user_name", loginResponse.user?.nombre)
+                            putInt("user_id", user.id)
+                            putString("user_name", user.nombre)
+                            putString("user_email", user.email)
+                            putString("user_role", rolNormalizado)
+                            // Extraemos el nombre de la empresa del objeto EmpresaData
+                            putString("user_company", user.empresa?.nombre ?: "Empresa")
                             apply()
                         }
-                        Toast.makeText(this@MainActivity, "Bienvenido ${loginResponse.user?.nombre}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Bienvenido ${user.nombre}", Toast.LENGTH_SHORT).show()
                         navigateTo(ActivityInicio::class.java, true)
                     }
                 } else {
-                    val errorMsg = response.errorBody()?.string() ?: "Error desconocido"
-                    Log.e("LoginError", "Error servidor: $errorMsg")
+                    Log.e("LoginError", "Error servidor: ${response.code()}")
                     Toast.makeText(this@MainActivity, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                // AQUÍ VERÁS EL ERROR REAL EN LOGCAT
-                Log.e("LoginError", "Fallo de conexión: ${e.message}", e)
-                Toast.makeText(this@MainActivity, "Error: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                Log.e("LoginError", "Error: ${e.message}", e)
+                Toast.makeText(this@MainActivity, "Error de conexión con el servidor", Toast.LENGTH_LONG).show()
             }
         }
     }

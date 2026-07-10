@@ -16,7 +16,14 @@ data class GenericResponse(
 data class UserData(
     val id: Int,
     val nombre: String,
-    val email: String
+    val email: String,
+    val rol: String?, // Viene del servidor como "administrador_principal", "auxiliar", etc.
+    val empresa: EmpresaData?
+)
+
+data class EmpresaData(
+    val id: Int,
+    val nombre: String
 )
 
 data class RegisterRequest(
@@ -25,6 +32,13 @@ data class RegisterRequest(
     val password: String,
     @SerializedName("password_confirmation") val passwordConfirmation: String,
     val empresa: String
+)
+
+data class UserCreateRequest(
+    val nombre: String,
+    val email: String,
+    val password: String,
+    val rol: String
 )
 
 data class LoginRequest(
@@ -43,13 +57,14 @@ data class Categoria(
     @SerializedName("created_at", alternate = ["fecha_creacion", "fecha"]) 
     val createdAt: String?,
     
-    @SerializedName("activo", alternate = ["status", "estado", "is_active"]) 
-    val activo: Any? // Usamos Any por si viene como String "1", Int 1 o Boolean true
+    @SerializedName("activo", alternate = ["status", "estado", "is_active", "activa"]) 
+    val activo: Any? 
 )
 
 data class CategoriaRequest(
     val nombre: String,
-    val descripcion: String?
+    val descripcion: String?,
+    @SerializedName("activa") val activa: Int = 1 
 )
 
 data class ProductoRequest(
@@ -71,30 +86,20 @@ data class Producto(
     @SerializedName("activo") val activo: Int,
     @SerializedName("precio") val precio: String,
     @SerializedName("foto") val foto: String?,
-    @SerializedName("categoria") val categoria: Categoria
+    @SerializedName("categoria") val categoria: Categoria?
 )
+
 data class EditarProductoRequest(
-    @SerializedName("nombre")
-    val nombre: String,
-
-    @SerializedName("codigo")
-    val codigo: String,
-
-    @SerializedName("categoria_id")
-    val categoria_id: Int,
-
-    @SerializedName("cantidad")
-    val cantidad: Int,
-
-    @SerializedName("stock_minimo")
-    val stock_minimo: Int,
-
-    @SerializedName("precio")
-    val precio: Double
+    @SerializedName("nombre") val nombre: String,
+    @SerializedName("codigo") val codigo: String,
+    @SerializedName("categoria_id") val categoria_id: Int,
+    @SerializedName("cantidad") val cantidad: Int,
+    @SerializedName("stock_minimo") val stock_minimo: Int,
+    @SerializedName("precio") val precio: Double
 )
+
 data class EstadoProductoRequest(
-    @SerializedName("activo")
-    val activo: Int
+    @SerializedName("activo") val activo: Int
 )
 
 data class MovimientoRequest(
@@ -126,15 +131,18 @@ data class ReporteGeneral(
     val entradas_total: Int,
     val salidas_total: Int
 )
+
 data class EstadisticaMensual(
     val mes: String,
     val valor: Float
 )
+
 data class MovimientoSemanal(
     val dia:String,
     val entradas:Int,
     val salidas:Int
 )
+
 data class CategoriaGrafica(
     val categoria: String,
     val total: Float
@@ -145,7 +153,6 @@ data class DashboardAndroid(
     val categorias_total: Int,
     val movimientos_total: Int,
     val valor_total: Double,
-
     val stock_normal: Int,
     val stock_bajo: Int,
     val sin_stock: Int

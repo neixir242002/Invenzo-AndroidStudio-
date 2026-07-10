@@ -54,11 +54,23 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <TextView
+                android:id="@+id/editUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:text="Editar Categoría"
+                android:textColor="@color/primaryColor"
+                android:textSize="22sp"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold" />
+
             <!-- MAIN FORM CARD -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -74,6 +86,7 @@
                         android:textSize="14sp" />
 
                     <EditText
+                        android:id="@+id/etNombreCategoria"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -83,7 +96,6 @@
                         android:hint="@string/category_name"
                         android:inputType="text"
                         android:padding="16dp"
-                        android:text="@string/electronics"
                         android:textColor="@color/textPrimary"
                         android:textSize="16sp" />
 
@@ -96,6 +108,7 @@
                         android:textSize="14sp" />
 
                     <EditText
+                        android:id="@+id/etDescripcionCategoria"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -107,202 +120,15 @@
                         android:inputType="textMultiLine"
                         android:minLines="4"
                         android:padding="16dp"
-                        android:text="@string/electronics_desc"
                         android:textColor="@color/textPrimary"
                         android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/select_icon"
-                        android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
-
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:columnCount="4"
-                        android:rowCount="2">
-
-                        <!-- Icon 1 -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="4dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@string/app_name"
-                                android:padding="16dp"
-                                android:src="@drawable/icons8_caja_llena_24"
-                                app:tint="@color/textPrimary" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <!-- Icon 2 (Selected) -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="4dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="0dp"
-                            app:cardBackgroundColor="@color/primaryColor">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@string/app_name"
-                                android:padding="16dp"
-                                android:src="@drawable/icons8_categorias_24"
-                                app:tint="@color/white" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <!-- Icon 3 -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="4dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@string/app_name"
-                                android:padding="16dp"
-                                android:src="@drawable/ic_launcher_foreground"
-                                app:tint="@color/textPrimary" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <!-- Icon 4 -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="4dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@string/app_name"
-                                android:padding="16dp"
-                                android:src="@drawable/ic_launcher_foreground"
-                                app:tint="@color/textPrimary" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <!-- Icon 5 -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="4dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@string/app_name"
-                                android:padding="16dp"
-                                android:src="@drawable/icons8_carrito_de_compras_24"
-                                app:tint="@color/textPrimary" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <!-- Icon 6 -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="4dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="0dp"
-                            app:cardBackgroundColor="#F3F4F6">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:contentDescription="@string/app_name"
-                                android:padding="16dp"
-                                android:src="@drawable/icons8_alerta_24"
-                                app:tint="@color/textPrimary" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                    </GridLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- STATS SECTION -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/white">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/products"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="13sp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sample_products_count"
-                            android:textColor="@color/primaryColor"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/primaryColor">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/total_value"
-                            android:textColor="#DBEAFE"
-                            android:textSize="13sp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sample_total_value"
-                            android:textColor="@color/white"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
-
             <!-- BUTTONS -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGuardarCambios"
                 style="@style/InvenzoButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -312,6 +138,7 @@
                 app:iconGravity="textStart" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEliminarCategoria"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

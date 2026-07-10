@@ -15,6 +15,29 @@ interface ApiService {
     @POST("api/register")
     suspend fun register(@Body request: RegisterRequest): Response<GenericResponse>
 
+    // --- USUARIOS ---
+    @Headers("Accept: application/json")
+    @GET("api/usuarios")
+    suspend fun getUsuarios(@Header("Authorization") token: String): Response<List<UserData>>
+
+    @Headers("Accept: application/json")
+    @POST("api/usuarios")
+    suspend fun crearUsuario(
+        @Header("Authorization") token: String,
+        @Body request: UserCreateRequest
+    ): Response<GenericResponse>
+
+    @Multipart
+    @POST("api/usuarios/{id}")
+    suspend fun actualizarPerfil(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Part("_method") method: RequestBody,
+        @Part("nombre") nombre: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part foto: MultipartBody.Part?
+    ): Response<GenericResponse>
+
     // --- PRODUCTOS ---
     @Headers("Accept: application/json")
     @GET("api/productos")
@@ -24,7 +47,6 @@ interface ApiService {
     @DELETE("api/productos/{id}")
     suspend fun eliminarProducto(@Header("Authorization") token: String, @Path("id") id: Int): Response<GenericResponse>
 
-    // Cambiado a POST: Muchos servidores locales rechazan PATCH/PUT en rutas de acción personalizadas
     @Headers(
         "Content-Type: application/json",
         "Accept: application/json"
@@ -35,7 +57,7 @@ interface ApiService {
         @Path("id") id: Int,
         @Body request: EstadoProductoRequest
     ): Response<GenericResponse>
-    // Regresamos a PUT: Si decía "guardado" pero no cambiaba nada, el servidor lo recibía pero quizás ignoraba el body
+
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("api/productos/{id}")
     suspend fun actualizarProducto(
@@ -67,6 +89,21 @@ interface ApiService {
     suspend fun agregarCategoria(
         @Header("Authorization") token: String,
         @Body request: CategoriaRequest
+    ): Response<GenericResponse>
+
+    @Headers("Accept: application/json")
+    @PUT("api/categorias/{id}")
+    suspend fun actualizarCategoria(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body request: CategoriaRequest
+    ): Response<GenericResponse>
+
+    @Headers("Accept: application/json")
+    @DELETE("api/categorias/{id}")
+    suspend fun eliminarCategoria(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
     ): Response<GenericResponse>
 
     // --- MOVIMIENTOS ---
