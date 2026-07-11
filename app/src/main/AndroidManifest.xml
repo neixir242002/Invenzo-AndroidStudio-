@@ -32,12 +32,14 @@
         <activity android:name=".ControlInventarioActivity"/>
         <activity android:name=".CategoriaActivity"/>
         <activity android:name=".NuevaCategoriaActivity"/>
+
         <activity android:name=".RegistroActivity"  android:exported="false"/>
 
         <!-- Para que el scroll se acomode con el teclado       -->
         <activity
             android:name=".AgregarProductoActivity"
             android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".EditarProductoActivity"/>
 
         <activity android:name=".EditarProductoActivity"/>
         <activity android:name=".EditarCategoriaActivity"/>

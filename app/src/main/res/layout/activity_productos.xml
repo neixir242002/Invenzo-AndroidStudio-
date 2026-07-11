@@ -159,7 +159,6 @@
         android:paddingHorizontal="16dp"
         android:weightSum="3"
         app:layout_constraintTop_toBottomOf="@id/linearLayout2">
-
         <TextView
             android:id="@+id/tabTodos"
             android:layout_width="0dp"
@@ -210,6 +209,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- BOTÓN AGREGAR -->
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/agregarProducto"
         android:layout_width="wrap_content"

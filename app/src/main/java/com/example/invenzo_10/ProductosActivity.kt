@@ -2,6 +2,8 @@ package com.example.invenzo_10
 
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -42,10 +44,14 @@ class ProductosActivity : AppCompatActivity() {
     private var listaCompleta = mutableListOf<Producto>()
     
     private var filtroActual = "TODOS"
+//    método para cambiar de pestaña
 
+//    Cambiar el color del Tab seleccionado
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
+
         setContentView(R.layout.activity_productos)
 
         mostrarDatosUsuario()
@@ -136,7 +142,6 @@ class ProductosActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val nuevoEstado = if (producto.activo == 1) 0 else 1
-
                 val response = RetrofitClient.instance.toggleStatusProducto(
                     "Bearer $token",
                     producto.id,
@@ -308,6 +313,7 @@ class ProductosActivity : AppCompatActivity() {
     private fun configurarNavegacion() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.products
+
         
         val prefs = getSharedPreferences("auth", MODE_PRIVATE)
         val rol = prefs.getString("user_role", "Administrador")
@@ -315,22 +321,48 @@ class ProductosActivity : AppCompatActivity() {
             bottomNav.menu.findItem(R.id.categoria)?.isVisible = false
         }
 
+
         bottomNav.setOnItemSelectedListener { item ->
+
             if (item.itemId == R.id.products) return@setOnItemSelectedListener true
             val intent = when (item.itemId) {
-                R.id.home -> Intent(this, ActivityInicio::class.java)
-                R.id.categoria -> Intent(this, CategoriaActivity::class.java)
-                R.id.reports -> Intent(this, ReportesActivity::class.java)
-                R.id.more -> Intent(this, MasOpcionesActivity::class.java)
+
+                R.id.home ->
+                    Intent(
+                        this,
+                        ActivityInicio::class.java
+                    )
+
+                R.id.categoria ->
+                    Intent(
+                        this,
+                        CategoriaActivity::class.java
+                    )
+
+                R.id.reports ->
+                    Intent(
+                        this,
+                        ReportesActivity::class.java
+                    )
+
+                R.id.more ->
+                    Intent(
+                        this,
+                        MasOpcionesActivity::class.java
+                    )
+
                 else -> null
             }
             intent?.let {
-                it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+
                 startActivity(it)
+
                 @Suppress("DEPRECATION")
                 overridePendingTransition(0, 0)
+
                 finish()
             }
+
             true
         }
     }

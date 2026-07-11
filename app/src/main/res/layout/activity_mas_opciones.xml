@@ -17,41 +17,43 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:paddingHorizontal="20dp">
+            android:paddingHorizontal="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/more_options"
                 android:textColor="@color/textPrimary"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <FrameLayout
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="@drawable/bg_icon_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
                     android:src="@drawable/ic_bell"
                     app:tint="@color/textPrimary" />
 
-                <View
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                <TextView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="top|end"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/red_dot" />
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="-4dp"
+                    android:background="@drawable/red_dot"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
             </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -62,15 +64,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="100dp"
+        android:paddingBottom="80dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="12dp">
+            android:padding="16dp">
+
 
             <!-- Card de Perfil (Encabezado) -->
             <com.google.android.material.card.MaterialCardView
@@ -83,7 +85,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp">
+                    android:padding="16dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imgProfile"
@@ -94,12 +96,11 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:shapeAppearanceOverlay="@style/circleImage"
-                        app:strokeColor="@color/grayBorder"
-                        app:strokeWidth="1dp" />
+                        app:shapeAppearanceOverlay="@style/circleImage" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="8dp"
@@ -107,16 +108,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/imgProfile"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="@id/imgProfile"
+                        app:layout_constraintVertical_chainStyle="packed" />
 
-                        <TextView
-                            android:id="@+id/txtName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/david_garcia"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/txtRole"
@@ -127,30 +121,37 @@
                             android:textColor="@color/textSecondary"
                             android:textSize="14sp" />
                     </LinearLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
+
             <!-- SECCIÓN: ADMINISTRACIÓN -->
+
             <TextView
-                style="@style/InvenzoLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:layout_marginBottom="12dp"
                 android:text="@string/administration"
-                android:textAllCaps="true"
-                android:letterSpacing="0.05" />
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
+            <!-- Administration Group -->
             <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="28dp">
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/grayBorder"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optCategorias"
@@ -208,6 +209,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/primaryColor" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -228,7 +230,7 @@
                             app:tint="@color/textSecondary" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View style="@style/Divider" android:layout_marginHorizontal="16dp" />
+                    <View style="@style/Divider" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optUsuarios"
@@ -247,6 +249,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/primaryColor" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -271,22 +274,27 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+
             <!-- SECCIÓN: CUENTA -->
+
             <TextView
-                style="@style/InvenzoLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:layout_marginBottom="12dp"
+
                 android:text="@string/account_section"
                 android:textAllCaps="true"
                 android:letterSpacing="0.05" />
 
+            <!-- Configuration Group -->
             <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp">
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/grayBorder"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -294,6 +302,7 @@
                     android:orientation="vertical">
 
                     <!-- Perfil -->
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optPerfil"
                         android:layout_width="match_parent"
@@ -310,7 +319,9 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
+
                             app:tint="@color/primaryColor" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -448,7 +459,10 @@
         android:layout_gravity="bottom"
         android:background="@color/white"
         app:backgroundTint="@color/white"
-        android:elevation="16dp"
+        android:elevation="8dp"
+        android:theme="@style/Theme.Material3.Light"
+        app:itemIconTint="@color/nav_item_color_state"
+        app:itemTextColor="@color/nav_item_color_state"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav_menu" />
 

@@ -50,15 +50,17 @@ data class Categoria(
     val id: Int,
     val nombre: String,
     @SerializedName("descripcion") val descripcion: String?,
-    
-    @SerializedName("productos_count", alternate = ["cantidad_productos", "productosCount", "cantidad"]) 
-    val productosCount: Int?, 
-    
-    @SerializedName("created_at", alternate = ["fecha_creacion", "fecha"]) 
+
+    @SerializedName("productos_count", alternate = ["cantidad_productos", "productosCount", "cantidad"])
+    val productosCount: Int?,
+
+    @SerializedName("created_at", alternate = ["fecha_creacion", "fecha"])
     val createdAt: String?,
+
     
     @SerializedName("activo", alternate = ["status", "estado", "is_active", "activa"]) 
     val activo: Any? 
+
 )
 
 data class CategoriaRequest(

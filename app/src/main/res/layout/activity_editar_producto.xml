@@ -45,7 +45,7 @@
 
         <!-- IMAGEN -->
         <LinearLayout
-            android:id="@+id/layoutImagen"
+            android:id="@+id/layoutSeleccionarImagen"
             android:layout_width="match_parent"
             android:layout_height="190dp"
             android:layout_marginTop="25dp"
@@ -113,10 +113,12 @@
 
         <Spinner
             android:id="@+id/spCategoria"
+            style="@style/InvenzoButton"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@drawable/bg_input"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input_error"
+            android:backgroundTint="#FF0000" />
 
         <!-- PRECIO -->
         <TextView
@@ -202,6 +204,14 @@
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
+
+        <Button
+            style="@style/InvenzoButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="#FF0000"
+            android:text="Eliminar Producto" />
 
         <Button
             android:id="@+id/btnGuardar"
