@@ -1,6 +1,6 @@
 package com.example.invenzo_10
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -61,6 +61,7 @@ class ProductoAdapter(
 
     override fun getItemCount(): Int = lista.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int
@@ -70,63 +71,46 @@ class ProductoAdapter(
 
         holder.nombre.text = producto.nombre
         holder.codigo.text = producto.codigo
-        holder.categoria.text = producto.categoria
-        holder.stock.text = "Stock: ${producto.stock}"
+        holder.categoria.text = producto.categoria.nombre
+        holder.stock.text = "Stock: ${producto.cantidad}"
         holder.precio.text = "$ ${producto.precio}"
 
-        val archivo = File(producto.rutaImagen)
-
-        if (archivo.exists()) {
-            holder.imagen.setImageBitmap(
-                BitmapFactory.decodeFile(
-                    archivo.absolutePath
-                )
-            )
-        }
 
         //==============================
         // Estado del Stock
         //==============================
-
         when {
 
-            producto.stock == 0 -> {
+            producto.cantidad == 0 -> {
 
                 holder.estado.text = "Sin stock"
                 holder.estado.setTextColor(Color.RED)
 
             }
 
-            producto.stock <= producto.stockmini -> {
+            producto.cantidad <= producto.stockMinimo -> {
 
                 holder.estado.text = "Stock bajo"
-                holder.estado.setTextColor(
-                    Color.parseColor("#FF9800")
-                )
+                holder.estado.setTextColor(Color.parseColor("#FF9800"))
 
             }
 
             else -> {
 
                 holder.estado.text = "Disponible"
-                holder.estado.setTextColor(
-                    Color.parseColor("#4CAF50")
-                )
+                holder.estado.setTextColor(Color.parseColor("#4CAF50"))
 
             }
-
         }
 
         //==============================
         // Estado del producto
         //==============================
 
-        if (producto.activo) {
+        if (producto.activo == 1) {
 
             holder.accion.text = "Activo"
-            holder.accion.setTextColor(
-                Color.parseColor("#4CAF50")
-            )
+            holder.accion.setTextColor(Color.parseColor("#4CAF50"))
 
         } else {
 

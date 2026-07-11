@@ -1,17 +1,34 @@
-//package com.example.invenzo_10
-//
-//import retrofit2.Retrofit
-//import retrofit2.converter.gson.GsonConverterFactory
-//
-//object RetrofitClient {
-////    // 10.0.2.2 es el "alias" para llegar a tu PC desde el emulador
-////    private const val BASE_URL = "http://10.0.2.2:8000/"
-////
-////    val instance: ApiService by lazy {
-////        val retrofit = Retrofit.Builder()
-////            .baseUrl(BASE_URL)
-////            .addConverterFactory(GsonConverterFactory.create())
-////            .build()
-////        retrofit.create(ApiService::class.java)
-////    }
-//}
+package com.example.invenzo_10
+
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
+object RetrofitClient {
+    // Cambiamos 127.0.0.1 por tu IP real para que el celular encuentre el servidor
+    private const val BASE_URL =
+        "http://127.0.0.1:8000/"
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(15, TimeUnit.SECONDS)
+        .writeTimeout(15, TimeUnit.SECONDS)
+        .build()
+
+    val instance: ApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
+    val logging = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+}
