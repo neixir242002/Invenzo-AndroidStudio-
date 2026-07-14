@@ -11,12 +11,11 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -30,6 +29,7 @@ import java.io.FileOutputStream
 class EditarUsuarioActivity : AppCompatActivity() {
 
     private lateinit var imgProfile: ImageView
+    private lateinit var layoutPhoto: View
     private lateinit var etNombre: EditText
     private lateinit var etEmail: EditText
     private lateinit var spinnerRol: AutoCompleteTextView
@@ -42,22 +42,16 @@ class EditarUsuarioActivity : AppCompatActivity() {
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
             selectedImageUri = it
-            imgProfile.setImageURI(it)
+            Glide.with(this)
+                .load(it)
+                .circleCrop()
+                .into(imgProfile)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_editarusuario)
-
-        // Manejo de Insets para evitar que la TopBar choque con la barra de estado
-        val topBar = findViewById<View>(R.id.topBar)
-        ViewCompat.setOnApplyWindowInsetsListener(topBar) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(v.paddingLeft, systemBars.top, v.paddingRight, v.paddingBottom)
-            insets
-        }
 
         initViews()
         setupRolesSpinner()
@@ -66,6 +60,8 @@ class EditarUsuarioActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        imgProfile = findViewById(R.id.imgProfile)
+        layoutPhoto = findViewById(R.id.layoutPhoto)
         etNombre = findViewById(R.id.etName)
         etEmail = findViewById(R.id.etEmail)
         spinnerRol = findViewById(R.id.etRolUsuario) 
@@ -73,7 +69,6 @@ class EditarUsuarioActivity : AppCompatActivity() {
     }
 
     private fun setupRolesSpinner() {
-        // Incluimos los 3 roles para que el mapeo sea correcto
         val roles = arrayOf("Administrador Principal", "Administrador", "Auxiliar")
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, roles)
         spinnerRol.setAdapter(adapter)
@@ -87,7 +82,6 @@ class EditarUsuarioActivity : AppCompatActivity() {
             etNombre.setText(intent.getStringExtra("user_name"))
             etEmail.setText(intent.getStringExtra("user_email"))
             
-            // Normalizar el rol que viene del intent
             val rolRaw = intent.getStringExtra("user_role")?.lowercase() ?: "auxiliar"
             val rolVisual = when {
                 rolRaw.contains("principal") -> "Administrador Principal"
@@ -95,29 +89,50 @@ class EditarUsuarioActivity : AppCompatActivity() {
                 else -> "Auxiliar"
             }
             spinnerRol.setText(rolVisual, false)
+            cargarImagen(intent.getStringExtra("user_photo"))
         } else {
             val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
             editingUserId = prefs.getInt("user_id", -1)
             etNombre.setText(prefs.getString("user_name", ""))
             etEmail.setText(prefs.getString("user_email", ""))
-            val rol = prefs.getString("user_role", "Administrador Principal")
-            spinnerRol.setText(rol, false)
+            spinnerRol.setText(prefs.getString("user_role", "Administrador Principal"), false)
+            cargarImagen(prefs.getString("user_photo", ""))
+        }
+    }
+
+    private fun cargarImagen(path: String?) {
+        if (path.isNullOrEmpty()) {
+            imgProfile.setImageResource(R.drawable.ic_profile)
+            return
+        }
+
+        val fullUrl = RetrofitClient.obtenerUrlRealtime(path)
+        if (fullUrl != null) {
+            Glide.with(this)
+                .load(fullUrl)
+                .signature(com.bumptech.glide.signature.ObjectKey(System.currentTimeMillis().toString()))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .placeholder(R.drawable.ic_profile)
+                .error(R.drawable.ic_profile)
+                .circleCrop()
+                .into(imgProfile)
+        } else {
+            imgProfile.setImageResource(R.drawable.ic_profile)
         }
     }
 
     private fun setupListeners() {
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
-        btnSave.setOnClickListener {
-            guardarCambios()
-        }
+        layoutPhoto.setOnClickListener { pickImageLauncher.launch("image/*") }
+        btnSave.setOnClickListener { guardarCambios() }
     }
 
     private fun guardarCambios() {
         val nuevoNombre = etNombre.text.toString().trim()
         val nuevoEmail = etEmail.text.toString().trim()
         val nuevoRolVisual = spinnerRol.text.toString()
-        
-        // Mapeo exacto para el servidor
+
         val nuevoRolApi = when (nuevoRolVisual) {
             "Administrador Principal" -> "administrador_principal"
             "Administrador" -> "administrador"
@@ -125,7 +140,7 @@ class EditarUsuarioActivity : AppCompatActivity() {
         }
 
         if (nuevoNombre.isEmpty() || nuevoEmail.isEmpty()) {
-            Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -134,53 +149,103 @@ class EditarUsuarioActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                val nombrePart = nuevoNombre.toRequestBody("text/plain".toMediaTypeOrNull())
-                val emailPart = nuevoEmail.toRequestBody("text/plain".toMediaTypeOrNull())
-                val rolPart = nuevoRolApi.toRequestBody("text/plain".toMediaTypeOrNull())
-                val methodPart = "PUT".toRequestBody("text/plain".toMediaTypeOrNull())
+                val responseDatos = if (isEditingOther) {
 
-                var fotoPart: MultipartBody.Part? = null
+                    RetrofitClient.instance.actualizarUsuario(
+
+                        "Bearer $token",
+
+                        editingUserId,
+
+                        ProfileUpdateRequest(
+
+                            nombre = nuevoNombre,
+
+                            email = nuevoEmail,
+
+                            rol = nuevoRolApi
+
+                        )
+
+                    )
+
+                } else {
+
+                    RetrofitClient.instance.actualizarPerfil(
+
+                        "Bearer $token",
+
+                        ProfileUpdateRequest(
+
+                            nombre = nuevoNombre,
+
+                            email = nuevoEmail,
+
+                            rol = null
+
+                        )
+
+                    )
+
+                }
+                if (!responseDatos.isSuccessful) {
+                    val code = responseDatos.code()
+                    val error = responseDatos.errorBody()?.string()
+                    Log.e("EDITAR_USUARIO", "HTTP $code -> $error")
+                    Toast.makeText(
+                        this@EditarUsuarioActivity,
+                        "HTTP $code: ${error ?: "sin detalle"}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@launch
+                }
+
+                val userActualizado = responseDatos.body()?.user
+                if (userActualizado != null) {
+                    prefs.edit().apply {
+                        putString("user_name", userActualizado.nombre)
+                        putString("user_email", userActualizado.email)
+                        putString("user_role", nuevoRolVisual)
+                        putString("user_photo", userActualizado.foto ?: "")
+                        apply()
+                    }
+                }
+
                 selectedImageUri?.let { uri ->
                     val file = uriToFile(uri)
-                    file?.let {
-                        val requestFile = it.asRequestBody("image/*".toMediaTypeOrNull())
-                        fotoPart = MultipartBody.Part.createFormData("foto", it.name, requestFile)
-                    }
-                }
+                    if (file != null) {
+                        val contentType = contentResolver.getType(uri) ?: "image/jpeg"
+                        val requestFile = file.asRequestBody(contentType.toMediaTypeOrNull())
+                        val fotoPart = MultipartBody.Part.createFormData("foto", file.name, requestFile)
 
-                val response = RetrofitClient.instance.actualizarPerfil(
-                    "Bearer $token",
-                    editingUserId,
-                    methodPart,
-                    nombrePart,
-                    emailPart,
-                    rolPart,
-                    fotoPart
-                )
+                        val responseFoto = RetrofitClient.instance.uploadPhoto(
+                            "Bearer $token",
+                            fotoPart
+                        )
 
-                if (response.isSuccessful) {
-                    if (!isEditingOther) {
-                        // Si edito mi propio perfil, actualizo mis datos locales con el nombre visual exacto
-                        prefs.edit().apply {
-                            putString("user_name", nuevoNombre)
-                            putString("user_email", nuevoEmail)
-                            putString("user_role", nuevoRolVisual) // "Administrador" o "Administrador Principal"
-                            apply()
+                        if (!responseFoto.isSuccessful) {
+                            val error = responseFoto.errorBody()?.string()
+                            Log.e("EDITAR_USUARIO", "Error foto: $error")
+                            Toast.makeText(this@EditarUsuarioActivity, "Datos guardados, pero falló la foto: $error", Toast.LENGTH_LONG).show()
+                            return@launch
+                        }
+
+                        responseFoto.body()?.user?.let { userFoto ->
+                            prefs.edit().putString("user_photo", userFoto.foto ?: "").apply()
                         }
                     }
-                    Toast.makeText(this@EditarUsuarioActivity, "Cambios guardados", Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    Toast.makeText(this@EditarUsuarioActivity, "Error al actualizar", Toast.LENGTH_SHORT).show()
                 }
+
+                Toast.makeText(this@EditarUsuarioActivity, "Usuario actualizado con éxito", Toast.LENGTH_SHORT).show()
+                finish()
             } catch (e: Exception) {
-                Toast.makeText(this@EditarUsuarioActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+                Log.e("EDITAR_USUARIO", "Exception", e)
+                Toast.makeText(this@EditarUsuarioActivity, e.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
             }
         }
     }
-
     private fun uriToFile(uri: Uri): File? {
-        val fileName = getFileName(uri) ?: "temp_image"
+        val fileName = getFileName(uri) ?: "profile_update_${System.currentTimeMillis()}.jpg"
         val tempFile = File(cacheDir, fileName)
         return try {
             contentResolver.openInputStream(uri)?.use { input ->

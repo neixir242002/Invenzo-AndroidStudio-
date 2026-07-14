@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.delay
@@ -57,6 +59,7 @@ class CategoriaActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         cargarCategorias()
+        mostrarDatosUsuario()
     }
 
     private fun setupRecyclerView() {
@@ -110,7 +113,6 @@ class CategoriaActivity : AppCompatActivity() {
             intent.putExtra("ID_CATEGORIA", categoria.id)
             intent.putExtra("NOMBRE_CATEGORIA", categoria.nombre)
             intent.putExtra("DESCRIPCION_CATEGORIA", categoria.descripcion)
-            // Pasar el estado actual para que no se pierda al editar
             intent.putExtra("ACTIVO_CATEGORIA", if (isActive) 1 else 0)
             startActivity(intent)
             dialog.dismiss()
@@ -126,7 +128,7 @@ class CategoriaActivity : AppCompatActivity() {
             AlertDialog.Builder(this)
                 .setTitle("¿Eliminar Categoría?")
                 .setMessage("¿Estás seguro de que deseas eliminar '${categoria.nombre}'?")
-                .setPositiveButton("Eliminar") { _, _ -> eliminarCategoria(categoria.id) }
+                .setPositiveButton("Eliminar") { _, _ -> eliminarCategoria(id = categoria.id) }
                 .setNegativeButton("Cancelar", null)
                 .show()
         }
@@ -189,13 +191,38 @@ class CategoriaActivity : AppCompatActivity() {
     private fun mostrarDatosUsuario() {
         val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
         val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        val imgProfile = findViewById<ImageView>(R.id.profileImageHeader)
+
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
         var rol = prefs.getString("user_role", "Administrador")
         val empresa = prefs.getString("user_company", "Empresa")
-        if (rol?.contains("principal", ignoreCase = true) == true) rol = "Admin Principal"
+        val fotoPath = prefs.getString("user_photo", "")
+
+        if (rol?.contains("principal", ignoreCase = true) == true) {
+            rol = "Administrador Principal"
+        }
+
         txtNombre?.text = nombre
         txtRoleCompany?.text = "$rol • $empresa"
+
+        if (imgProfile != null) {
+            if (!fotoPath.isNullOrEmpty()) {
+                val cleanPath = if (fotoPath.startsWith("/")) fotoPath.substring(1) else fotoPath
+                val fullUrl = if (fotoPath.startsWith("http")) fotoPath else "${RetrofitClient.BASE_URL}storage/$cleanPath"
+                
+                Glide.with(this)
+                    .load(fullUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .placeholder(R.drawable.ic_user)
+                    .error(R.drawable.ic_user)
+                    .circleCrop()
+                    .into(imgProfile)
+            } else {
+                imgProfile.setImageResource(R.drawable.ic_user)
+            }
+        }
     }
 
     private fun setupClickListeners() {

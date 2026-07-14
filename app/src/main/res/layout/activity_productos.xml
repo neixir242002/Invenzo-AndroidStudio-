@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-    <!-- HEADER RESTAURADO -->
+    <!-- HEADER -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -55,193 +55,122 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <!-- SWIPE REFRESH LAYOUT PARA ACTUALIZACIÓN EN TIEMPO REAL -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@id/bottomNavDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <!-- TÍTULO, DESCRIPCIÓN E INDICADOR -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutTituloProductos"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:paddingTop="20dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="wrap_content"
+                <!-- TÍTULO -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutTituloProductos"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Gestión de Productos"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:paddingHorizontal="20dp"
+                    android:paddingTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tvDesc"
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gestión de Productos"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPageIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_user_pill"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="4dp"
+                        android:text="1 / 1"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- BUSCADOR -->
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="80dp"
-                    android:text="Gestiona y exporta el inventario de tus productos"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/fondo_redondo"
+                    android:backgroundTint="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    app:layout_constraintTop_toBottomOf="@id/layoutTituloProductos"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/imageViewExport">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:layout_gravity="center_vertical" android:src="@drawable/search_24dp_000000_fill0_wght400_grad0_opsz24" app:tint="@color/textSecondary"/>
+                    <EditText android:id="@+id/editTextText" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/transparent" android:hint="@string/hint_search_products" android:padding="12dp" android:textColor="@color/textPrimary" android:textSize="15sp" android:inputType="text"/>
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/imageViewExport"
+                    android:layout_width="48dp" android:layout_height="48dp"
+                    android:layout_marginEnd="20dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/grayBorder"
+                    app:strokeWidth="1dp"
+                    app:layout_constraintTop_toTopOf="@id/linearLayout2"
+                    app:layout_constraintBottom_toBottomOf="@id/linearLayout2"
+                    app:layout_constraintEnd_toEndOf="parent">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:padding="12dp" android:src="@drawable/ic_reports" app:tint="@color/textPrimary"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- PESTAÑAS -->
+                <LinearLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout2">
+                    <TextView android:id="@+id/tabTodos" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="8dp" android:text="@string/filter_all" android:textColor="@color/primaryColor" android:textStyle="bold" android:background="@drawable/bg_user_pill" android:backgroundTint="@color/primaryLight"/>
+                    <TextView android:id="@+id/tabStockBajo" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="8dp" android:text="@string/low_stock_title" android:textColor="@color/textSecondary" />
+                    <TextView android:id="@+id/tabSinStock" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:paddingVertical="8dp" android:text="@string/out_of_stock_title" android:textColor="@color/textSecondary" />
+                </LinearLayout>
+
+                <!-- LISTA -->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vpProductos"
+                    android:layout_width="0dp"
+                    android:layout_height="530dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/tabLayout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <TextView
-                    android:id="@+id/txtPageIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_user_pill"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="4dp"
-                    android:text="1 / 1"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <!-- BUSCADOR -->
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/fondo_redondo"
-                android:backgroundTint="@color/white"
-                android:elevation="0dp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="12dp"
-                app:layout_constraintTop_toBottomOf="@id/layoutTituloProductos"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/imageViewExport">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/search_24dp_000000_fill0_wght400_grad0_opsz24"
-                    app:tint="@color/textSecondary"/>
-
-                <EditText
-                    android:id="@+id/editTextText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="@string/hint_search_products"
-                    android:padding="12dp"
-                    android:textColor="@color/textPrimary"
-                    android:textColorHint="@color/textSecondary"
-                    android:textSize="15sp"
-                    android:inputType="text"/>
-
-            </LinearLayout>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/imageViewExport"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="20dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/grayBorder"
-                app:strokeWidth="1dp"
-                app:layout_constraintTop_toTopOf="@id/linearLayout2"
-                app:layout_constraintBottom_toBottomOf="@id/linearLayout2"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_reports"
-                    app:tint="@color/textPrimary"/>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- PESTAÑAS -->
-            <LinearLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="20dp"
-                android:weightSum="3"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout2">
-
-                <TextView
-                    android:id="@+id/tabTodos"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingVertical="8dp"
-                    android:text="@string/filter_all"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:background="@drawable/bg_user_pill"
-                    android:backgroundTint="@color/primaryLight"/>
-
-                <TextView
-                    android:id="@+id/tabStockBajo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingVertical="8dp"
-                    android:text="@string/low_stock_title"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tabSinStock"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingVertical="8dp"
-                    android:text="@string/out_of_stock_title"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <!-- VIEWPAGER2 PARA PRODUCTOS -->
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vpProductos"
-                android:layout_width="0dp"
-                android:layout_height="530dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/tabLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <!-- BOTÓN AGREGAR -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/agregarProducto"
         android:layout_width="wrap_content"
@@ -250,20 +179,10 @@
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/primaryColor"
         app:tint="@color/white"
-        app:shapeAppearanceOverlay="@style/circleImage"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <View
-        android:id="@+id/bottomNavDivider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/grayBorder"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- BOTTOM NAV -->
+    <View android:id="@+id/bottomNavDivider" android:layout_width="0dp" android:layout_height="1dp" android:background="@color/grayBorder" app:layout_constraintBottom_toTopOf="@id/bottomNav" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"

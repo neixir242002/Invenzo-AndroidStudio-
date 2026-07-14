@@ -14,11 +14,27 @@ data class GenericResponse(
     val status: String?
 )
 
+data class UserUpdateResponse(
+    val message: String?,
+    val status: String?,
+    val user: UserData?
+)
+
+data class ProfileUpdateRequest(
+
+    val nombre: String,
+
+    val email: String,
+
+    val rol: String? = null
+
+)
 data class UserData(
     val id: Int,
     val nombre: String,
     val email: String,
     val rol: String?, 
+    @SerializedName("foto") val foto: String?,
     val empresa: EmpresaData?
 )
 
@@ -34,6 +50,13 @@ data class RegisterRequest(
     @SerializedName("password_confirmation") val passwordConfirmation: String,
     val empresa: String,
     val rol: String
+)
+
+data class ResetPasswordRequest(
+    @SerializedName("email") val email: String,
+    @SerializedName("password") val password: String,
+    @SerializedName("password_confirmation") val passwordConfirmation: String,
+    @SerializedName("token") val token: String = "" 
 )
 
 data class UserCreateRequest(
@@ -148,22 +171,15 @@ data class Notificacion(
     val tipo: String get() = (tipoRoot ?: getStringFromData("tipo") ?: getStringFromData("type") ?: "SISTEMA").toString().uppercase()
 
     val titulo: String get() {
-        // SEGÚN IMAGEN: Si es Movimiento o Stock, el título debe ser "Control"
         if (tipo == "MOVIMIENTO" || tipo == "STOCK") return "Control"
-
-        // SEGÚN IMAGEN: Si es Nuevo Producto, el título es el nombre del producto (ej: "carros")
         val t = getStringFromData("titulo") ?: getStringFromData("producto") ?: 
                 getStringFromData("nombre") ?: getStringFromData("title") ?: getStringFromData("producto_nombre")
-        
         return t ?: "Inventario"
     }
 
     val mensaje: String get() {
-        // Intentar obtener el mensaje directo guardado por Laravel
         val m = getStringFromData("mensaje") ?: getStringFromData("message") ?: getStringFromData("body")
         if (!m.isNullOrBlank()) return m!!
-
-        // Construcción dinámica basada EXACTAMENTE en la imagen proporcionada
         return when (tipo) {
             "MOVIMIENTO" -> {
                 val mov = (getStringFromData("tipo_movimiento") ?: getStringFromData("tipo") ?: "movimiento").toString().lowercase()
@@ -193,10 +209,6 @@ data class Notificacion(
     }
 }
 
-/**
- * Petición para crear una notificación.
- * Incluye campos redundantes para asegurar que Laravel guarde los datos correctamente.
- */
 data class NotificacionRequest(
     val titulo: String,
     val title: String,

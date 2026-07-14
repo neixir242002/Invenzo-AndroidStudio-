@@ -3,9 +3,12 @@ package com.example.invenzo_10
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.card.MaterialCardView
 
 class UsuarioAdapter(
@@ -19,7 +22,7 @@ class UsuarioAdapter(
         val txtStatus: TextView = view.findViewById(R.id.txtStatus)
         val badgeStatus: MaterialCardView = view.findViewById(R.id.badgeStatus)
         val txtInitials: TextView = view.findViewById(R.id.txtInitials)
-        val imgProfile: View = view.findViewById(R.id.imgProfile)
+        val imgProfile: ImageView = view.findViewById(R.id.imgProfile)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,16 +38,32 @@ class UsuarioAdapter(
         holder.txtName.text = usuario.nombre
         holder.txtRole.text = "${usuario.rol?.replace("_", " ")?.replaceFirstChar { it.uppercase() } ?: "Usuario"} • ${usuario.email}"
 
-        // Lógica de iniciales
-        val iniciales = usuario.nombre.split(" ")
-            .filter { it.isNotEmpty() }
-            .take(2)
-            .map { it[0].uppercase() }
-            .joinToString("")
-        
-        holder.txtInitials.text = iniciales
-        holder.txtInitials.visibility = View.VISIBLE
-        holder.imgProfile.visibility = View.GONE
+        if (!usuario.foto.isNullOrEmpty()) {
+            holder.txtInitials.visibility = View.GONE
+            holder.imgProfile.visibility = View.VISIBLE
+            
+            // USAMOS REALTIME URL PARA ACTUALIZACIÓN INSTANTÁNEA
+            val fullUrl = RetrofitClient.obtenerUrlRealtime(usuario.foto)
+            
+            Glide.with(context)
+                .load(fullUrl)
+                .placeholder(R.drawable.ic_user)
+                .error(R.drawable.ic_user)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .circleCrop()
+                .into(holder.imgProfile)
+        } else {
+            val iniciales = usuario.nombre.split(" ")
+                .filter { it.isNotEmpty() }
+                .take(2)
+                .map { it[0].uppercase() }
+                .joinToString("")
+            
+            holder.txtInitials.text = iniciales
+            holder.txtInitials.visibility = View.VISIBLE
+            holder.imgProfile.visibility = View.GONE
+        }
 
         holder.txtStatus.text = "Activo"
         holder.badgeStatus.setCardBackgroundColor(ContextCompat.getColor(context, R.color.successLight))

@@ -15,14 +15,13 @@ import kotlinx.coroutines.launch
 class EditarCategoriaActivity : AppCompatActivity() {
 
     private var categoriaId: Int = -1
-    private var estadoActual: Int = 1 // Variable para almacenar el estado
+    private var estadoActual: Int = 1
     private lateinit var etNombre: EditText
     private lateinit var etDescripcion: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Aplicar Edge-to-Edge y manejo de insets para la TopBar
         applyEdgeToEdgeWithInsets(null)
         setContentView(R.layout.activity_editarcategoria)
         applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
@@ -35,20 +34,20 @@ class EditarCategoriaActivity : AppCompatActivity() {
         val btnEliminar = findViewById<MaterialButton>(R.id.btnEliminarCategoria)
         
         categoriaId = intent.getIntExtra("ID_CATEGORIA", -1)
-        estadoActual = intent.getIntExtra("ACTIVO_CATEGORIA", 1) // Recuperar estado del intent
-        val nombre = intent.getStringExtra("NOMBRE_CATEGORIA")
-        val descripcion = intent.getStringExtra("DESCRIPCION_CATEGORIA")
+        estadoActual = intent.getIntExtra("ACTIVO_CATEGORIA", 1)
+        val nombre = intent.getStringExtra("NOMBRE_CATEGORIA") ?: ""
+        val descripcion = intent.getStringExtra("DESCRIPCION_CATEGORIA") ?: ""
 
         etNombre.setText(nombre)
         etDescripcion.setText(descripcion)
 
-        findViewById<android.view.View>(R.id.btnBack).setOnClickListener { finish() }
+        findViewById<android.view.View>(R.id.btnBack)?.setOnClickListener { finish() }
 
-        btnGuardar.setOnClickListener {
+        btnGuardar?.setOnClickListener {
             actualizarCategoria()
         }
 
-        btnEliminar.setOnClickListener {
+        btnEliminar?.setOnClickListener {
             mostrarConfirmacionEliminar()
         }
     }
@@ -84,7 +83,6 @@ class EditarCategoriaActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                // Pasamos explícitamente el estado capturado para cumplir con el constructor de CategoriaRequest
                 val request = CategoriaRequest(
                     nombre = nombre, 
                     descripcion = descripcion,
@@ -119,7 +117,7 @@ class EditarCategoriaActivity : AppCompatActivity() {
     private fun mostrarConfirmacionEliminar() {
         AlertDialog.Builder(this)
             .setTitle("Eliminar Categoría")
-            .setMessage("¿Estás seguro de que deseas eliminar esta categoría? Esta acción no se puede deshacer.")
+            .setMessage("¿Estás seguro de que deseas eliminar esta categoría?")
             .setPositiveButton("Eliminar") { _, _ ->
                 eliminarCategoria()
             }

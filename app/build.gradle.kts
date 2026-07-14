@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.cardview)
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     //Paguinado
     implementation("androidx.viewpager2:viewpager2:1.1.0")

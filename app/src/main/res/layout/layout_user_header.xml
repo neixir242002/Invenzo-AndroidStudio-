@@ -19,14 +19,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profileImageHeader"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@drawable/bg_circle_light_blue"
-            android:padding="6dp"
+            android:background="@color/primaryLight"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_user"
-            app:tint="@color/primaryColor" />
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="@color/white"
+            app:strokeWidth="0.5dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"

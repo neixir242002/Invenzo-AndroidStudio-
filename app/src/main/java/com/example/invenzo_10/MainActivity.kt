@@ -3,7 +3,6 @@ package com.example.invenzo_10
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -23,17 +22,18 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // Habilitar Edge-to-Edge
-        applyEdgeToEdgeWithInsets(null)
+        // isLightStatusBar = false para que los iconos de la barra sean blancos sobre el fondo azul
+        applyEdgeToEdgeWithInsets(null, false)
         setContentView(R.layout.activity_main)
-        // En el login no solemos ajustar padding superior si el diseño es libre, 
-        // pero aplicamos la config de iconos oscuros.
-        applyEdgeToEdgeWithInsets(null)
+        
+        // Ajustamos el padding del contenedor del logo para evitar el notch/barra de estado
+        applyEdgeToEdgeWithInsets(findViewById(R.id.logoContainer), false)
 
         val inputCorreo = findViewById<TextInputLayout>(R.id.inputCorreo)
         val inputPassword = findViewById<TextInputLayout>(R.id.inputPassword)
         val btnLogin = findViewById<Button>(R.id.inicioSecion)
         val tvRegister = findViewById<TextView>(R.id.register)
+        val tvForgotPass = findViewById<TextView>(R.id.restContraseña)
 
         btnLogin?.setOnClickListener {
             val correo = inputCorreo?.editText?.text.toString().trim()
@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity() {
 
         tvRegister?.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))
+        }
+
+        tvForgotPass?.setOnClickListener {
+            startActivity(Intent(this, RestablecerPasswordActivity::class.java))
         }
     }
 
@@ -79,18 +83,17 @@ class MainActivity : AppCompatActivity() {
                             putString("user_email", user.email)
                             putString("user_role", rolNormalizado)
                             putString("user_company", user.empresa?.nombre ?: "Empresa")
+                            putString("user_photo", user.foto)
                             apply()
                         }
                         Toast.makeText(this@MainActivity, "Bienvenido ${user.nombre}", Toast.LENGTH_SHORT).show()
                         navigateTo(ActivityInicio::class.java, true)
                     }
                 } else {
-                    Log.e("LoginError", "Error servidor: ${response.code()}")
                     Toast.makeText(this@MainActivity, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Log.e("LoginError", "Error: ${e.message}", e)
-                Toast.makeText(this@MainActivity, "Error de conexión con el servidor", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "Error de conexión", Toast.LENGTH_LONG).show()
             }
         }
     }

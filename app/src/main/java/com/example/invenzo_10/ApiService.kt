@@ -15,10 +15,22 @@ interface ApiService {
     @POST("api/register")
     suspend fun register(@Body request: RegisterRequest): Response<GenericResponse>
 
+    @Headers("Accept: application/json")
+    @POST("api/forgot-password")
+    suspend fun sendResetLink(@Body request: Map<String, String>): Response<GenericResponse>
+
+    @Headers("Accept: application/json")
+    @POST("api/reset-password")
+    suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<GenericResponse>
+
     // --- USUARIOS ---
     @Headers("Accept: application/json")
     @GET("api/usuarios")
     suspend fun getUsuarios(@Header("Authorization") token: String): Response<List<UserData>>
+
+    @Headers("Accept: application/json")
+    @GET("api/user")
+    suspend fun getPerfil(@Header("Authorization") token: String): Response<UserData>
 
     @Headers("Accept: application/json")
     @POST("api/usuarios")
@@ -27,17 +39,37 @@ interface ApiService {
         @Body request: UserCreateRequest
     ): Response<GenericResponse>
 
-    @Multipart
-    @POST("api/usuarios/{id}")
-    suspend fun actualizarPerfil(
+    @Headers("Content-Type: application/json", "Accept: application/json")
+
+    @PUT("api/usuarios/{id}")
+
+    suspend fun actualizarUsuario(
+
         @Header("Authorization") token: String,
+
         @Path("id") id: Int,
-        @Part("_method") method: RequestBody,
-        @Part("nombre") nombre: RequestBody,
-        @Part("email") email: RequestBody,
-        @Part("rol") rol: RequestBody? = null,
-        @Part foto: MultipartBody.Part?
-    ): Response<GenericResponse>
+
+        @Body request: ProfileUpdateRequest
+
+    ): Response<UserUpdateResponse>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+
+    @PUT("api/profile")
+
+    suspend fun actualizarPerfil(
+
+        @Header("Authorization") token: String,
+
+        @Body request: ProfileUpdateRequest
+
+    ): Response<UserUpdateResponse>
+    @Multipart
+    @POST("api/profile/photo")
+    suspend fun uploadPhoto(
+        @Header("Authorization") token: String,
+        @Part foto: MultipartBody.Part
+    ): Response<UserUpdateResponse>
 
     // --- PRODUCTOS ---
     @Headers("Accept: application/json")
@@ -48,10 +80,7 @@ interface ApiService {
     @DELETE("api/productos/{id}")
     suspend fun eliminarProducto(@Header("Authorization") token: String, @Path("id") id: Int): Response<GenericResponse>
 
-    @Headers(
-        "Content-Type: application/json",
-        "Accept: application/json"
-    )
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("api/productos/{id}")
     suspend fun toggleStatusProducto(
         @Header("Authorization") token: String,

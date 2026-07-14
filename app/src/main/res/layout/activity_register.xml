@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/backgroundColor">
+    android:background="@color/primaryColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -14,263 +14,290 @@
         android:layout_height="wrap_content"
         tools:context=".RegistroActivity">
 
-        <!-- LOGO -->
-        <TextView
-            android:id="@+id/textLogo"
-            android:layout_width="wrap_content"
+        <!-- Sección Logo y Texto (Adaptación móvil del lateral derecho de la imagen) -->
+        <LinearLayout
+            android:id="@+id/headerContainer"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="@string/app_name"
-            android:textColor="@color/textPrimary"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingHorizontal="32dp"
+            android:paddingTop="48dp"
+            android:paddingBottom="24dp"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/infobasica"
-            android:textColor="@color/textSecondary"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textLogo" />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/whatsapp_image_2026_05_27_at_3_40_40_pm_removebg_preview"
+                app:tint="@color/white" />
 
-        <!-- CARD -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Invenzo"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Crea tu cuenta y comienza a gestionar tu inventario con Invenzo"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:alpha="0.9" />
+        </LinearLayout>
+
+        <!-- Tarjeta de Registro (Cuerpo blanco de la imagen) -->
         <com.google.android.material.card.MaterialCardView
-            style="@style/CardConEsquinasSuperiores"
+            android:id="@+id/materialCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="40dp"
             app:cardBackgroundColor="@color/white"
-            app:strokeColor="@color/grayBorder"
-            app:strokeWidth="1dp"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="10dp"
+            app:strokeWidth="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textInfo">
+            app:layout_constraintTop_toBottomOf="@id/headerContainer"
+            app:layout_constraintVertical_bias="0.2">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:padding="24dp">
 
+                <!-- Botón Volver al inicio -->
                 <TextView
-                    android:id="@+id/textRegistro"
+                    android:id="@+id/btnBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/registration"
+                    android:text="Volver al inicio"
                     android:textColor="@color/textPrimary"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="6dp"
+                    app:drawableStartCompat="@drawable/ic_back"
+                    app:drawableTint="@color/textPrimary"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
-                    android:id="@+id/textBienvenida"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/create_account"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="14sp" />
-
-                <!-- NOMBRE -->
-                <TextView
+                    android:id="@+id/titleRegister"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="@string/hint_name"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:text="Crear una cuenta"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/btnBack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
+                <!-- Campo Nombre -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputNombre"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/primaryColor"
-                    app:hintTextColor="@color/primaryColor"
-                    app:hintEnabled="false">
+                    android:layout_marginTop="28dp"
+                    app:boxStrokeColor="@color/grayBorder"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:hintEnabled="false"
+                    app:startIconDrawable="@drawable/ic_user"
+                    app:startIconTint="@color/textSecondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/titleRegister">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_name"
+                        android:paddingVertical="14dp"
+                        android:hint="Tu nombre completo"
                         android:inputType="textPersonName"
                         android:textColor="@color/textPrimary"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- EMPRESA -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Nombre de la Empresa"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
+                <!-- Campo Empresa -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputEmpresa"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/primaryColor"
-                    app:hintTextColor="@color/primaryColor"
-                    app:hintEnabled="false">
+                    android:layout_marginTop="12dp"
+                    app:boxStrokeColor="@color/grayBorder"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:hintEnabled="false"
+                    app:startIconDrawable="@drawable/ic_business"
+                    app:startIconTint="@color/textSecondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/inputNombre">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Ej. Invenzo Corp"
+                        android:paddingVertical="14dp"
+                        android:hint="Nombre de la empresa"
                         android:inputType="text"
                         android:textColor="@color/textPrimary"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- EMAIL -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Correo Electrónico"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
+                <!-- Campo Email -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputCorreo"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/primaryColor"
-                    app:hintTextColor="@color/primaryColor"
-                    app:hintEnabled="false">
+                    android:layout_marginTop="12dp"
+                    app:boxStrokeColor="@color/grayBorder"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:hintEnabled="false"
+                    app:startIconDrawable="@drawable/ic_mail"
+                    app:startIconTint="@color/textSecondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/inputEmpresa">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_email"
+                        android:paddingVertical="14dp"
+                        android:hint="correo@ejemplo.com"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/textPrimary"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- PASSWORD -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/password"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
+                <!-- Campo Contraseña -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputPassword"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/primaryColor"
-                    app:hintTextColor="@color/primaryColor"
+                    android:layout_marginTop="12dp"
+                    app:boxStrokeColor="@color/grayBorder"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
                     app:hintEnabled="false"
-                    app:passwordToggleEnabled="true">
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="@color/textSecondary"
+                    app:passwordToggleEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/inputCorreo">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="••••••••"
+                        android:paddingVertical="14dp"
+                        android:hint="Ingresa tu contraseña"
                         android:inputType="textPassword"
                         android:textColor="@color/textPrimary"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- CONFIRM PASSWORD -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Confirmar Contraseña"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
+                <!-- Campo Confirmar -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputConfirmar"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:boxStrokeColor="@color/primaryColor"
-                    app:hintTextColor="@color/primaryColor"
+                    android:layout_marginTop="12dp"
+                    app:boxStrokeColor="@color/grayBorder"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
                     app:hintEnabled="false"
-                    app:passwordToggleEnabled="true">
+                    app:startIconDrawable="@drawable/ic_lock"
+                    app:startIconTint="@color/textSecondary"
+                    app:passwordToggleEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/inputPassword">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="••••••••"
+                        android:paddingVertical="14dp"
+                        android:hint="Repite la contraseña"
                         android:inputType="textPassword"
                         android:textColor="@color/textPrimary"
-                        android:textSize="15sp" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- BOTON REGISTRO -->
                 <Button
                     android:id="@+id/buttonRegistro"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="56dp"
-                    android:layout_marginTop="32dp"
-                    android:text="@string/create_account"
+                    android:layout_marginTop="28dp"
+                    android:text="Crear Cuenta"
                     android:textAllCaps="false"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
                     android:backgroundTint="@color/primaryColor"
-                    app:cornerRadius="12dp" />
+                    app:cornerRadius="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/inputConfirmar" />
 
-                <!-- PROGRESS BAR -->
                 <ProgressBar
                     android:id="@+id/progressRegistro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:visibility="gone" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/white"
+                    app:layout_constraintTop_toTopOf="@id/buttonRegistro"
+                    app:layout_constraintBottom_toBottomOf="@id/buttonRegistro"
+                    app:layout_constraintEnd_toEndOf="@id/buttonRegistro"
+                    android:layout_marginEnd="16dp" />
 
-                <!-- LOGIN LINK -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/buttonRegistro">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/already_have_account"
-                        android:textColor="@color/textSecondary" />
+                        android:text="¿Ya tienes una cuenta?"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="13sp" />
                     <TextView
                         android:id="@+id/textLogin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
-                        android:text="@string/login_action"
+                        android:text="Iniciar sesión"
                         android:textColor="@color/primaryColor"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
-            </LinearLayout>
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>

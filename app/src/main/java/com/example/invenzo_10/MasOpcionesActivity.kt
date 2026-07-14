@@ -4,10 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MasOpcionesActivity : AppCompatActivity() {
@@ -17,7 +20,6 @@ class MasOpcionesActivity : AppCompatActivity() {
         applyEdgeToEdgeWithInsets(null)
         setContentView(R.layout.activity_mas_opciones)
 
-        // Inicialización de notificaciones
         NotificacionManager.init(this)
         NotificationUtils.setupNotificationButton(this)
 
@@ -28,18 +30,19 @@ class MasOpcionesActivity : AppCompatActivity() {
     }
 
     private fun mostrarDatosUsuario() {
-        // Campos de la tarjeta de perfil
         val txtNombre = findViewById<TextView>(R.id.txtName)
         val txtRole = findViewById<TextView>(R.id.txtRole)
+        val imgProfileCard = findViewById<ImageView>(R.id.imgProfile)
 
-        // Campos del header superior (Top Bar)
         val txtNombreHeader = findViewById<TextView>(R.id.txtUserNameHeader)
         val txtRoleHeader = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        val imgProfileHeader = findViewById<ImageView>(R.id.profileImageHeader)
 
         val prefs = getSharedPreferences("auth", MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
         var rol = prefs.getString("user_role", "Administrador")
         val empresa = prefs.getString("user_company", "Empresa")
+        val fotoPath = prefs.getString("user_photo", "")
 
         if (rol?.contains("principal", ignoreCase = true) == true) {
             rol = "Administrador Principal"
@@ -47,18 +50,34 @@ class MasOpcionesActivity : AppCompatActivity() {
 
         val infoCompleta = "$rol • $empresa"
 
-        // Actualizar ambos lugares para mantener consistencia
         txtNombre?.text = nombre
         txtRole?.text = infoCompleta
-
         txtNombreHeader?.text = nombre
         txtRoleHeader?.text = infoCompleta
+
+        if (!fotoPath.isNullOrEmpty()) {
+            // USAMOS URL REALTIME PARA QUE SE ACTUALICE AL INSTANTE
+            val fullUrl = RetrofitClient.obtenerUrlRealtime(fotoPath)
+            
+            val glideRequest = Glide.with(this)
+                .load(fullUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .placeholder(R.drawable.ic_user)
+                .error(R.drawable.ic_user)
+                .circleCrop()
+
+            imgProfileCard?.let { glideRequest.into(it) }
+            imgProfileHeader?.let { glideRequest.into(it) }
+        } else {
+            imgProfileCard?.setImageResource(R.drawable.ic_user)
+            imgProfileHeader?.setImageResource(R.drawable.ic_user)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         mostrarDatosUsuario()
-        aplicarRestricciones()
     }
 
     private fun aplicarRestricciones() {
@@ -70,50 +89,28 @@ class MasOpcionesActivity : AppCompatActivity() {
                 findViewById<View>(R.id.optUsuarios)?.visibility = View.GONE
                 findViewById<View>(R.id.optCategorias)?.visibility = View.GONE
                 findViewById<View>(R.id.optHistorialInventario)?.visibility = View.GONE
-                
-                val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-                bottomNav?.menu?.findItem(R.id.categoria)?.isVisible = false
+                findViewById<BottomNavigationView>(R.id.bottomNav)?.menu?.findItem(R.id.categoria)?.isVisible = false
             }
             "Administrador" -> {
                 findViewById<View>(R.id.optUsuarios)?.visibility = View.GONE
-                findViewById<View>(R.id.optCategorias)?.visibility = View.GONE // Auditoría solo para Principal
+                findViewById<View>(R.id.optCategorias)?.visibility = View.GONE 
                 findViewById<View>(R.id.optHistorialInventario)?.visibility = View.VISIBLE
-                
-                val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-                bottomNav?.menu?.findItem(R.id.categoria)?.isVisible = true
             }
             else -> {
                 findViewById<View>(R.id.optUsuarios)?.visibility = View.VISIBLE
                 findViewById<View>(R.id.optCategorias)?.visibility = View.VISIBLE
                 findViewById<View>(R.id.optHistorialInventario)?.visibility = View.VISIBLE
-                
-                val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-                bottomNav?.menu?.findItem(R.id.categoria)?.isVisible = true
             }
         }
     }
 
     private fun setupClickListeners() {
         findViewById<View>(R.id.cardProfileHeader)?.setOnClickListener { mostrarDialogoEditar() }
-        
-        findViewById<View>(R.id.optCategorias)?.setOnClickListener {
-            startActivity(Intent(this, AuditoriaActivity::class.java))
-        }
-
-        findViewById<View>(R.id.optInventarios)?.setOnClickListener {
-            startActivity(Intent(this, ControlInventarioActivity::class.java))
-        }
-        findViewById<View>(R.id.optUsuarios)?.setOnClickListener {
-            startActivity(Intent(this, UsuariosActivity::class.java))
-        }
-        
-        findViewById<View>(R.id.optHistorialInventario)?.setOnClickListener {
-            startActivity(Intent(this, HistorialInventarioActivity::class.java))
-        }
-
-        findViewById<View>(R.id.optNotificaciones)?.setOnClickListener {
-            startActivity(Intent(this, ConfigNotificacionesActivity::class.java))
-        }
+        findViewById<View>(R.id.optCategorias)?.setOnClickListener { startActivity(Intent(this, AuditoriaActivity::class.java)) }
+        findViewById<View>(R.id.optInventarios)?.setOnClickListener { startActivity(Intent(this, ControlInventarioActivity::class.java)) }
+        findViewById<View>(R.id.optUsuarios)?.setOnClickListener { startActivity(Intent(this, UsuariosActivity::class.java)) }
+        findViewById<View>(R.id.optHistorialInventario)?.setOnClickListener { startActivity(Intent(this, HistorialInventarioActivity::class.java)) }
+        findViewById<View>(R.id.optNotificaciones)?.setOnClickListener { startActivity(Intent(this, ConfigNotificacionesActivity::class.java)) }
         findViewById<View>(R.id.btnCerrarSesion)?.setOnClickListener { logout() }
     }
 
@@ -127,8 +124,7 @@ class MasOpcionesActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        prefs.edit().clear().apply()
+        getSharedPreferences("auth", Context.MODE_PRIVATE).edit().clear().apply()
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
