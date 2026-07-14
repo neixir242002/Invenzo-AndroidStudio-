@@ -42,10 +42,13 @@
         <activity android:name=".EditarProductoActivity"/>
         <activity android:name=".EditarCategoriaActivity"/>
         <activity android:name=".ConfiguracionActivity"/>
+        <activity android:name=".ConfigNotificacionesActivity"/>
         <activity android:name=".EditarUsuarioActivity"/>
         <activity android:name=".NuevoUsuarioActivity"/>
         <activity android:name=".UsuariosActivity"/>
         <activity android:name=".RestablecerPasswordActivity"/>
+        <activity android:name=".AuditoriaActivity"/>
+        <activity android:name=".HistorialInventarioActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>

@@ -2,10 +2,10 @@ package com.example.invenzo_10
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -15,32 +15,33 @@ import kotlinx.coroutines.launch
 class EditarCategoriaActivity : AppCompatActivity() {
 
     private var categoriaId: Int = -1
+    private var estadoActual: Int = 1 // Variable para almacenar el estado
     private lateinit var etNombre: EditText
     private lateinit var etDescripcion: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        
+        // Aplicar Edge-to-Edge y manejo de insets para la TopBar
+        applyEdgeToEdgeWithInsets(null)
         setContentView(R.layout.activity_editarcategoria)
+        applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
 
-        // Se muestran los datos del usuario en el TopBar
         mostrarDatosUsuario()
 
-        // Inicializar vistas
         etNombre = findViewById(R.id.etNombreCategoria)
         etDescripcion = findViewById(R.id.etDescripcionCategoria)
         val btnGuardar = findViewById<MaterialButton>(R.id.btnGuardarCambios)
         val btnEliminar = findViewById<MaterialButton>(R.id.btnEliminarCategoria)
         
-        // Cargar datos del Intent
         categoriaId = intent.getIntExtra("ID_CATEGORIA", -1)
+        estadoActual = intent.getIntExtra("ACTIVO_CATEGORIA", 1) // Recuperar estado del intent
         val nombre = intent.getStringExtra("NOMBRE_CATEGORIA")
         val descripcion = intent.getStringExtra("DESCRIPCION_CATEGORIA")
 
         etNombre.setText(nombre)
         etDescripcion.setText(descripcion)
 
-        // Botones
         findViewById<android.view.View>(R.id.btnBack).setOnClickListener { finish() }
 
         btnGuardar.setOnClickListener {
@@ -58,8 +59,12 @@ class EditarCategoriaActivity : AppCompatActivity() {
         
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
-        val rol = prefs.getString("user_role", "Administrador")
+        var rol = prefs.getString("user_role", "Administrador")
         val empresa = prefs.getString("user_company", "Empresa")
+
+        if (rol?.contains("principal", ignoreCase = true) == true) {
+            rol = "Administrador Principal"
+        }
 
         txtNombre?.text = nombre
         txtRoleCompany?.text = "$rol • $empresa"
@@ -79,12 +84,27 @@ class EditarCategoriaActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                val request = CategoriaRequest(nombre, descripcion)
+                // Pasamos explícitamente el estado capturado para cumplir con el constructor de CategoriaRequest
+                val request = CategoriaRequest(
+                    nombre = nombre, 
+                    descripcion = descripcion,
+                    activo = estadoActual,
+                    activa = estadoActual
+                )
                 val response = RetrofitClient.instance.actualizarCategoria(
                     "Bearer $token", categoriaId, request
                 )
 
                 if (response.isSuccessful) {
+                    try {
+                        RetrofitClient.instance.registrarAuditoria(
+                            "Bearer $token",
+                            AuditoriaRequest("Actualizó la categoría: $nombre", "Categorías")
+                        )
+                    } catch (e: Exception) {
+                        Log.e("AUDIT", "Error en auditoría", e)
+                    }
+                    
                     Toast.makeText(this@EditarCategoriaActivity, "Categoría actualizada", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
@@ -110,11 +130,21 @@ class EditarCategoriaActivity : AppCompatActivity() {
     private fun eliminarCategoria() {
         val prefs = getSharedPreferences("auth", MODE_PRIVATE)
         val token = prefs.getString("token", "") ?: ""
+        val nombreCat = etNombre.text.toString()
 
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.instance.eliminarCategoria("Bearer $token", categoriaId)
                 if (response.isSuccessful) {
+                    try {
+                        RetrofitClient.instance.registrarAuditoria(
+                            "Bearer $token",
+                            AuditoriaRequest("Eliminó la categoría: $nombreCat", "Categorías")
+                        )
+                    } catch (e: Exception) {
+                        Log.e("AUDIT", "Error en auditoría", e)
+                    }
+
                     Toast.makeText(this@EditarCategoriaActivity, "Categoría eliminada", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC">
+    android:background="@color/backgroundColor">
 
     <!-- TOP BAR -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="16dp"
+        android:padding="20dp"
         android:elevation="2dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -22,14 +22,45 @@
             android:layout_height="24dp"
             android:contentDescription="@string/desc_back_button"
             android:rotation="180"
-            android:rotationY="-180"
+            android:rotationY="180"
             android:src="@drawable/ic_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/primaryColor" />
 
+        <FrameLayout
+            android:id="@+id/btnNotificationsTop"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/userHeaderInclude"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bell"
+                app:tint="@color/textSecondary" />
+
+            <TextView
+                android:id="@+id/txtNotificationBadge"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="top|end"
+                android:background="@drawable/red_dot"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
+
         <include
+            android:id="@+id/userHeaderInclude"
             layout="@layout/layout_user_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <!-- BIENVENIDA -->
             <TextView
@@ -61,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gestión de Usuarios"
-                android:textColor="#1E293B"
+                android:textColor="@color/textPrimary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -69,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Administra los usuarios y permisos"
-                android:textColor="#64748B"
+                android:textColor="@color/textSecondary"
                 android:textSize="14sp"
                 android:layout_marginBottom="20dp" />
 
@@ -81,7 +112,7 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#E2E8F0"
+                app:strokeColor="@color/grayBorder"
                 app:strokeWidth="1dp"
                 android:layout_marginBottom="16dp">
 
@@ -96,7 +127,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/search_24dp_000000_fill0_wght400_grad0_opsz24"
-                        app:tint="#64748B" />
+                        app:tint="@color/textSecondary" />
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -104,7 +135,8 @@
                         android:background="@android:color/transparent"
                         android:hint="@string/hint_search_user"
                         android:padding="12dp"
-                        android:textColor="#1E293B"
+                        android:textColor="@color/textPrimary"
+                        android:textColorHint="@color/textSecondary"
                         android:textSize="15sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -116,7 +148,7 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#E2E8F0"
+                app:strokeColor="@color/grayBorder"
                 app:strokeWidth="1dp"
                 android:layout_marginBottom="20dp">
 
@@ -128,13 +160,14 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/backgroundColor"
                         android:padding="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/personnel_list"
-                            android:textColor="#1E293B"
+                            android:textColor="@color/textPrimary"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -145,7 +178,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/view_all"
-                            android:textColor="#2563EB"
+                            android:textColor="@color/primaryColor"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -176,7 +209,7 @@
         android:layout_margin="24dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_add"
-        app:backgroundTint="#2563EB"
+        app:backgroundTint="@color/primaryColor"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:shapeAppearanceOverlay="@style/circleImage"
@@ -184,10 +217,9 @@
 
     <View
         android:id="@+id/bottomNavDivider"
-        style="@style/Divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="#E2E8F0"
+        android:background="@color/grayBorder"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

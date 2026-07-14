@@ -6,30 +6,38 @@ import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
-import java.io.InputStream
 
 class EditarUsuarioActivity : AppCompatActivity() {
 
     private lateinit var imgProfile: ImageView
     private lateinit var etNombre: EditText
     private lateinit var etEmail: EditText
+    private lateinit var spinnerRol: AutoCompleteTextView
     private lateinit var btnSave: MaterialButton
+    
     private var selectedImageUri: Uri? = null
+    private var editingUserId: Int = -1
+    private var isEditingOther: Boolean = false
 
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
@@ -43,29 +51,62 @@ class EditarUsuarioActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_editarusuario)
 
+        // Manejo de Insets para evitar que la TopBar choque con la barra de estado
+        val topBar = findViewById<View>(R.id.topBar)
+        ViewCompat.setOnApplyWindowInsetsListener(topBar) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(v.paddingLeft, systemBars.top, v.paddingRight, v.paddingBottom)
+            insets
+        }
+
         initViews()
-        cargarDatosActuales()
+        setupRolesSpinner()
+        cargarDatos()
         setupListeners()
     }
 
     private fun initViews() {
-        imgProfile = findViewById(R.id.profileImage)
         etNombre = findViewById(R.id.etName)
         etEmail = findViewById(R.id.etEmail)
+        spinnerRol = findViewById(R.id.etRolUsuario) 
         btnSave = findViewById(R.id.btnSave)
     }
 
-    private fun cargarDatosActuales() {
-        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        etNombre.setText(prefs.getString("user_name", ""))
-        etEmail.setText(prefs.getString("user_email", ""))
+    private fun setupRolesSpinner() {
+        // Incluimos los 3 roles para que el mapeo sea correcto
+        val roles = arrayOf("Administrador Principal", "Administrador", "Auxiliar")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, roles)
+        spinnerRol.setAdapter(adapter)
+    }
+
+    private fun cargarDatos() {
+        isEditingOther = intent.getBooleanExtra("is_editing_other", false)
+        
+        if (isEditingOther) {
+            editingUserId = intent.getIntExtra("user_id", -1)
+            etNombre.setText(intent.getStringExtra("user_name"))
+            etEmail.setText(intent.getStringExtra("user_email"))
+            
+            // Normalizar el rol que viene del intent
+            val rolRaw = intent.getStringExtra("user_role")?.lowercase() ?: "auxiliar"
+            val rolVisual = when {
+                rolRaw.contains("principal") -> "Administrador Principal"
+                rolRaw == "administrador" -> "Administrador"
+                else -> "Auxiliar"
+            }
+            spinnerRol.setText(rolVisual, false)
+        } else {
+            val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+            editingUserId = prefs.getInt("user_id", -1)
+            etNombre.setText(prefs.getString("user_name", ""))
+            etEmail.setText(prefs.getString("user_email", ""))
+            val rol = prefs.getString("user_role", "Administrador Principal")
+            spinnerRol.setText(rol, false)
+        }
     }
 
     private fun setupListeners() {
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
-        findViewById<View>(R.id.btnChangePhoto).setOnClickListener {
-            pickImageLauncher.launch("image/*")
-        }
         btnSave.setOnClickListener {
             guardarCambios()
         }
@@ -74,6 +115,14 @@ class EditarUsuarioActivity : AppCompatActivity() {
     private fun guardarCambios() {
         val nuevoNombre = etNombre.text.toString().trim()
         val nuevoEmail = etEmail.text.toString().trim()
+        val nuevoRolVisual = spinnerRol.text.toString()
+        
+        // Mapeo exacto para el servidor
+        val nuevoRolApi = when (nuevoRolVisual) {
+            "Administrador Principal" -> "administrador_principal"
+            "Administrador" -> "administrador"
+            else -> "auxiliar"
+        }
 
         if (nuevoNombre.isEmpty() || nuevoEmail.isEmpty()) {
             Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
@@ -82,52 +131,49 @@ class EditarUsuarioActivity : AppCompatActivity() {
 
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val token = prefs.getString("token", "") ?: ""
-        val userId = prefs.getInt("user_id", -1)
-
-        if (userId == -1) {
-            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show()
-            return
-        }
 
         lifecycleScope.launch {
             try {
                 val nombrePart = nuevoNombre.toRequestBody("text/plain".toMediaTypeOrNull())
                 val emailPart = nuevoEmail.toRequestBody("text/plain".toMediaTypeOrNull())
+                val rolPart = nuevoRolApi.toRequestBody("text/plain".toMediaTypeOrNull())
                 val methodPart = "PUT".toRequestBody("text/plain".toMediaTypeOrNull())
 
                 var fotoPart: MultipartBody.Part? = null
                 selectedImageUri?.let { uri ->
                     val file = uriToFile(uri)
-                    if (file != null) {
-                        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                        fotoPart = MultipartBody.Part.createFormData("foto", file.name, requestFile)
+                    file?.let {
+                        val requestFile = it.asRequestBody("image/*".toMediaTypeOrNull())
+                        fotoPart = MultipartBody.Part.createFormData("foto", it.name, requestFile)
                     }
                 }
 
                 val response = RetrofitClient.instance.actualizarPerfil(
                     "Bearer $token",
-                    userId,
+                    editingUserId,
                     methodPart,
                     nombrePart,
                     emailPart,
+                    rolPart,
                     fotoPart
                 )
 
                 if (response.isSuccessful) {
-                    prefs.edit().apply {
-                        putString("user_name", nuevoNombre)
-                        putString("user_email", nuevoEmail)
-                        apply()
+                    if (!isEditingOther) {
+                        // Si edito mi propio perfil, actualizo mis datos locales con el nombre visual exacto
+                        prefs.edit().apply {
+                            putString("user_name", nuevoNombre)
+                            putString("user_email", nuevoEmail)
+                            putString("user_role", nuevoRolVisual) // "Administrador" o "Administrador Principal"
+                            apply()
+                        }
                     }
-                    Toast.makeText(this@EditarUsuarioActivity, "Perfil actualizado con éxito", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@EditarUsuarioActivity, "Cambios guardados", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
-                    val errorMsg = response.errorBody()?.string() ?: "Error desconocido"
-                    Log.e("EditarUsuario", "Error API: $errorMsg")
-                    Toast.makeText(this@EditarUsuarioActivity, "Error al actualizar", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@EditarUsuarioActivity, "Error al actualizar", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Log.e("EditarUsuario", "Excepción: ${e.message}")
                 Toast.makeText(this@EditarUsuarioActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
             }
         }
@@ -136,30 +182,20 @@ class EditarUsuarioActivity : AppCompatActivity() {
     private fun uriToFile(uri: Uri): File? {
         val fileName = getFileName(uri) ?: "temp_image"
         val tempFile = File(cacheDir, fileName)
-        
         return try {
-            val inputStream: InputStream? = contentResolver.openInputStream(uri)
-            val outputStream = FileOutputStream(tempFile)
-            inputStream?.use { input ->
-                outputStream.use { output ->
-                    input.copyTo(output)
-                }
+            contentResolver.openInputStream(uri)?.use { input ->
+                FileOutputStream(tempFile).use { output -> input.copyTo(output) }
             }
             tempFile
-        } catch (e: Exception) {
-            null
-        }
+        } catch (e: Exception) { null }
     }
 
     private fun getFileName(uri: Uri): String? {
         var name: String? = null
-        val cursor = contentResolver.query(uri, null, null, null, null)
-        cursor?.use {
+        contentResolver.query(uri, null, null, null, null)?.use {
             if (it.moveToFirst()) {
                 val index = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                if (index != -1) {
-                    name = it.getString(index)
-                }
+                if (index != -1) name = it.getString(index)
             }
         }
         return name

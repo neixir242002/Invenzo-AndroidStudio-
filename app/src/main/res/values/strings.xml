@@ -15,10 +15,21 @@
     <string name="notifications">Notificaciones</string>
     <string name="help_support">Ayuda y soporte</string>
     <string name="logout">Cerrar sesión</string>
-    <string name="home">Inicio</string>
+    <string name="home">Dashboard</string>
     <string name="products">Productos</string>
-    <string name="reports">Reportes</string>
+    <string name="reports">Alertas</string>
     <string name="more">Más</string>
+
+    <!-- Historial Inventario -->
+    <string name="inventory_history_title">Historial de Inventario</string>
+    <string name="inventory_history_desc">Registro completo de movimientos</string>
+    <string name="export_data_btn">Exportar Datos</string>
+    <string name="movements">Movimientos</string>
+    <string name="search_product_hint">Buscar por producto...</string>
+
+    <!-- Auditoría Sistema -->
+    <string name="audit_system_title">Auditoría del Sistema</string>
+    <string name="audit_system_desc">Registro de acciones realizadas por los usuarios</string>
 
     <!-- Configuration strings -->
     <string name="edit">Editar</string>
@@ -173,7 +184,6 @@
     <string name="stock_summary">Resumen de Stock</string>
 
     <string name="infobasica">Información básica para tu cuenta</string>
-    <string name="new_category">Nueva Categoría</string>
     <string name="category_name">Nombre de la categoría</string>
     <string name="status">Estado</string>
     <string name="status_tipe">Activo...Inactivo..</string>
@@ -185,6 +195,7 @@
     <string name="preview">Vista previa</string>
     <string name="preview_desc">Así es como se verá tu nueva categoría en la lista principal.</string>
     <string name="create_category">Crear Categoría</string>
+    <string name="new_category">Nueva Categoría</string>
 
     <!-- Users Activity strings -->
     <string name="total_users">Total Usuarios</string>
@@ -200,6 +211,13 @@
     <string name="sample_initials">AM</string>
     <string name="sample_user_name">Alejandro Mendoza</string>
     <string name="active">Activo</string>
+
+    <!-- Notification Settings strings -->
+    <string name="notification_config_title">Configuración de Notificaciones</string>
+    <string name="system_notifications">Notificaciones del Sistema</string>
+    <string name="stock_alerts">Alertas de Stock</string>
+    <string name="inventory_movements">Movimientos de Inventario</string>
+    <string name="new_products">Productos Nuevos</string>
 
     <!-- Placeholders / Hardcoded values -->
     <string name="val_80">80</string>

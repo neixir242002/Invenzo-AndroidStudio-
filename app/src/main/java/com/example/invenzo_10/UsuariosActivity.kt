@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,20 +24,34 @@ class UsuariosActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_usuarios)
+        
+        // Seguridad de rol: Solo el Principal accede aquí
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val rolActual = prefs.getString("user_role", "")
+        if (rolActual != "Administrador Principal") {
+            Toast.makeText(this, "Acceso denegado: Solo el Administrador Principal puede gestionar usuarios", Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
 
-        mostrarDatosUsuario()
+        // Aplicar Edge-to-Edge y manejo de insets
+        applyEdgeToEdgeWithInsets(null)
+        setContentView(R.layout.activity_usuarios)
+        applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
+
+        //Mostras notificaciones
+        NotificacionManager.init(this)
+        NotificationUtils.setupNotificationButton(this)
+
+
+
         initViews()
         setupRecyclerView()
         setupBottomNavigation()
-        cargarUsuarios()
 
         findViewById<FloatingActionButton>(R.id.nuevoUsuario).setOnClickListener {
             val intent = Intent(this, NuevoUsuarioActivity::class.java)
             startActivity(intent)
-            @Suppress("DEPRECATION")
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
 
         findViewById<View>(R.id.btnBack).setOnClickListener {
@@ -45,27 +59,42 @@ class UsuariosActivity : AppCompatActivity() {
         }
     }
 
+    // --- ACTUALIZACIÓN EN TIEMPO REAL ---
+    override fun onResume() {
+        super.onResume()
+        // Refrescar la lista y los datos del header al volver a la actividad
+        cargarUsuarios()
+        mostrarDatosUsuario()
+    }
+
     private fun initViews() {
         rvUsuarios = findViewById(R.id.rvUsuarios)
     }
 
     private fun setupRecyclerView() {
-        usuarioAdapter = UsuarioAdapter(listaUsuarios)
+        usuarioAdapter = UsuarioAdapter(listaUsuarios) { usuario ->
+            mostrarDialogoEdicion(usuario)
+        }
         rvUsuarios.layoutManager = LinearLayoutManager(this)
         rvUsuarios.adapter = usuarioAdapter
     }
 
-    private fun mostrarDatosUsuario() {
-        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
-        val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
-        
-        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val nombre = prefs.getString("user_name", "Usuario")
-        val rol = prefs.getString("user_role", "Administrador")
-        val empresa = prefs.getString("user_company", "Empresa")
-
-        txtNombre?.text = nombre
-        txtRoleCompany?.text = "$rol • $empresa"
+    private fun mostrarDialogoEdicion(usuario: UserData) {
+        AlertDialog.Builder(this)
+            .setTitle("Editar Usuario")
+            .setMessage("¿Deseas editar al usuario ${usuario.nombre}?")
+            .setPositiveButton("Sí") { _, _ ->
+                val intent = Intent(this, EditarUsuarioActivity::class.java).apply {
+                    putExtra("user_id", usuario.id)
+                    putExtra("user_name", usuario.nombre)
+                    putExtra("user_email", usuario.email)
+                    putExtra("user_role", usuario.rol)
+                    putExtra("is_editing_other", true)
+                }
+                startActivity(intent)
+            }
+            .setNegativeButton("No", null)
+            .show()
     }
 
     private fun cargarUsuarios() {
@@ -77,26 +106,29 @@ class UsuariosActivity : AppCompatActivity() {
                     listaUsuarios.clear()
                     listaUsuarios.addAll(response.body()!!)
                     usuarioAdapter.actualizarLista(listaUsuarios)
-                } else {
-                    Log.e("UsuariosActivity", "Error: ${response.code()}")
                 }
             } catch (e: Exception) {
-                Log.e("UsuariosActivity", "Error de red: ${e.message}")
-                Toast.makeText(this@UsuariosActivity, "Error al cargar usuarios", Toast.LENGTH_SHORT).show()
+                Log.e("UsuariosActivity", "Error al refrescar lista: ${e.message}")
             }
         }
+    }
+
+    private fun mostrarDatosUsuario() {
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        
+        val nombre = prefs.getString("user_name", "Usuario")
+        val rol = prefs.getString("user_role", "")
+        val empresa = prefs.getString("user_company", "")
+        
+        txtNombre?.text = nombre
+        txtRoleCompany?.text = "$rol • $empresa"
     }
 
     private fun setupBottomNavigation() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav?.selectedItemId = R.id.more
-
-        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val rol = prefs.getString("user_role", "Administrador")
-        if (rol == "Auxiliar") {
-            bottomNav?.menu?.findItem(R.id.categoria)?.isVisible = false
-        }
-
         bottomNav?.setOnItemSelectedListener { item ->
             val intent = when (item.itemId) {
                 R.id.home -> Intent(this, ActivityInicio::class.java)
@@ -106,12 +138,8 @@ class UsuariosActivity : AppCompatActivity() {
                 R.id.more -> Intent(this, MasOpcionesActivity::class.java)
                 else -> null
             }
-
             intent?.let {
-                it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(it)
-                @Suppress("DEPRECATION")
-                overridePendingTransition(0, 0)
                 finish()
             }
             true

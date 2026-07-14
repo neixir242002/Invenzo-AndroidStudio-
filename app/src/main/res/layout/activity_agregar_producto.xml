@@ -1,236 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".AgregarProductoActivity">
+    android:background="@color/backgroundColor">
 
-    <LinearLayout
+    <!-- HEADER -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:background="@color/white"
+        android:padding="20dp"
+        android:elevation="2dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- HEADER -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:contentDescription="@string/desc_back_button"
+            android:rotation="180"
+            android:rotationY="180"
+            android:src="@drawable/ic_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/primaryColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Agregar producto"
+            android:textColor="@color/textPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-            <!--sin funcionalidad-->
-            <ImageButton
-                android:id="@+id/btnBack"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@string/desc_back_button"
-                android:rotation="180"
-                android:rotationY="180"
-
-                android:src="@drawable/ic_arrow" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Agregar producto"
-                android:textColor="#000000"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginEnd="24dp"/>
-        </LinearLayout>
-
-        <!-- IMAGE BOX -->
-        <!--        agregar Imagendel producto-->
-        <LinearLayout
-            android:id="@+id/layoutSeleccionarImagen"
-            android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/bg_upload"
-            android:gravity="center"
             android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true"
             android:padding="20dp">
 
-            <ImageView
-                android:id="@+id/imgProducto"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@android:drawable/ic_menu_gallery"/>
+            <!-- IMAGE BOX -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/layoutSeleccionarImagen"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/grayBorder"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgProducto"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:src="@android:drawable/ic_menu_gallery"
+                        app:tint="@color/textSecondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Seleccionar imagen"
+                        android:textColor="@color/primaryColor"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- FORMULARIO -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Nombre del producto"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtNombreProducto"
+                style="@style/InvenzoInput"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:hint='Ej. Laptop HP 15"'
+                android:textColorHint="@color/textSecondary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Seleccionar imagen"
-                android:textColor="#000000"
-                android:textStyle="bold"/>
+                android:layout_marginTop="16dp"
+                android:text="Código"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtcodigo"
+                style="@style/InvenzoInput"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:hint="123-jdls"
+                android:textColorHint="@color/textSecondary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Categoría"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spCategoria"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/fondo_redondo"
+                android:backgroundTint="@color/white"
+                android:paddingHorizontal="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stock Inicial"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edtStock"
+                        style="@style/InvenzoInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="8dp"
+                        android:hint="Ej. 10"
+                        android:inputType="number"
+                        android:textColorHint="@color/textSecondary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stock Mínimo"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edit_stockmini"
+                        style="@style/InvenzoInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="8dp"
+                        android:hint="Ej. 2"
+                        android:inputType="number"
+                        android:textColorHint="@color/textSecondary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Precio de venta"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtPrecio"
+                style="@style/InvenzoInput"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="8dp"
+                android:hint="Ej. 150000"
+                android:inputType="numberDecimal"
+                android:textColorHint="@color/textSecondary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Descripción (opcional)"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                style="@style/InvenzoInput"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="8dp"
+                android:gravity="top"
+                android:hint="Descripción del producto..."
+                android:padding="16dp"
+                android:textColorHint="@color/textSecondary" />
+
+            <!-- BOTON -->
+            <Button
+                android:id="@+id/btnGuardarProducto"
+                style="@style/InvenzoButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="40dp"
+                android:text="Guardar producto" />
+
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <!-- NOMBRE -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Nombre del producto"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/edtNombreProducto"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:hint='Ej. Laptop HP 15"'
-            android:paddingHorizontal="16dp"
-            android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
-
-        <!-- Codigo -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Codigo"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-        <EditText
-            android:id="@+id/edtcodigo"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:hint="123-jdls"
-            android:paddingHorizontal="16dp"
-            android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
-
-        <!-- CATEGORIA -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Categoría"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-
-        <Spinner
-            android:id="@+id/spCategoria"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:paddingHorizontal="12dp"/>
-
-
-        <!-- PRECIO -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Precio de venta"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/edtPrecio"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:hint="Ej. 150000"
-            android:inputType="number"
-            android:paddingHorizontal="16dp"
-            android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
-        <!-- ROW -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stock"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/edtStock"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:hint="Ej. 10"
-            android:inputType="number"
-            android:paddingHorizontal="16dp"
-            android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Stock Minimo"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:textStyle="bold"/>
-        <EditText
-            android:id="@+id/edit_stockmini"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:hint="2"
-            android:inputType="number"
-            android:paddingHorizontal="16dp"
-            android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
-
-
-        <!-- DESCRIPCION -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Descripción (opcional)"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:gravity="top"
-            android:hint="Descripción del producto..."
-            android:padding="16dp"
-            android:textColor="#000000"
-            android:textColorHint="#9E9E9E"/>
-
-        <!-- BOTON -->
-        <Button
-            android:id="@+id/btnGuardarProducto"
-            style="@style/InvenzoButton"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="40dp"
-            android:text="Guardar producto"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

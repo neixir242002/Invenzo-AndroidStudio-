@@ -4,19 +4,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <!-- Icono de Notificaciones -->
-    <ImageView
-        android:id="@+id/btnNotificationsHeader"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
-        android:padding="6dp"
-        android:src="@drawable/ic_bell"
-        app:layout_constraintBottom_toBottomOf="@id/userPill"
-        app:layout_constraintEnd_toStartOf="@id/userPill"
-        app:layout_constraintTop_toTopOf="@id/userPill"
-        app:tint="#64748B" />
-
     <!-- Contenedor del Usuario (Pill) -->
     <LinearLayout
         android:id="@+id/userPill"
@@ -39,7 +26,7 @@
             android:background="@drawable/bg_circle_light_blue"
             android:padding="6dp"
             android:src="@drawable/ic_user"
-            app:tint="#0284C7" />
+            app:tint="@color/primaryColor" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,16 +39,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="David Ramos"
-                android:textColor="#111827"
+                android:textColor="@color/textPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:fontFamily="sans-serif"
+                android:textFontWeight="600" />
 
             <TextView
                 android:id="@+id/txtUserRoleCompanyHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Admin • Empresa"
-                android:textColor="#64748B"
+                android:textColor="@color/textSecondary"
                 android:textSize="11sp" />
         </LinearLayout>
     </LinearLayout>

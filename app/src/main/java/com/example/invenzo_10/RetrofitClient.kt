@@ -7,8 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-    // Cambiamos 127.0.0.1 por tu IP real para que el celular encuentre el servidor
+    // BASE_URL original para conexión via USB/ADB Reverse
     const val BASE_URL = "http://127.0.0.1:8000/"
+    
     private val client = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY

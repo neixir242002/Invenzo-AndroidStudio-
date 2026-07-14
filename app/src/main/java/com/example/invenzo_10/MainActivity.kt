@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
@@ -24,17 +23,21 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        enableEdgeToEdge()
+        // Habilitar Edge-to-Edge
+        applyEdgeToEdgeWithInsets(null)
         setContentView(R.layout.activity_main)
+        // En el login no solemos ajustar padding superior si el diseño es libre, 
+        // pero aplicamos la config de iconos oscuros.
+        applyEdgeToEdgeWithInsets(null)
 
         val inputCorreo = findViewById<TextInputLayout>(R.id.inputCorreo)
         val inputPassword = findViewById<TextInputLayout>(R.id.inputPassword)
         val btnLogin = findViewById<Button>(R.id.inicioSecion)
         val tvRegister = findViewById<TextView>(R.id.register)
 
-        btnLogin.setOnClickListener {
-            val correo = inputCorreo.editText?.text.toString().trim()
-            val password = inputPassword.editText?.text.toString().trim()
+        btnLogin?.setOnClickListener {
+            val correo = inputCorreo?.editText?.text.toString().trim()
+            val password = inputPassword?.editText?.text.toString().trim()
 
             if (correo.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             ejecutarLogin(correo, password)
         }
 
-        tvRegister.setOnClickListener {
+        tvRegister?.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))
         }
     }
@@ -60,12 +63,12 @@ class MainActivity : AppCompatActivity() {
                     val user = loginResponse?.user
 
                     if (!token.isNullOrEmpty() && user != null) {
-                        // Normalización de roles para compatibilidad con las restricciones de la app
-                        val rolOriginal = user.rol ?: "Usuario"
+                        val rolOriginal = user.rol ?: ""
                         val rolNormalizado = when {
-                            rolOriginal.contains("admin", ignoreCase = true) -> "Administrador"
+                            rolOriginal.equals("administrador_principal", ignoreCase = true) -> "Administrador Principal"
+                            rolOriginal.equals("administrador", ignoreCase = true) -> "Administrador"
                             rolOriginal.contains("aux", ignoreCase = true) -> "Auxiliar"
-                            else -> rolOriginal
+                            else -> "Administrador Principal"
                         }
 
                         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
@@ -75,7 +78,6 @@ class MainActivity : AppCompatActivity() {
                             putString("user_name", user.nombre)
                             putString("user_email", user.email)
                             putString("user_role", rolNormalizado)
-                            // Extraemos el nombre de la empresa del objeto EmpresaData
                             putString("user_company", user.empresa?.nombre ?: "Empresa")
                             apply()
                         }
@@ -97,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, destination)
         startActivity(intent)
         @Suppress("DEPRECATION")
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         if (finishCurrent) finish()
     }
 }

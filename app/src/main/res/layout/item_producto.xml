@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="0dp"
     android:layout_marginVertical="1dp"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp"
     app:strokeColor="@color/grayBorder"
@@ -75,7 +76,7 @@
             android:id="@+id/txtPrecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/primaryColor"
+            android:textColor="@color/primaryDark"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -120,17 +121,21 @@
                 android:textStyle="bold"
                 tools:text="Disponible" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@color/grayBorder" />
 
             <TextView
                 android:id="@+id/txtAcciones"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_green_icon"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
                 android:textSize="11sp"
-                android:textStyle="italic"
+                android:textStyle="bold"
                 tools:text="Activo" />
 
         </LinearLayout>

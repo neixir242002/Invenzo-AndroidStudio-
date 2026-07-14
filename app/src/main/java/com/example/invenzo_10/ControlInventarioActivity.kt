@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
@@ -37,14 +36,24 @@ class ControlInventarioActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        
+        // 1. Habilitar Edge-to-Edge
+        applyEdgeToEdgeWithInsets(null)
+        
         setContentView(R.layout.activity_control_inventario)
+
+        // Inicializar Gestor de Notificaciones
+        NotificacionManager.init(this)
+        NotificationUtils.setupNotificationButton(this)
+
+        // 2. Aplicar insets a la TopBar
+        applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
 
         mostrarDatosUsuario()
         initViews()
         setupSpinners()
         setupViewPagers()
-        setupBottomNavigation() // <-- Agregado para que funcione el Navbar
+        setupBottomNavigation()
         cargarDatos()
 
         btnRegistrar.setOnClickListener { registrarMovimiento() }
@@ -57,8 +66,14 @@ class ControlInventarioActivity : AppCompatActivity() {
         
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
-        val rol = prefs.getString("user_role", "Administrador")
+        var rol = prefs.getString("user_role", "Administrador Principal")
         val empresa = prefs.getString("user_company", "Empresa")
+
+        if (rol?.contains("admin", ignoreCase = true) == true && !rol.contains("Principal", ignoreCase = true)) {
+            rol = "Administrador Principal"
+        } else if (rol?.contains("principal", ignoreCase = true) == true) {
+            rol = "Administrador Principal"
+        }
 
         txtNombre?.text = nombre
         txtRoleCompany?.text = "$rol • $empresa"
@@ -113,21 +128,16 @@ class ControlInventarioActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        
-        // Marcar "Más" como seleccionado
         bottomNav?.selectedItemId = R.id.more
 
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val rol = prefs.getString("user_role", "Administrador")
+        val rol = prefs.getString("user_role", "Administrador Principal")
         
-        // Restricción para Auxiliar
         if (rol == "Auxiliar") {
             bottomNav?.menu?.findItem(R.id.categoria)?.isVisible = false
         }
 
         bottomNav?.setOnItemSelectedListener { item ->
-            // Si ya estamos en una subsección de "More", y pulsan "More" de nuevo, 
-            // volvemos al menú principal de opciones.
             val intent = when (item.itemId) {
                 R.id.home -> Intent(this, ActivityInicio::class.java)
                 R.id.products -> Intent(this, ProductosActivity::class.java)
@@ -138,10 +148,7 @@ class ControlInventarioActivity : AppCompatActivity() {
             }
 
             intent?.let {
-                it.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(it)
-                @Suppress("DEPRECATION")
-                overridePendingTransition(0, 0)
                 finish()
             }
             true
@@ -169,7 +176,7 @@ class ControlInventarioActivity : AppCompatActivity() {
 
                 val resMov = RetrofitClient.instance.getMovimientos(authHeader)
                 if (resMov.isSuccessful && resMov.body() != null) {
-                    val movimientos = resMov.body()!!.reversed()
+                    val movimientos = resMov.body()!!.sortedByDescending { it.createdAt ?: "" }
                     movimientoPagerAdapter.actualizar(movimientos)
                     txtPageIndicator.text = "1 / ${movimientoPagerAdapter.itemCount}"
                 }
@@ -187,9 +194,12 @@ class ControlInventarioActivity : AppCompatActivity() {
             return
         }
 
+        val nombreProducto = listaProductos.find { it.id == productoSeleccionadoId }?.nombre ?: "Desconocido"
+        val tipoOriginal = spinnerTipo.text.toString()
+
         val request = MovimientoRequest(
             producto_id = productoSeleccionadoId,
-            tipo = spinnerTipo.text.toString(),
+            tipo = tipoOriginal.lowercase(),
             cantidad = cantStr.toInt(),
             observacion = etObservaciones.text.toString()
         )
@@ -199,17 +209,50 @@ class ControlInventarioActivity : AppCompatActivity() {
             try {
                 val response = RetrofitClient.instance.registrarMovimiento("Bearer $token", request)
                 if (response.isSuccessful) {
-                    Toast.makeText(this@ControlInventarioActivity, "Movimiento registrado", Toast.LENGTH_SHORT).show()
+                    registrarEnAuditoria("Registró $tipoOriginal de $cantStr unidades del producto: $nombreProducto", "Control Inventario")
+                    
+                    val movData = response.body()?.movimiento
+                    val prodUpdated = movData?.producto
+
+                    // NOTIFICACIÓN DE MOVIMIENTO: Título "Control", Mensaje "salida/entrada de X unidades"
+                    val msgMov = "${tipoOriginal.lowercase()} de $cantStr unidades"
+                    NotificacionManager.addNotification(this@ControlInventarioActivity, "Control", msgMov, "MOVIMIENTO")
+
+                    // NOTIFICACIÓN DE STOCK: Título "Control", Mensaje "Control tiene stock bajo"
+                    if (prodUpdated != null && prodUpdated.cantidad <= prodUpdated.stockMinimo) {
+                        NotificacionManager.addNotification(
+                            this@ControlInventarioActivity,
+                            "Control",
+                            "Control tiene stock bajo",
+                            "STOCK"
+                        )
+                    }
+
+                    Toast.makeText(this@ControlInventarioActivity, "Movimiento registrado correctamente", Toast.LENGTH_SHORT).show()
                     etCantidad.text?.clear()
                     etObservaciones.text?.clear()
                     spinnerProducto.text?.clear()
                     productoSeleccionadoId = -1
-                    cargarDatos() // Recargar para ver cambios
+                    cargarDatos()
                 } else {
-                    Toast.makeText(this@ControlInventarioActivity, "Error al registrar", Toast.LENGTH_SHORT).show()
+                    val errorBody = response.errorBody()?.string() ?: "Error desconocido"
+                    Log.e("CONTROL", "Error ${response.code()}: $errorBody")
+                    Toast.makeText(this@ControlInventarioActivity, "Error ${response.code()}: $errorBody", Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@ControlInventarioActivity, "Error de red", Toast.LENGTH_SHORT).show()
+                Log.e("CONTROL", "Excepción", e)
+                Toast.makeText(this@ControlInventarioActivity, "Error de red: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun registrarEnAuditoria(accion: String, modulo: String) {
+        val token = getSharedPreferences("auth", MODE_PRIVATE).getString("token", "") ?: ""
+        lifecycleScope.launch {
+            try {
+                RetrofitClient.instance.registrarAuditoria("Bearer $token", AuditoriaRequest(accion, modulo))
+            } catch (e: Exception) {
+                Log.e("AUDIT", "Error al registrar auditoría", e)
             }
         }
     }

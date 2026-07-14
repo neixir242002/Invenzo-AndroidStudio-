@@ -1,5 +1,6 @@
 package com.example.invenzo_10
 
+import com.google.gson.JsonElement
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
@@ -17,7 +18,7 @@ data class UserData(
     val id: Int,
     val nombre: String,
     val email: String,
-    val rol: String?, // Viene del servidor como "administrador_principal", "auxiliar", etc.
+    val rol: String?, 
     val empresa: EmpresaData?
 )
 
@@ -31,7 +32,8 @@ data class RegisterRequest(
     val email: String,
     val password: String,
     @SerializedName("password_confirmation") val passwordConfirmation: String,
-    val empresa: String
+    val empresa: String,
+    val rol: String
 )
 
 data class UserCreateRequest(
@@ -50,21 +52,16 @@ data class Categoria(
     val id: Int,
     val nombre: String,
     @SerializedName("descripcion") val descripcion: String?,
-    
-    @SerializedName("productos_count", alternate = ["cantidad_productos", "productosCount", "cantidad"]) 
-    val productosCount: Int?, 
-    
-    @SerializedName("created_at", alternate = ["fecha_creacion", "fecha"]) 
-    val createdAt: String?,
-    
-    @SerializedName("activo", alternate = ["status", "estado", "is_active", "activa"]) 
-    val activo: Any? 
+    @SerializedName("productos_count") val productosCount: Int?, 
+    @SerializedName("created_at") val createdAt: String?,
+    @SerializedName(value = "activo", alternate = ["activa"]) var activo: Any?
 )
 
 data class CategoriaRequest(
     val nombre: String,
     val descripcion: String?,
-    @SerializedName("activa") val activa: Int = 1 
+    @SerializedName("activo") val activo: Int = 1,
+    @SerializedName("activa") val activa: Int = 1
 )
 
 data class ProductoRequest(
@@ -120,7 +117,93 @@ data class Movimiento(
     val cantidad: Int,
     val observacion: String?,
     @SerializedName("created_at") val createdAt: String?,
-    val producto: Producto
+    val producto: Producto,
+    val usuario: UsuarioAuditoria?
+)
+
+data class Auditoria(
+    val id: Int?,
+    @SerializedName("accion") val accion: String?,
+    @SerializedName("modulo") val modulo: String?,
+    @SerializedName("created_at") val fecha: String?,
+    @SerializedName("usuario") val usuario: UsuarioAuditoria?
+)
+
+data class UsuarioAuditoria(
+    @SerializedName("nombre") val nombre: String?
+)
+
+data class AuditoriaRequest(
+    @SerializedName("accion") val accion: String,
+    @SerializedName("modulo") val modulo: String
+)
+
+data class Notificacion(
+    val id: String,
+    val data: JsonElement?,
+    @SerializedName("created_at") val createdAt: String?,
+    @SerializedName("read_at") val readAt: String?,
+    @SerializedName("tipo") val tipoRoot: String?
+) {
+    val tipo: String get() = (tipoRoot ?: getStringFromData("tipo") ?: getStringFromData("type") ?: "SISTEMA").toString().uppercase()
+
+    val titulo: String get() {
+        // SEGÚN IMAGEN: Si es Movimiento o Stock, el título debe ser "Control"
+        if (tipo == "MOVIMIENTO" || tipo == "STOCK") return "Control"
+
+        // SEGÚN IMAGEN: Si es Nuevo Producto, el título es el nombre del producto (ej: "carros")
+        val t = getStringFromData("titulo") ?: getStringFromData("producto") ?: 
+                getStringFromData("nombre") ?: getStringFromData("title") ?: getStringFromData("producto_nombre")
+        
+        return t ?: "Inventario"
+    }
+
+    val mensaje: String get() {
+        // Intentar obtener el mensaje directo guardado por Laravel
+        val m = getStringFromData("mensaje") ?: getStringFromData("message") ?: getStringFromData("body")
+        if (!m.isNullOrBlank()) return m!!
+
+        // Construcción dinámica basada EXACTAMENTE en la imagen proporcionada
+        return when (tipo) {
+            "MOVIMIENTO" -> {
+                val mov = (getStringFromData("tipo_movimiento") ?: getStringFromData("tipo") ?: "movimiento").toString().lowercase()
+                val cant = (getStringFromData("cantidad") ?: "0")
+                "$mov de $cant unidades"
+            }
+            "STOCK" -> {
+                val t = titulo
+                if (t == "Control") "Control tiene stock bajo" else "$t tiene stock bajo"
+            }
+            "NUEVO_PRODUCTO" -> "Nuevo producto registrado"
+            else -> "Toca para ver detalles"
+        }
+    }
+
+    val leida: Boolean get() = readAt != null
+
+    private fun getStringFromData(key: String): String? {
+        return try {
+            if (data == null || data.isJsonNull || !data.isJsonObject) return null
+            val element = data.asJsonObject.get(key) ?: data.asJsonObject.get(key.lowercase())
+            if (element != null && !element.isJsonNull) {
+                return if (element.isJsonPrimitive) element.asString else element.toString().replace("\"", "")
+            }
+            null
+        } catch (e: Exception) { null }
+    }
+}
+
+/**
+ * Petición para crear una notificación.
+ * Incluye campos redundantes para asegurar que Laravel guarde los datos correctamente.
+ */
+data class NotificacionRequest(
+    val titulo: String,
+    val title: String,
+    val mensaje: String,
+    val message: String,
+    val tipo: String,
+    val type: String
 )
 
 data class ReporteGeneral(
@@ -138,9 +221,9 @@ data class EstadisticaMensual(
 )
 
 data class MovimientoSemanal(
-    val dia:String,
-    val entradas:Int,
-    val salidas:Int
+    val dia: String,
+    val entradas: Any,
+    val salidas: Any
 )
 
 data class CategoriaGrafica(
@@ -152,7 +235,7 @@ data class DashboardAndroid(
     val productos_total: Int,
     val categorias_total: Int,
     val movimientos_total: Int,
-    val valor_total: Double,
+    val valor_total: String,
     val stock_normal: Int,
     val stock_bajo: Int,
     val sin_stock: Int

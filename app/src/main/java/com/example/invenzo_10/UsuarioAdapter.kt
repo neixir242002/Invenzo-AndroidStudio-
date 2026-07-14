@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 
 class UsuarioAdapter(
-    private var listaUsuarios: List<UserData>
+    private var listaUsuarios: List<UserData>,
+    private val onItemClick: (UserData) -> Unit
 ) : RecyclerView.Adapter<UsuarioAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,8 +33,7 @@ class UsuarioAdapter(
         val context = holder.itemView.context
 
         holder.txtName.text = usuario.nombre
-        // Mostramos el email debajo del nombre usando el campo txtRole o podemos concatenar
-        holder.txtRole.text = "${usuario.rol?.replace("_", " ")?.capitalize() ?: "Usuario"} • ${usuario.email}"
+        holder.txtRole.text = "${usuario.rol?.replace("_", " ")?.replaceFirstChar { it.uppercase() } ?: "Usuario"} • ${usuario.email}"
 
         // Lógica de iniciales
         val iniciales = usuario.nombre.split(" ")
@@ -46,10 +46,13 @@ class UsuarioAdapter(
         holder.txtInitials.visibility = View.VISIBLE
         holder.imgProfile.visibility = View.GONE
 
-        // Estado (Simulado como Activo ya que el modelo no lo trae explícitamente, o podrías basarlo en algo)
         holder.txtStatus.text = "Activo"
         holder.badgeStatus.setCardBackgroundColor(ContextCompat.getColor(context, R.color.successLight))
         holder.txtStatus.setTextColor(ContextCompat.getColor(context, R.color.successColor))
+
+        holder.itemView.setOnClickListener {
+            onItemClick(usuario)
+        }
     }
 
     override fun getItemCount() = listaUsuarios.size

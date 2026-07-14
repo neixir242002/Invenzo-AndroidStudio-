@@ -2,6 +2,7 @@ package com.example.invenzo_10
 
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -12,14 +13,16 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
@@ -45,13 +48,20 @@ class ProductosActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        
+        applyEdgeToEdgeWithInsets(null)
         setContentView(R.layout.activity_productos)
+        
+        val topBar = findViewById<View>(R.id.topBar)
+        applyEdgeToEdgeWithInsets(topBar)
+
+        NotificacionManager.init(this)
+        NotificationUtils.setupNotificationButton(this)
 
         mostrarDatosUsuario()
         
         etBuscar = findViewById(R.id.editTextText)
-        btnExportar = findViewById(R.id.imageView5)
+        btnExportar = findViewById(R.id.imageViewExport)
         txtPageIndicator = findViewById(R.id.txtPageIndicator)
         vpProductos = findViewById(R.id.vpProductos)
 
@@ -59,13 +69,11 @@ class ProductosActivity : AppCompatActivity() {
         val rol = prefs.getString("user_role", "Administrador")
 
         pagerAdapter = ProductoPagerAdapter(listaProductosAMostrar) { producto, _, action ->
-            if (rol == "Auxiliar" && (action == "EDIT" || action == "TOGGLE" || action == "DELETE")) {
-                Toast.makeText(this, "No tienes permisos para esta acción", Toast.LENGTH_SHORT).show()
-            } else {
-                when (action) {
-                    "EDIT" -> abrirEditarProducto(producto)
-                    "TOGGLE" -> toggleEstado(producto)
-                    "DELETE" -> eliminarProductoDefinitivo(producto)
+            if (action == "SHOW_OPTIONS") {
+                if (rol == "Auxiliar") {
+                    Toast.makeText(this, "No tienes permisos para gestionar productos", Toast.LENGTH_SHORT).show()
+                } else {
+                    mostrarOpcionesProducto(producto)
                 }
             }
         }
@@ -82,19 +90,61 @@ class ProductosActivity : AppCompatActivity() {
         setupTabs()
         cargarProductos()
 
-        btnExportar.setOnClickListener {
+        btnExportar?.setOnClickListener {
             mostrarDialogoExportar()
         }
 
-        findViewById<FloatingActionButton>(R.id.agregarProducto).setOnClickListener {
+        findViewById<FloatingActionButton>(R.id.agregarProducto)?.setOnClickListener {
             startActivity(Intent(this, AgregarProductoActivity::class.java))
         }
 
-        findViewById<ImageView>(R.id.btnBack).setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+        configurarNavegacion()
+    }
+
+    private fun mostrarOpcionesProducto(producto: Producto) {
+        val dialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val view = layoutInflater.inflate(R.layout.dialog_producto_options, null)
+        
+        val btnEditar = view.findViewById<LinearLayout>(R.id.btnEditarProducto)
+        val btnCambiarEstado = view.findViewById<LinearLayout>(R.id.btnCambiarEstadoProducto)
+        val btnEliminar = view.findViewById<LinearLayout>(R.id.btnEliminarProducto)
+        val txtStatusAction = view.findViewById<TextView>(R.id.txtStatusActionProducto)
+        val imgStatusIcon = view.findViewById<ImageView>(R.id.imgStatusIconProducto)
+
+        val isActive = producto.activo == 1
+
+        if (isActive) {
+            txtStatusAction.text = "Desactivar Producto"
+            imgStatusIcon.setImageResource(R.drawable.icons8_alerta_24)
+            imgStatusIcon.setColorFilter(Color.parseColor("#DC2626"))
+        } else {
+            txtStatusAction.text = "Activar Producto"
+            imgStatusIcon.setImageResource(R.drawable.ic_check)
+            imgStatusIcon.setColorFilter(Color.parseColor("#059669"))
+        }
+        
+        btnEditar.setOnClickListener {
+            abrirEditarProducto(producto)
+            dialog.dismiss()
+        }
+        
+        btnCambiarEstado.setOnClickListener {
+            toggleEstado(producto)
+            dialog.dismiss()
         }
 
-        configurarNavegacion()
+        btnEliminar.setOnClickListener {
+            dialog.dismiss()
+            AlertDialog.Builder(this)
+                .setTitle("¿Eliminar Producto?")
+                .setMessage("¿Estás seguro de que deseas eliminar '${producto.nombre}'? Esta acción no se puede deshacer.")
+                .setPositiveButton("Eliminar") { _, _ -> eliminarProductoDefinitivo(producto) }
+                .setNegativeButton("Cancelar", null)
+                .show()
+        }
+        
+        dialog.setContentView(view)
+        dialog.show()
     }
 
     private fun mostrarDatosUsuario() {
@@ -103,8 +153,12 @@ class ProductosActivity : AppCompatActivity() {
         
         val prefs = getSharedPreferences("auth", MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
-        val rol = prefs.getString("user_role", "Administrador")
+        var rol = prefs.getString("user_role", "Administrador")
         val empresa = prefs.getString("user_company", "Empresa")
+
+        if (rol?.contains("principal", ignoreCase = true) == true) {
+            rol = "Administrador Principal"
+        }
 
         txtNombre?.text = nombre
         txtRoleCompany?.text = "$rol • $empresa"
@@ -143,7 +197,7 @@ class ProductosActivity : AppCompatActivity() {
                     EstadoProductoRequest(nuevoEstado)
                 )
                 if (response.isSuccessful) {
-                    Toast.makeText(this@ProductosActivity, "Estado actualizado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ProductosActivity, "Producto actualizado con éxito", Toast.LENGTH_SHORT).show()
                     cargarProductos()
                 } else {
                     Toast.makeText(this@ProductosActivity, "Error al actualizar estado", Toast.LENGTH_SHORT).show()
@@ -181,7 +235,7 @@ class ProductosActivity : AppCompatActivity() {
     }
 
     private fun setupBuscador() {
-        etBuscar.addTextChangedListener(object : TextWatcher {
+        etBuscar?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 aplicarFiltros()
@@ -196,23 +250,27 @@ class ProductosActivity : AppCompatActivity() {
         val tabSin = findViewById<TextView>(R.id.tabSinStock)
         val tabs = listOf(tabTodos, tabBajo, tabSin)
 
-        tabTodos.setOnClickListener { filtroActual = "TODOS"; actualizarUITabs(tabTodos, tabs) }
-        tabBajo.setOnClickListener { filtroActual = "BAJO"; actualizarUITabs(tabBajo, tabs) }
-        tabSin.setOnClickListener { filtroActual = "SIN"; actualizarUITabs(tabSin, tabs) }
+        tabTodos?.setOnClickListener { filtroActual = "TODOS"; actualizarUITabs(tabTodos, tabs) }
+        tabBajo?.setOnClickListener { filtroActual = "BAJO"; actualizarUITabs(tabBajo, tabs) }
+        tabSin?.setOnClickListener { filtroActual = "SIN"; actualizarUITabs(tabSin, tabs) }
     }
 
     private fun actualizarUITabs(seleccionada: TextView, todas: List<TextView>) {
         todas.forEach {
-            it.setTextColor(ContextCompat.getColor(this, R.color.textSecondary))
-            it.setTypeface(null, android.graphics.Typeface.NORMAL)
+            it?.setTextColor(ContextCompat.getColor(this, R.color.textSecondary))
+            it?.setTypeface(null, android.graphics.Typeface.NORMAL)
+            it?.background = null
         }
-        seleccionada.setTextColor(ContextCompat.getColor(this, R.color.primaryColor))
-        seleccionada.setTypeface(null, android.graphics.Typeface.BOLD)
+        seleccionada?.setTextColor(ContextCompat.getColor(this, R.color.primaryColor))
+        seleccionada?.setTypeface(null, android.graphics.Typeface.BOLD)
+        seleccionada?.setBackgroundResource(R.drawable.bg_user_pill)
+        seleccionada?.backgroundTintList = ContextCompat.getColorStateList(this, R.color.primaryLight)
+
         aplicarFiltros()
     }
 
     private fun aplicarFiltros() {
-        val textoBusqueda = etBuscar.text.toString().lowercase()
+        val textoBusqueda = etBuscar?.text.toString().lowercase()
         val filtrados = listaCompleta.filter { producto ->
             val coincideBusqueda = producto.nombre.lowercase().contains(textoBusqueda) || 
                                  producto.codigo.lowercase().contains(textoBusqueda)

@@ -5,13 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
-    <!-- TOP BAR -->
+
+
+    <!-- HEADER -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_light_background"
+        android:background="@color/white"
         android:padding="20dp"
+        android:elevation="2dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -19,8 +22,7 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:contentDescription="@string/desc_back_button"
-            android:rotation="900"
-            android:rotationX="6"
+            android:rotation="180"
             android:rotationY="180"
             android:src="@drawable/ic_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -28,13 +30,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/primaryColor" />
 
-
-        <include
-            layout="@layout/layout_user_header"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Editar Categoría"
+            android:textColor="@color/textPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnBack"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -54,23 +59,12 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <TextView
-                android:id="@+id/editUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="9dp"
-                android:text="Editar Categoría"
-                android:textColor="@color/primaryColor"
-                android:textSize="22sp"
-                android:layout_marginBottom="20dp"
-                android:textStyle="bold" />
-
             <!-- MAIN FORM CARD -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/DashboardCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,21 +77,18 @@
                         android:layout_height="wrap_content"
                         android:text="@string/category_name"
                         android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/etNombreCategoria"
+                        style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:autofillHints="name"
-                        android:background="@drawable/fondo_redondo"
-                        android:backgroundTint="#F3F4F6"
                         android:hint="@string/category_name"
-                        android:inputType="text"
-                        android:padding="16dp"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="16sp" />
+                        android:inputType="text" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -105,23 +96,19 @@
                         android:layout_marginTop="20dp"
                         android:text="@string/description"
                         android:textColor="@color/textSecondary"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/etDescripcionCategoria"
+                        style="@style/InvenzoInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:autofillHints="none"
-                        android:background="@drawable/fondo_redondo"
-                        android:backgroundTint="#F3F4F6"
                         android:gravity="top"
                         android:hint="@string/description"
                         android:inputType="textMultiLine"
-                        android:minLines="4"
-                        android:padding="16dp"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="16sp" />
+                        android:minLines="4" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -131,52 +118,24 @@
                 android:id="@+id/btnGuardarCambios"
                 style="@style/InvenzoButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="55dp"
                 android:layout_marginTop="30dp"
                 android:text="@string/save_changes"
-                app:icon="@drawable/ic_add"
+                android:textAllCaps="false"
+                app:icon="@drawable/ic_check"
                 app:iconGravity="textStart" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnEliminarCategoria"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/delete_category"
-                android:textColor="@color/dangerColor"
-                app:icon="@drawable/icons8_alerta_24"
-                app:iconGravity="textStart"
-                app:iconTint="@color/dangerColor" />
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
     <View
         android:id="@+id/bottomNavDivider"
-        style="@style/Divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="#E2E8F0"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- BOTTOM NAV -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:backgroundTint="@color/white"
-        android:elevation="8dp"
-        android:theme="@style/Theme.Material3.Light"
-        app:itemIconTint="@color/nav_item_color_state"
-        app:itemTextColor="@color/nav_item_color_state"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        android:layout_height="1dp"
+        android:background="@color/grayBorder"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

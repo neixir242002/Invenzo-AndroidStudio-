@@ -35,6 +35,7 @@ interface ApiService {
         @Part("_method") method: RequestBody,
         @Part("nombre") nombre: RequestBody,
         @Part("email") email: RequestBody,
+        @Part("rol") rol: RequestBody? = null,
         @Part foto: MultipartBody.Part?
     ): Response<GenericResponse>
 
@@ -67,6 +68,21 @@ interface ApiService {
     ): Response<GenericResponse>
 
     @Multipart
+    @POST("api/productos/{id}")
+    suspend fun actualizarProductoMultipart(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Part("_method") method: RequestBody,
+        @Part("nombre") nombre: RequestBody,
+        @Part("codigo") codigo: RequestBody,
+        @Part("categoria_id") categoriaId: RequestBody,
+        @Part("precio") precio: RequestBody,
+        @Part("cantidad") cantidad: RequestBody,
+        @Part("stock_minimo") stockMinimo: RequestBody,
+        @Part foto: MultipartBody.Part?
+    ): Response<GenericResponse>
+
+    @Multipart
     @POST("api/productos")
     suspend fun agregarProducto(
         @Header("Authorization") token: String,
@@ -76,6 +92,7 @@ interface ApiService {
         @Part("precio") precio: RequestBody,
         @Part("cantidad") cantidad: RequestBody,
         @Part("stock_minimo") stockMinimo: RequestBody,
+        @Part("activo") activo: RequestBody,
         @Part foto: MultipartBody.Part
     ): Response<GenericResponse>
 
@@ -107,7 +124,7 @@ interface ApiService {
     ): Response<GenericResponse>
 
     // --- MOVIMIENTOS ---
-    @Headers("Accept: application/json")
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("api/movimientos")
     suspend fun registrarMovimiento(
         @Header("Authorization") token: String,
@@ -119,6 +136,44 @@ interface ApiService {
     suspend fun getMovimientos(
         @Header("Authorization") token: String
     ): Response<List<Movimiento>>
+
+    // --- AUDITORIA ---
+    @Headers("Accept: application/json")
+    @GET("api/auditorias")
+    suspend fun getAuditorias(
+        @Header("Authorization") token: String
+    ): Response<List<Auditoria>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("api/auditorias")
+    suspend fun registrarAuditoria(
+        @Header("Authorization") token: String,
+        @Body request: AuditoriaRequest
+    ): Response<GenericResponse>
+
+    @DELETE("api/auditorias/limpiar")
+    suspend fun limpiarAuditorias(
+        @Header("Authorization") token: String
+    ): Response<GenericResponse>
+
+    // --- NOTIFICACIONES ---
+    @Headers("Accept: application/json")
+    @GET("api/notificaciones")
+    suspend fun getNotificaciones(
+        @Header("Authorization") token: String
+    ): Response<List<Notificacion>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("api/notificaciones")
+    suspend fun crearNotificacion(
+        @Header("Authorization") token: String,
+        @Body request: NotificacionRequest
+    ): Response<GenericResponse>
+
+    @DELETE("api/notificaciones/limpiar")
+    suspend fun limpiarNotificaciones(
+        @Header("Authorization") token: String
+    ): Response<GenericResponse>
 
     //================ REPORTES DASHBOARD =================//
 

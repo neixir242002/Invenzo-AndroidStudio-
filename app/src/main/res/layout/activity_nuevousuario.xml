@@ -11,6 +11,8 @@
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="2dp"
         android:padding="20dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -18,9 +20,9 @@
             android:id="@+id/btnBack"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/desc_back_button"
             android:rotation="180"
-            android:rotationY="184"
+            android:rotationY="180"
             android:src="@drawable/ic_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/new_user_title"
-            android:textColor="@color/primaryColor"
+            android:textColor="@color/textPrimary"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +75,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0dp"
-                        android:text="@string/full_name" />
+                        android:text="@string/full_name"
+                        android:textColor="@color/textSecondary" />
 
                     <EditText
                         android:id="@+id/etNombreUsuario"
@@ -81,16 +84,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="#F3F4F6"
                         android:autofillHints="name"
                         android:hint="@string/hint_full_name"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/textSecondary" />
 
                     <TextView
                         style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/email" />
+                        android:layout_marginTop="16dp"
+                        android:text="@string/email"
+                        android:textColor="@color/textSecondary" />
 
                     <EditText
                         android:id="@+id/etEmailUsuario"
@@ -99,15 +104,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:autofillHints="emailAddress"
-                        android:backgroundTint="#F3F4F6"
                         android:hint="@string/hint_email"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:textColorHint="@color/textSecondary" />
 
                     <TextView
                         style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/temp_password" />
+                        android:layout_marginTop="16dp"
+                        android:text="@string/temp_password"
+                        android:textColor="@color/textSecondary" />
 
                     <EditText
                         android:id="@+id/etPasswordUsuario"
@@ -115,56 +122,55 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:backgroundTint="#F3F4F6"
                         android:hint="@string/password_placeholder"
                         android:autofillHints="password"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:textColorHint="@color/textSecondary" />
 
                     <TextView
                         style="@style/InvenzoLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/rol" />
+                        android:layout_marginTop="16dp"
+                        android:text="@string/rol"
+                        android:textColor="@color/textSecondary" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:hint="@string/hint_type_required">
+                        android:hint="@string/hint_type_required"
+                        app:boxStrokeColor="@color/primaryColor"
+                        app:hintTextColor="@color/primaryColor">
 
                         <com.google.android.material.textfield.MaterialAutoCompleteTextView
                             android:id="@+id/Edit_rol"
-                            style="@style/InvenzoInput"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/fondo_redondo"
-                            android:backgroundTint="#F3F4F6"
-                            android:inputType="none" />
+                            android:backgroundTint="@color/white"
+                            android:inputType="none"
+                            android:padding="14dp"
+                            android:textColor="@color/textPrimary"
+                            android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-            <!-- CARD 2: ROLE & SECURITY -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/primaryColor"/>
 
             <!-- SAVE BUTTON -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGuardarUsuario"
                 style="@style/InvenzoButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="55dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:text="@string/save_user"
-                app:icon="@drawable/ic_launcher_foreground"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                app:icon="@drawable/ic_check"
                 app:iconGravity="textStart" />
 
         </LinearLayout>

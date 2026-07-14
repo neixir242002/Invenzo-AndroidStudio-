@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#F8FAFC">
+    android:background="@color/backgroundColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/app_name"
-            android:textColor="#1E293B"
+            android:textColor="@color/textPrimary"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/infobasica"
-            android:textColor="#64748B"
+            android:textColor="@color/textSecondary"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +46,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:layout_marginHorizontal="24dp"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/grayBorder"
+            app:strokeWidth="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/registration"
-                    android:textColor="#1E293B"
+                    android:textColor="@color/textPrimary"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -74,7 +78,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
                     android:text="@string/create_account"
-                    android:textColor="#64748B"
+                    android:textColor="@color/textSecondary"
                     android:textSize="14sp" />
 
                 <!-- NOMBRE -->
@@ -83,23 +87,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/hint_name"
-                    android:textColor="#64748B"
+                    android:textColor="@color/textSecondary"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputNombre"
-                    style="@style/LoginTextInputLayout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/primaryColor"
+                    app:hintTextColor="@color/primaryColor"
                     app:hintEnabled="false">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_name"
                         android:inputType="textPersonName"
-                        android:textColor="#1E293B"
+                        android:textColor="@color/textPrimary"
                         android:textSize="15sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,23 +115,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Nombre de la Empresa"
-                    android:textColor="#64748B"
+                    android:textColor="@color/textSecondary"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputEmpresa"
-                    style="@style/LoginTextInputLayout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/primaryColor"
+                    app:hintTextColor="@color/primaryColor"
                     app:hintEnabled="false">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Ej. Invenzo Corp"
                         android:inputType="text"
-                        android:textColor="#1E293B"
+                        android:textColor="@color/textPrimary"
                         android:textSize="15sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,23 +143,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Correo Electrónico"
-                    android:textColor="#64748B"
+                    android:textColor="@color/textSecondary"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputCorreo"
-                    style="@style/LoginTextInputLayout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/primaryColor"
+                    app:hintTextColor="@color/primaryColor"
                     app:hintEnabled="false">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_email"
                         android:inputType="textEmailAddress"
-                        android:textColor="#1E293B"
+                        android:textColor="@color/textPrimary"
                         android:textSize="15sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,16 +171,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/password"
-                    android:textColor="#64748B"
+                    android:textColor="@color/textSecondary"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputPassword"
-                    style="@style/LoginTextInputLayout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/primaryColor"
+                    app:hintTextColor="@color/primaryColor"
                     app:hintEnabled="false"
                     app:passwordToggleEnabled="true">
                     <com.google.android.material.textfield.TextInputEditText
@@ -178,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:hint="••••••••"
                         android:inputType="textPassword"
-                        android:textColor="#1E293B"
+                        android:textColor="@color/textPrimary"
                         android:textSize="15sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,16 +200,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Confirmar Contraseña"
-                    android:textColor="#64748B"
+                    android:textColor="@color/textSecondary"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inputConfirmar"
-                    style="@style/LoginTextInputLayout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    app:boxStrokeColor="@color/primaryColor"
+                    app:hintTextColor="@color/primaryColor"
                     app:hintEnabled="false"
                     app:passwordToggleEnabled="true">
                     <com.google.android.material.textfield.TextInputEditText
@@ -205,18 +219,22 @@
                         android:layout_height="wrap_content"
                         android:hint="••••••••"
                         android:inputType="textPassword"
-                        android:textColor="#1E293B"
+                        android:textColor="@color/textPrimary"
                         android:textSize="15sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- BOTON REGISTRO -->
                 <Button
                     android:id="@+id/buttonRegistro"
-                    style="@style/InvenzoButton"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="32dp"
-                    android:text="@string/create_account" />
+                    android:text="@string/create_account"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/primaryColor"
+                    app:cornerRadius="12dp" />
 
                 <!-- PROGRESS BAR -->
                 <ProgressBar
@@ -238,14 +256,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/already_have_account"
-                        android:textColor="#64748B" />
+                        android:textColor="@color/textSecondary" />
                     <TextView
                         android:id="@+id/textLogin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:text="@string/login_action"
-                        android:textColor="#2563EB"
+                        android:textColor="@color/primaryColor"
                         android:textStyle="bold" />
                 </LinearLayout>
 

@@ -9,7 +9,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -27,8 +27,17 @@ class ReportesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        
+        // 1. Habilitar Edge-to-Edge
+        applyEdgeToEdgeWithInsets(null)
+        
         setContentView(R.layout.activity_reportes)
+        
+        // 2. Aplicar insets a la TopBar
+        applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
+
+        NotificacionManager.init(this)
+        NotificationUtils.setupNotificationButton(this)
 
         viewPager = findViewById(R.id.viewPagerProductosReporte)
         txtPagina = findViewById(R.id.txtPagina)
@@ -64,8 +73,13 @@ class ReportesActivity : AppCompatActivity() {
         
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
-        val rol = prefs.getString("user_role", "Administrador")
+        var rol = prefs.getString("user_role", "Administrador")
         val empresa = prefs.getString("user_company", "Empresa")
+
+        // Asegurar que se muestre "Administrador Principal" correctamente
+        if (rol?.contains("principal", ignoreCase = true) == true) {
+            rol = "Administrador Principal"
+        }
 
         txtNombre?.text = nombre
         txtRoleCompany?.text = "$rol • $empresa"
@@ -73,7 +87,7 @@ class ReportesActivity : AppCompatActivity() {
 
     private fun setupSearch() {
         val etBuscar = findViewById<EditText>(R.id.etBuscarReporte)
-        etBuscar.addTextChangedListener(object : TextWatcher {
+        etBuscar?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 queryActual = s.toString()
@@ -88,21 +102,21 @@ class ReportesActivity : AppCompatActivity() {
         val btnCritico = findViewById<TextView>(R.id.btnFiltroCritico)
         val btnBajo = findViewById<TextView>(R.id.btnFiltroBajo)
 
-        btnTodo.setOnClickListener {
+        btnTodo?.setOnClickListener {
             filtroActual = "Todo"
-            actualizarUIFiltros(btnTodo, btnCritico, btnBajo)
+            actualizarUIFiltros(btnTodo, btnCritico!!, btnBajo!!)
             aplicarFiltros()
         }
 
-        btnCritico.setOnClickListener {
+        btnCritico?.setOnClickListener {
             filtroActual = "Crítico"
-            actualizarUIFiltros(btnCritico, btnTodo, btnBajo)
+            actualizarUIFiltros(btnCritico, btnTodo!!, btnBajo!!)
             aplicarFiltros()
         }
 
-        btnBajo.setOnClickListener {
+        btnBajo?.setOnClickListener {
             filtroActual = "Bajo"
-            actualizarUIFiltros(btnBajo, btnTodo, btnCritico)
+            actualizarUIFiltros(btnBajo, btnTodo!!, btnCritico!!)
             aplicarFiltros()
         }
     }
@@ -160,11 +174,19 @@ class ReportesActivity : AppCompatActivity() {
         val criticos = listaCompleta.count { it.cantidad == 0 }
         val bajos = listaCompleta.count { it.cantidad > 0 && it.cantidad <= it.stockMinimo }
         
-        findViewById<TextView>(R.id.productsNumber).text = criticos.toString()
-        findViewById<TextView>(R.id.stockNumber).text = bajos.toString()
+        findViewById<TextView>(R.id.productsNumber)?.text = criticos.toString()
+        findViewById<TextView>(R.id.stockNumber)?.text = bajos.toString()
         
-        val valorTotal = listaCompleta.sumOf { (it.precio.toDoubleOrNull() ?: 0.0) * it.cantidad }
-        findViewById<TextView>(R.id.valueNumber).text = "$${String.format("%.2f", valorTotal)}"
+        // Cálculo del valor necesario para reponer el stock hasta el mínimo permitido
+        val valorReposicion = listaCompleta
+            .filter { it.cantidad < it.stockMinimo }
+            .sumOf { producto ->
+                val faltante = producto.stockMinimo - producto.cantidad
+                val precio = producto.precio.toDoubleOrNull() ?: 0.0
+                faltante * precio
+            }
+
+        findViewById<TextView>(R.id.valueNumber)?.text = "$${String.format("%.2f", valorReposicion)}"
     }
 
     private fun actualizarViewPager(lista: List<Producto>) {
@@ -181,15 +203,15 @@ class ReportesActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.selectedItemId = R.id.reports
+        bottomNav?.selectedItemId = R.id.reports
 
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val rol = prefs.getString("user_role", "Administrador")
         if (rol == "Auxiliar") {
-            bottomNav.menu.findItem(R.id.categoria)?.isVisible = false
+            bottomNav?.menu?.findItem(R.id.categoria)?.isVisible = false
         }
 
-        bottomNav.setOnItemSelectedListener { item ->
+        bottomNav?.setOnItemSelectedListener { item ->
             if (item.itemId == R.id.reports) return@setOnItemSelectedListener true
             val intent = when (item.itemId) {
                 R.id.home -> Intent(this, ActivityInicio::class.java)

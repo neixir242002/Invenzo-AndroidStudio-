@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC"
+    android:background="@color/backgroundColor"
     tools:context=".MainActivity">
 
     <ImageView
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Invenzo"
-        android:textColor="#1E293B"
+        android:textColor="@color/textPrimary"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
-        app:strokeColor="#E2E8F0"
+        app:strokeColor="@color/grayBorder"
         app:strokeWidth="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Correo Electrónico"
-                android:textColor="#64748B"
+                android:textColor="@color/textSecondary"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
-                app:boxStrokeColor="#E2E8F0"
+                app:boxStrokeColor="@color/grayBorder"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:hint="ejemplo@correo.com"
                     android:inputType="textEmailAddress"
-                    android:textColor="#1E293B"
+                    android:textColor="@color/textPrimary"
                     android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Contraseña"
-                android:textColor="#64748B"
+                android:textColor="@color/textSecondary"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +110,7 @@
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusTopStart="12dp"
-                app:boxStrokeColor="#E2E8F0"
+                app:boxStrokeColor="@color/grayBorder"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:hint="••••••••"
                     android:inputType="textPassword"
-                    android:textColor="#1E293B"
+                    android:textColor="@color/textPrimary"
                     android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Recordarme"
-                android:textColor="#64748B"
+                android:textColor="@color/textSecondary"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/inputPassword" />
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¿Olvidaste tu contraseña?"
-                android:textColor="#2563EB"
+                android:textColor="@color/primaryColor"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/checkBox"
@@ -158,7 +158,7 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:backgroundTint="#2563EB"
+                android:backgroundTint="@color/primaryColor"
                 app:cornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¿No tienes cuenta?"
-                    android:textColor="#64748B" />
+                    android:textColor="@color/textSecondary" />
 
                 <TextView
                     android:id="@+id/register"
@@ -186,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:text="Regístrate"
-                    android:textColor="#2563EB"
+                    android:textColor="@color/primaryColor"
                     android:textStyle="bold" />
             </LinearLayout>
 

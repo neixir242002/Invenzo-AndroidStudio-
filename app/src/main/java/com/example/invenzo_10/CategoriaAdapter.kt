@@ -1,5 +1,7 @@
 package com.example.invenzo_10
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,34 +31,28 @@ class CategoriaAdapter(
         val item = lista[position]
 
         holder.nombre.text = item.nombre
-        
-        // Formatear fecha: mostrar solo la parte de la fecha si viene con hora
         val fechaTexto = item.createdAt?.split("T")?.get(0) ?: "N/A"
         holder.fecha.text = "Creado: $fechaTexto"
+        holder.cantidad.text = "${item.productosCount ?: 0} Productos"
         
-        // Cantidad de productos con valor por defecto
-        val count = item.productosCount ?: 0
-        holder.cantidad.text = "$count Productos"
-        
-        // Lógica flexible para el estado (soporta Int, String o Boolean)
-        val isActive = when (item.activo) {
-            is Number -> item.activo.toInt() == 1
-            is String -> item.activo == "1" ||
-                    item.activo.equals("active", true) ||
-                    item.activo.equals("activo", true)
-            is Boolean -> item.activo
-            null -> true // Si no viene el campo, asumir Activo
-            else -> true
+        // Lógica de estado ultra-robusta
+        val isActive = when (val value = item.activo) {
+            is Number -> value.toInt() == 1
+            is Boolean -> value
+            is String -> value == "1" || value.equals("active", true) || value.equals("activo", true)
+            else -> true // Por defecto activo si es nulo
         }
 
         if (isActive) {
             holder.estado.text = "Activo"
             holder.estado.setBackgroundResource(R.drawable.bg_green_icon)
-            holder.estado.backgroundTintList = null // Resetear por si fue usado antes
+            holder.estado.setTextColor(Color.parseColor("#059669"))
+            holder.estado.backgroundTintList = null 
         } else {
             holder.estado.text = "Inactivo"
             holder.estado.setBackgroundResource(R.drawable.bg_user_pill)
-            holder.estado.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.context, android.R.color.darker_gray)
+            holder.estado.setTextColor(Color.parseColor("#64748B"))
+            holder.estado.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#E2E8F0"))
         }
 
         holder.itemView.setOnClickListener {
