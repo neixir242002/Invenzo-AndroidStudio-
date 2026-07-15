@@ -1,6 +1,6 @@
 package com.example.invenzo_10
-
 import android.content.Context
+
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -31,6 +31,7 @@ class AgregarProductoActivity : AppCompatActivity() {
     private lateinit var edtStock: EditText
     private lateinit var edtStockMinimo: EditText
 
+//    Imagen del Producto
     private var rutaImagenGuardada: String? = null
     private var imagenTemporalUri: Uri? = null
 
@@ -130,7 +131,6 @@ class AgregarProductoActivity : AppCompatActivity() {
 
         guardarProducto(producto)
     }
-
     private fun guardarProducto(producto: ProductoRequest) {
         val prefs = getSharedPreferences("auth", MODE_PRIVATE)
         val token = prefs.getString("token", null)
@@ -222,6 +222,7 @@ class AgregarProductoActivity : AppCompatActivity() {
         }
     }
 
+
     private fun mostrarDialogoImagen() {
         val vista = layoutInflater.inflate(R.layout.dialog_imagen_producto, null)
         imgPreviewDialog = vista.findViewById(R.id.imgPreview)
@@ -251,6 +252,13 @@ class AgregarProductoActivity : AppCompatActivity() {
             }
         }
         dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(getColor(R.color.primaryColor))
+
+
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            .setTextColor(getColor(R.color.dangerColor))
+
     }
 
     private fun guardarImagenLocal(uri: Uri): String? {

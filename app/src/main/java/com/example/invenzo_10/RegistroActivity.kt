@@ -82,7 +82,8 @@ class RegistroActivity : AppCompatActivity() {
                     finish()
                 } else {
                     val errorJson = response.errorBody()?.string()
-                    Log.e("RegistroError", "Error del servidor: $errorJson")
+                    Log.e("RegistroError", "Código HTTP: ${response.code()}")
+                    Log.e("RegistroError", "Respuesta: $errorJson")
                     
                     val mensaje = try {
                         val json = JSONObject(errorJson ?: "{}")
