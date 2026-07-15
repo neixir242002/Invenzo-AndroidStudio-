@@ -8,12 +8,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
@@ -27,12 +30,12 @@ class ReportesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         // 1. Habilitar Edge-to-Edge
         applyEdgeToEdgeWithInsets(null)
-        
+
         setContentView(R.layout.activity_reportes)
-        
+
         // 2. Aplicar insets a la TopBar
         applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
 
@@ -41,7 +44,7 @@ class ReportesActivity : AppCompatActivity() {
 
         viewPager = findViewById(R.id.viewPagerProductosReporte)
         txtPagina = findViewById(R.id.txtPagina)
-        
+
         pagerAdapter = ReporteProductoPagerAdapter(emptyList())
         viewPager.adapter = pagerAdapter
 
@@ -70,11 +73,14 @@ class ReportesActivity : AppCompatActivity() {
     private fun mostrarDatosUsuario() {
         val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
         val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
-        
+        val imgProfile = findViewById<ImageView>(R.id.profileImageHeader)
+
+
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
         var rol = prefs.getString("user_role", "Administrador")
         val empresa = prefs.getString("user_company", "Empresa")
+        val fotoPath = prefs.getString("user_photo", "")
 
         // Asegurar que se muestre "Administrador Principal" correctamente
         if (rol?.contains("principal", ignoreCase = true) == true) {
@@ -83,6 +89,24 @@ class ReportesActivity : AppCompatActivity() {
 
         txtNombre?.text = nombre
         txtRoleCompany?.text = "$rol • $empresa"
+
+        if (imgProfile != null) {
+            if (!fotoPath.isNullOrEmpty()) {
+                val cleanPath = if (fotoPath.startsWith("/")) fotoPath.substring(1) else fotoPath
+                val fullUrl = if (fotoPath.startsWith("http")) fotoPath else "${RetrofitClient.BASE_URL}storage/$cleanPath"
+
+                Glide.with(this)
+                    .load(fullUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) // Forzar descarga
+                    .skipMemoryCache(true) // Ignorar caché en RAM
+                    .placeholder(R.drawable.ic_user)
+                    .error(R.drawable.ic_user)
+                    .circleCrop()
+                    .into(imgProfile)
+            } else {
+                imgProfile.setImageResource(R.drawable.ic_user)
+            }
+        }
     }
 
     private fun setupSearch() {
@@ -139,9 +163,9 @@ class ReportesActivity : AppCompatActivity() {
     private fun aplicarFiltros() {
         var listaFiltrada = listaCompleta
         if (queryActual.isNotEmpty()) {
-            listaFiltrada = listaFiltrada.filter { 
-                it.nombre.contains(queryActual, ignoreCase = true) || 
-                it.codigo.contains(queryActual, ignoreCase = true) 
+            listaFiltrada = listaFiltrada.filter {
+                it.nombre.contains(queryActual, ignoreCase = true) ||
+                        it.codigo.contains(queryActual, ignoreCase = true)
             }
         }
         listaFiltrada = when (filtroActual) {
@@ -173,10 +197,10 @@ class ReportesActivity : AppCompatActivity() {
     private fun actualizarResumenCards() {
         val criticos = listaCompleta.count { it.cantidad == 0 }
         val bajos = listaCompleta.count { it.cantidad > 0 && it.cantidad <= it.stockMinimo }
-        
+
         findViewById<TextView>(R.id.productsNumber)?.text = criticos.toString()
         findViewById<TextView>(R.id.stockNumber)?.text = bajos.toString()
-        
+
         // Cálculo del valor necesario para reponer el stock hasta el mínimo permitido
         val valorReposicion = listaCompleta
             .filter { it.cantidad < it.stockMinimo }
@@ -192,9 +216,9 @@ class ReportesActivity : AppCompatActivity() {
     private fun actualizarViewPager(lista: List<Producto>) {
         pagerAdapter.actualizar(lista)
         if (lista.isNotEmpty()) {
-            viewPager.post { 
+            viewPager.post {
                 viewPager.setCurrentItem(0, false)
-                actualizarIndicadorPagina(0) 
+                actualizarIndicadorPagina(0)
             }
         } else {
             txtPagina.text = "0 / 0"

@@ -9,6 +9,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
@@ -37,16 +39,12 @@ class ControlInventarioActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // 1. Habilitar Edge-to-Edge
         applyEdgeToEdgeWithInsets(null)
-        
         setContentView(R.layout.activity_control_inventario)
 
-        // Inicializar Gestor de Notificaciones
         NotificacionManager.init(this)
         NotificationUtils.setupNotificationButton(this)
 
-        // 2. Aplicar insets a la TopBar
         applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
 
         mostrarDatosUsuario()
@@ -63,11 +61,13 @@ class ControlInventarioActivity : AppCompatActivity() {
     private fun mostrarDatosUsuario() {
         val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
         val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        val imgProfile = findViewById<ImageView>(R.id.profileImageHeader)
         
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
         var rol = prefs.getString("user_role", "Administrador Principal")
         val empresa = prefs.getString("user_company", "Empresa")
+        val fotoPath = prefs.getString("user_photo", "")
 
         if (rol?.contains("admin", ignoreCase = true) == true && !rol.contains("Principal", ignoreCase = true)) {
             rol = "Administrador Principal"
@@ -77,6 +77,24 @@ class ControlInventarioActivity : AppCompatActivity() {
 
         txtNombre?.text = nombre
         txtRoleCompany?.text = "$rol • $empresa"
+
+        if (imgProfile != null) {
+            if (!fotoPath.isNullOrEmpty()) {
+                val cleanPath = if (fotoPath.startsWith("/")) fotoPath.substring(1) else fotoPath
+                val fullUrl = if (fotoPath.startsWith("http")) fotoPath else "${RetrofitClient.BASE_URL}storage/$cleanPath"
+                
+                Glide.with(this)
+                    .load(fullUrl)
+                    .placeholder(R.drawable.ic_user)
+                    .error(R.drawable.ic_user)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .circleCrop()
+                    .into(imgProfile)
+            } else {
+                imgProfile.setImageResource(R.drawable.ic_user)
+            }
+        }
     }
 
     private fun initViews() {
@@ -214,11 +232,9 @@ class ControlInventarioActivity : AppCompatActivity() {
                     val movData = response.body()?.movimiento
                     val prodUpdated = movData?.producto
 
-                    // NOTIFICACIÓN DE MOVIMIENTO: Título "Control", Mensaje "salida/entrada de X unidades"
                     val msgMov = "${tipoOriginal.lowercase()} de $cantStr unidades"
                     NotificacionManager.addNotification(this@ControlInventarioActivity, "Control", msgMov, "MOVIMIENTO")
 
-                    // NOTIFICACIÓN DE STOCK: Título "Control", Mensaje "Control tiene stock bajo"
                     if (prodUpdated != null && prodUpdated.cantidad <= prodUpdated.stockMinimo) {
                         NotificacionManager.addNotification(
                             this@ControlInventarioActivity,
@@ -255,5 +271,10 @@ class ControlInventarioActivity : AppCompatActivity() {
                 Log.e("AUDIT", "Error al registrar auditoría", e)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mostrarDatosUsuario()
     }
 }

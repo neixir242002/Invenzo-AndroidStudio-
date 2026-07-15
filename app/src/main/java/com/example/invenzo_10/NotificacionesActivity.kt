@@ -4,12 +4,16 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.signature.ObjectKey
 import kotlinx.coroutines.launch
 
 class NotificacionesActivity : AppCompatActivity() {
@@ -43,30 +47,15 @@ class NotificacionesActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                Log.d("NOTIF_DEBUG", "Iniciando carga con token: ${token.take(10)}...")
                 val response = RetrofitClient.instance.getNotificaciones("Bearer $token")
                 
                 if (response.isSuccessful) {
                     val notifications = response.body() ?: emptyList()
-                    Log.d("NOTIF_DEBUG", "Carga exitosa. Recibidas: ${notifications.size}")
-                    
-                    // DIAGNÓSTICO EN PANTALLA
-                    Toast.makeText(this@NotificacionesActivity, "Notificaciones recibidas: ${notifications.size}", Toast.LENGTH_SHORT).show()
-                    
-                    if (notifications.isNotEmpty()) {
-                        Log.d("NOTIF_DEBUG", "Primera notif: Título=${notifications[0].titulo}, Mensaje=${notifications[0].mensaje}")
-                    }
-                    
                     actualizarUI(notifications)
                 } else {
-                    val error = response.errorBody()?.string() ?: "Sin error body"
-                    Log.e("NOTIF_DEBUG", "Error ${response.code()}: $error")
-                    Toast.makeText(this@NotificacionesActivity, "Error al cargar: ${response.code()}", Toast.LENGTH_LONG).show()
                     actualizarUI(emptyList())
                 }
             } catch (e: Exception) {
-                Log.e("NOTIF_DEBUG", "Excepción: ${e.message}", e)
-                Toast.makeText(this@NotificacionesActivity, "Error de red: ${e.message}", Toast.LENGTH_LONG).show()
                 actualizarUI(emptyList())
             }
         }
@@ -101,14 +90,41 @@ class NotificacionesActivity : AppCompatActivity() {
     }
 
     private fun mostrarDatosUsuario() {
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        val imgProfile = findViewById<ImageView>(R.id.profileImageHeader)
+        
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        findViewById<TextView>(R.id.txtUserNameHeader)?.text = prefs.getString("user_name", "Usuario")
-        findViewById<TextView>(R.id.txtUserRoleCompanyHeader)?.text =
-            "${prefs.getString("user_role", "Admin")} • ${prefs.getString("user_company", "Empresa")}"
+        val nombre = prefs.getString("user_name", "Usuario")
+        val rol = prefs.getString("user_role", "Admin")
+        val empresa = prefs.getString("user_company", "Empresa")
+        val fotoPath = prefs.getString("user_photo", "")
+        
+        txtNombre?.text = nombre
+        txtRoleCompany?.text = "$rol • $empresa"
+
+        if (imgProfile != null) {
+            if (!fotoPath.isNullOrEmpty()) {
+                val cleanPath = if (fotoPath.startsWith("/")) fotoPath.substring(1) else fotoPath
+                val fullUrl = if (fotoPath.startsWith("http")) fotoPath else "${RetrofitClient.BASE_URL}storage/$cleanPath"
+                
+                Glide.with(this)
+                    .load(fullUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .placeholder(R.drawable.ic_user)
+                    .error(R.drawable.ic_user)
+                    .circleCrop()
+                    .into(imgProfile)
+            } else {
+                imgProfile.setImageResource(R.drawable.ic_user)
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
         cargarDesdeBaseDeDatos()
+        mostrarDatosUsuario()
     }
 }

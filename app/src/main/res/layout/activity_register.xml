@@ -103,7 +103,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Ej. Juan Perez"
+                        android:hint="@string/hint_name"
                         android:inputType="textPersonName"
                         android:textColor="@color/textPrimary"
                         android:textSize="15sp" />

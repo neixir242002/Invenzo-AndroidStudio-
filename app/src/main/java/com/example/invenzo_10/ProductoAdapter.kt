@@ -47,17 +47,19 @@ class ProductoAdapter(
         holder.stock.text = "Stock: ${producto.cantidad}"
         holder.precio.text = "$${producto.precio}"
 
-        val urlImagen = construirUrlImagen(producto.foto)
+        // USAMOS LA FUNCIÓN REALTIME PARA EVITAR CACHÉ COMPLETAMENTE
+        val urlImagen = RetrofitClient.obtenerUrlRealtime(producto.foto)
         
         Glide.with(context)
             .load(urlImagen)
             .placeholder(R.drawable.ic_launcher_background) 
             .error(R.drawable.ic_launcher_background)
-            .diskCacheStrategy(DiskCacheStrategy.ALL) 
+            .diskCacheStrategy(DiskCacheStrategy.NONE) 
+            .skipMemoryCache(true)
             .transform(CenterCrop(), RoundedCorners(24))
             .into(holder.imagen)
 
-        // --- ESTADO DE STOCK (Badge) ---
+        // --- ESTADO DE STOCK ---
         when {
             producto.cantidad == 0 -> {
                 holder.estado.text = "Sin stock"
@@ -79,7 +81,6 @@ class ProductoAdapter(
             }
         }
 
-        // --- ESTADO ACTIVO/INACTIVO (Igual que categorías) ---
         if (producto.activo == 1) {
             holder.accion.text = "Activo"
             holder.accion.setBackgroundResource(R.drawable.bg_green_icon)
@@ -92,17 +93,8 @@ class ProductoAdapter(
             holder.accion.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#E2E8F0"))
         }
 
-        // Notificar clic para mostrar BottomSheet
         holder.itemView.setOnClickListener {
             onAction(producto, position, "SHOW_OPTIONS")
         }
-    }
-
-    private fun construirUrlImagen(foto: String?): String? {
-        if (foto.isNullOrEmpty()) return null
-        if (foto.startsWith("http")) return foto
-        val baseUrl = RetrofitClient.BASE_URL.trimEnd('/')
-        val cleanPath = foto.trimStart('/')
-        return if (cleanPath.startsWith("storage/")) "$baseUrl/$cleanPath" else "$baseUrl/storage/$cleanPath"
     }
 }

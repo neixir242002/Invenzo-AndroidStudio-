@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-
     <!-- HEADER -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
@@ -22,25 +21,39 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:contentDescription="@string/desc_back_button"
-            android:rotation="180"
-            android:rotationY="180"
-            android:src="@drawable/ic_arrow"
+            android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/primaryColor" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Editar Categoría"
-            android:textColor="@color/textPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txtUserNameHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuario"
+                android:textColor="@color/textPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtUserRoleCompanyHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rol • Empresa"
+                android:textColor="@color/textSecondary"
+                android:textSize="12sp" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -48,7 +61,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar">
@@ -59,12 +72,21 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="Editar Categoría"
+                android:textColor="@color/textPrimary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
             <!-- MAIN FORM CARD -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/DashboardCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -75,7 +97,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/category_name"
+                        android:text="Nombre de la categoría"
                         android:textColor="@color/textSecondary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -86,15 +108,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:autofillHints="name"
-                        android:hint="@string/category_name"
+                        android:hint="Ej. Electrónica"
                         android:inputType="text" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="@string/description"
+                        android:text="Descripción"
                         android:textColor="@color/textSecondary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -106,9 +127,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:gravity="top"
-                        android:hint="@string/description"
+                        android:hint="Opcional"
                         android:inputType="textMultiLine"
-                        android:minLines="4" />
+                        android:minLines="3" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -120,22 +141,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginTop="30dp"
-                android:text="@string/save_changes"
+                android:text="Guardar Cambios"
                 android:textAllCaps="false"
                 app:icon="@drawable/ic_check"
                 app:iconGravity="textStart" />
 
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEliminarCategoria"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="12dp"
+                android:text="Eliminar Categoría"
+                android:textColor="@color/dangerColor"
+                android:textAllCaps="false"
+                app:icon="@drawable/ic_delete_trash"
+                app:iconTint="@color/dangerColor"
+                app:iconGravity="textStart" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <View
-        android:id="@+id/bottomNavDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grayBorder"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

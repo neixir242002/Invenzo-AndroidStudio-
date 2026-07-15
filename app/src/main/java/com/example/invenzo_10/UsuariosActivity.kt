@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
@@ -25,25 +28,20 @@ class UsuariosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Seguridad de rol: Solo el Principal accede aquí
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val rolActual = prefs.getString("user_role", "")
         if (rolActual != "Administrador Principal") {
-            Toast.makeText(this, "Acceso denegado: Solo el Administrador Principal puede gestionar usuarios", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Acceso denegado", Toast.LENGTH_LONG).show()
             finish()
             return
         }
 
-        // Aplicar Edge-to-Edge y manejo de insets
         applyEdgeToEdgeWithInsets(null)
         setContentView(R.layout.activity_usuarios)
         applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
 
-        //Mostras notificaciones
         NotificacionManager.init(this)
         NotificationUtils.setupNotificationButton(this)
-
-
 
         initViews()
         setupRecyclerView()
@@ -59,10 +57,8 @@ class UsuariosActivity : AppCompatActivity() {
         }
     }
 
-    // --- ACTUALIZACIÓN EN TIEMPO REAL ---
     override fun onResume() {
         super.onResume()
-        // Refrescar la lista y los datos del header al volver a la actividad
         cargarUsuarios()
         mostrarDatosUsuario()
     }
@@ -89,6 +85,7 @@ class UsuariosActivity : AppCompatActivity() {
                     putExtra("user_name", usuario.nombre)
                     putExtra("user_email", usuario.email)
                     putExtra("user_role", usuario.rol)
+                    putExtra("user_photo", usuario.foto)
                     putExtra("is_editing_other", true)
                 }
                 startActivity(intent)
@@ -116,14 +113,34 @@ class UsuariosActivity : AppCompatActivity() {
     private fun mostrarDatosUsuario() {
         val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
         val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
-        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val imgProfile = findViewById<ImageView>(R.id.profileImageHeader)
         
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
         val nombre = prefs.getString("user_name", "Usuario")
         val rol = prefs.getString("user_role", "")
         val empresa = prefs.getString("user_company", "")
+        val fotoPath = prefs.getString("user_photo", "")
         
         txtNombre?.text = nombre
         txtRoleCompany?.text = "$rol • $empresa"
+
+        if (imgProfile != null) {
+            if (!fotoPath.isNullOrEmpty()) {
+                // USAMOS OBTENER URL REALTIME PARA CARGA INSTANTÁNEA
+                val fullUrl = RetrofitClient.obtenerUrlRealtime(fotoPath)
+                
+                Glide.with(this)
+                    .load(fullUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .placeholder(R.drawable.ic_user)
+                    .error(R.drawable.ic_user)
+                    .circleCrop()
+                    .into(imgProfile)
+            } else {
+                imgProfile.setImageResource(R.drawable.ic_user)
+            }
+        }
     }
 
     private fun setupBottomNavigation() {

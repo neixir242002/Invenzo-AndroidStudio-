@@ -1,6 +1,5 @@
 package com.example.invenzo_10
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -13,6 +12,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -31,55 +32,46 @@ class EditarProductoActivity : AppCompatActivity() {
     private lateinit var edtStockMinimo: EditText
     private lateinit var spCategoria: Spinner
     private lateinit var imgProducto: ImageView
-    
+
     private var productoId: Int = -1
     private var listaCategorias: List<Categoria> = emptyList()
     private var nombreCategoriaActual: String? = null
-    
-    private var rutaImagenGuardada: String? = null
     private var imagenTemporalUri: Uri? = null
     private var imgPreviewDialog: ImageView? = null
+    private var rutaImagenActual: String? = null
 
     private val seleccionarImagen =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
                 imagenTemporalUri = it
                 imgPreviewDialog?.setImageURI(it)
-                rutaImagenGuardada = guardarImagenLocal(it)
+                imgProducto.setImageURI(it)
             }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
-        // 1. Habilitar Edge-to-Edge
         applyEdgeToEdgeWithInsets(null)
         setContentView(R.layout.activity_editar_producto)
-        
-        // 2. Aplicar insets a la TopBar
-        val topBar = findViewById<View>(R.id.topBar)
-        if (topBar != null) {
-            applyEdgeToEdgeWithInsets(topBar)
-        }
 
-        // 3. Obtener datos con seguridad
+        val topBar = findViewById<View>(R.id.topBar)
+        if (topBar != null) applyEdgeToEdgeWithInsets(topBar)
+
         productoId = intent.getIntExtra("id", -1)
         val nombreProd = intent.getStringExtra("nombre") ?: ""
         val codigoProd = intent.getStringExtra("codigo") ?: ""
         nombreCategoriaActual = intent.getStringExtra("categoria")
-        val rutaImagen = intent.getStringExtra("rutaImagen")
-        
-        // IMPORTANTE: Aseguramos que se lea como Double ya que se envía como tal
+        rutaImagenActual = intent.getStringExtra("rutaImagen")
+
         val precioProd = try {
             intent.getDoubleExtra("precio", 0.0)
         } catch (e: Exception) {
             intent.getStringExtra("precio")?.toDoubleOrNull() ?: 0.0
         }
-        
+
         val stockProd = intent.getIntExtra("stock", 0)
         val stockMinProd = intent.getIntExtra("stockmini", 0)
 
-        // 4. Vincular vistas
         edtNombre = findViewById(R.id.edtNombre)
         edtPrecio = findViewById(R.id.edtPrecio)
         edtCodigo = findViewById(R.id.edtCodigo)
@@ -89,37 +81,31 @@ class EditarProductoActivity : AppCompatActivity() {
         imgProducto = findViewById(R.id.imgProducto)
         val layoutImagen = findViewById<View>(R.id.layoutImagen)
 
-        // 5. Poblar campos
         edtNombre.setText(nombreProd)
         edtCodigo.setText(codigoProd)
         edtPrecio.setText(precioProd.toString())
         edtStock.setText(stockProd.toString())
         edtStockMinimo.setText(stockMinProd.toString())
 
-        // Cargar imagen actual
-        if (!rutaImagen.isNullOrEmpty()) {
-            val urlCompleta = if (rutaImagen.startsWith("http")) rutaImagen else "${RetrofitClient.BASE_URL}storage/$rutaImagen"
+        cargarImagenActual()
+
+        cargarCategorias()
+
+        findViewById<ImageView>(R.id.btnBack)?.setOnClickListener { finish() }
+        findViewById<Button>(R.id.btnGuardar)?.setOnClickListener { actualizarProducto() }
+        layoutImagen?.setOnClickListener { mostrarDialogoImagen() }
+    }
+
+    private fun cargarImagenActual() {
+        rutaImagenActual?.let {
+            val urlCompleta = RetrofitClient.obtenerUrlRealtime(it)
             Glide.with(this)
                 .load(urlCompleta)
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .error(android.R.drawable.ic_menu_report_image)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(imgProducto)
-        }
-
-        // 6. Cargar categorías
-        cargarCategorias()
-
-        // 7. Configurar listeners
-        findViewById<ImageView>(R.id.btnBack)?.setOnClickListener { 
-            finish() 
-        }
-        
-        findViewById<Button>(R.id.btnGuardar)?.setOnClickListener { 
-            actualizarProducto() 
-        }
-
-        layoutImagen?.setOnClickListener {
-            mostrarDialogoImagen()
         }
     }
 
@@ -135,12 +121,9 @@ class EditarProductoActivity : AppCompatActivity() {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     spCategoria.adapter = adapter
 
-                    // Seleccionar la categoría actual
                     nombreCategoriaActual?.let { nombre ->
                         val index = nombres.indexOf(nombre)
-                        if (index != -1) {
-                            spCategoria.setSelection(index)
-                        }
+                        if (index != -1) spCategoria.setSelection(index)
                     }
                 }
             } catch (e: Exception) {
@@ -172,9 +155,8 @@ class EditarProductoActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                val response = if (rutaImagenGuardada != null) {
-                    // Actualización con nueva imagen (Multipart)
-                    val archivo = File(rutaImagenGuardada!!)
+                val response = if (imagenTemporalUri != null) {
+                    val archivo = uriToFile(imagenTemporalUri!!)
                     val requestFile = archivo.asRequestBody("image/*".toMediaTypeOrNull())
                     val fotoPart = MultipartBody.Part.createFormData("foto", archivo.name, requestFile)
 
@@ -191,23 +173,30 @@ class EditarProductoActivity : AppCompatActivity() {
                         fotoPart
                     )
                 } else {
-                    // Actualización sin cambiar imagen (JSON)
                     val request = EditarProductoRequest(nombre, codigo, categoriaId, stock, stockMin, precio)
                     RetrofitClient.instance.actualizarProducto("Bearer $token", productoId, request)
                 }
 
                 if (response.isSuccessful) {
-                    registrarEnAuditoria("Editó el producto: $nombre", "Productos")
                     Toast.makeText(this@EditarProductoActivity, "Producto actualizado", Toast.LENGTH_SHORT).show()
+
+                    rutaImagenActual?.let {
+                        val urlCompleta = RetrofitClient.obtenerUrlRealtime(it)
+                        Glide.with(this@EditarProductoActivity)
+                            .load(urlCompleta)
+                            .signature(ObjectKey(System.currentTimeMillis().toString()))
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .into(imgProducto)
+                    }
+
                     finish()
                 } else {
-                    val error = response.errorBody()?.string() ?: "Error desconocido"
-                    Log.e("EDIT", "Error: $error")
                     Toast.makeText(this@EditarProductoActivity, "Error al actualizar", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                Log.e("EDIT", "Error de red", e)
                 Toast.makeText(this@EditarProductoActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+                Log.e("EDIT", "Fallo actualizar producto", e)
             }
         }
     }
@@ -217,14 +206,17 @@ class EditarProductoActivity : AppCompatActivity() {
         imgPreviewDialog = vista.findViewById(R.id.imgPreview)
         val btnSeleccionar = vista.findViewById<Button>(R.id.btnSeleccionar)
 
-        // Cargar imagen actual en el preview del diálogo
-        if (imagenTemporalUri != null) {
-            imgPreviewDialog?.setImageURI(imagenTemporalUri)
-        } else {
-            val rutaImagen = intent.getStringExtra("rutaImagen")
-            if (!rutaImagen.isNullOrEmpty()) {
-                val urlCompleta = if (rutaImagen.startsWith("http")) rutaImagen else "${RetrofitClient.BASE_URL}storage/$rutaImagen"
-                Glide.with(this).load(urlCompleta).into(imgPreviewDialog!!)
+        imagenTemporalUri?.let {
+            imgPreviewDialog?.setImageURI(it)
+        } ?: run {
+            rutaImagenActual?.let {
+                val urlCompleta = RetrofitClient.obtenerUrlRealtime(it)
+                Glide.with(this)
+                    .load(urlCompleta)
+                    .signature(ObjectKey(System.currentTimeMillis().toString()))
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(imgPreviewDialog!!)
             }
         }
 
@@ -236,9 +228,7 @@ class EditarProductoActivity : AppCompatActivity() {
             .setNegativeButton("Cancelar") { d, _ -> d.dismiss() }
             .create()
 
-        btnSeleccionar.setOnClickListener {
-            seleccionarImagen.launch("image/*")
-        }
+        btnSeleccionar.setOnClickListener { seleccionarImagen.launch("image/*") }
 
         dialog.setOnShowListener {
             val btnGuardarDialogo = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
@@ -252,32 +242,17 @@ class EditarProductoActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun guardarImagenLocal(uri: Uri): String? {
-        return try {
-            val inputStream = contentResolver.openInputStream(uri)
-            val bitmap = BitmapFactory.decodeStream(inputStream)
-            inputStream?.close()
-            val directorio = File(filesDir, "productos").apply { if (!exists()) mkdirs() }
-            val archivo = File(directorio, "producto_edit_${System.currentTimeMillis()}.jpg")
-            val fos = FileOutputStream(archivo)
-            bitmap?.compress(Bitmap.CompressFormat.JPEG, 90, fos)
-            fos.flush()
-            fos.close()
-            archivo.absolutePath
-        } catch (e: Exception) {
-            Log.e("IMG", "Error al guardar imagen local", e)
-            null
-        }
-    }
+    private fun uriToFile(uri: Uri): File {
+        val inputStream = contentResolver.openInputStream(uri)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        inputStream?.close()
 
-    private fun registrarEnAuditoria(accion: String, modulo: String) {
-        val token = getSharedPreferences("auth", MODE_PRIVATE).getString("token", "") ?: ""
-        lifecycleScope.launch {
-            try {
-                RetrofitClient.instance.registrarAuditoria("Bearer $token", AuditoriaRequest(accion, modulo))
-            } catch (e: Exception) { 
-                Log.e("AUDIT", "Error: ${e.message}") 
-            }
+        val directorio = File(cacheDir, "productos").apply { if (!exists()) mkdirs() }
+        val archivo = File(directorio, "producto_edit_${System.currentTimeMillis()}.jpg")
+        FileOutputStream(archivo).use { fos ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos)
+            fos.flush()
         }
+        return archivo
     }
 }

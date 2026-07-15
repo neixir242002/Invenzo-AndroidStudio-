@@ -17,6 +17,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
@@ -28,9 +30,6 @@ class AuditoriaActivity : AppCompatActivity() {
     private lateinit var etBuscar: EditText
     private lateinit var txtPageIndicator: TextView
     private lateinit var spinnerModulos: Spinner
-
-    private var listaAuditoriaCompleta = listOf<Auditoria>()
-    private var moduloSeleccionado = "Todos los módulos"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,6 +93,9 @@ class AuditoriaActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
+
+    private var listaAuditoriaCompleta = listOf<Auditoria>()
+    private var moduloSeleccionado = "Todos los módulos"
 
     private fun mostrarConfirmacionLimpiar() {
         if (listaAuditoriaCompleta.isEmpty()) {
@@ -185,11 +187,42 @@ class AuditoriaActivity : AppCompatActivity() {
         txtPageIndicator.text = if (totalPaginas == 0) "0 / 0" else "${position + 1} / $totalPaginas"
     }
 
+    override fun onResume() {
+        super.onResume()
+        mostrarDatosUsuario()
+    }
+
     private fun mostrarDatosUsuario() {
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        val txtRoleHeader = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        val imgProfile = findViewById<ImageView>(R.id.profileImageHeader)
+
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        findViewById<TextView>(R.id.txtUserNameHeader)?.text = prefs.getString("user_name", "Usuario")
-        findViewById<TextView>(R.id.txtUserRoleCompanyHeader)?.text =
-            "${prefs.getString("user_role", "Admin")} • ${prefs.getString("user_company", "Empresa")}"
+        val nombre = prefs.getString("user_name", "Usuario")
+        val rol = prefs.getString("user_role", "Admin")
+        val empresa = prefs.getString("user_company", "Empresa")
+        val fotoPath = prefs.getString("user_photo", "")
+
+        txtNombre?.text = nombre
+        txtRoleHeader?.text = "$rol • $empresa"
+
+        if (imgProfile != null) {
+            if (!fotoPath.isNullOrEmpty()) {
+                val cleanPath = if (fotoPath.startsWith("/")) fotoPath.substring(1) else fotoPath
+                val fullUrl = if (fotoPath.startsWith("http")) fotoPath else "${RetrofitClient.BASE_URL}storage/$cleanPath"
+                
+                Glide.with(this)
+                    .load(fullUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .placeholder(R.drawable.ic_user)
+                    .error(R.drawable.ic_user)
+                    .circleCrop()
+                    .into(imgProfile)
+            } else {
+                imgProfile.setImageResource(R.drawable.ic_user)
+            }
+        }
     }
 
     private fun setupBottomNavigation() {

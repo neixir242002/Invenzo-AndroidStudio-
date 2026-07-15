@@ -16,6 +16,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,7 +36,7 @@ class HistorialInventarioActivity : AppCompatActivity() {
     private lateinit var txtPageIndicator: TextView
 
     private var listaMovimientosCompleta = listOf<Movimiento>()
-    private var listaActual = listOf<Movimiento>() // Lo que se ve actualmente (filtrado)
+    private var listaActual = listOf<Movimiento>() 
 
     private val createDocumentLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) { uri ->
         uri?.let { exportarAExcel(it) }
@@ -47,10 +49,8 @@ class HistorialInventarioActivity : AppCompatActivity() {
         setContentView(R.layout.activity_historial_inventario)
         applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
 
-        //Mostras notificaciones
         NotificacionManager.init(this)
         NotificationUtils.setupNotificationButton(this)
-
 
         txtEmpty = findViewById(R.id.txtEmpty)
         etBuscar = findViewById(R.id.etBuscarMovimiento)
@@ -92,7 +92,6 @@ class HistorialInventarioActivity : AppCompatActivity() {
     }
 
     private fun exportarAExcel(uri: Uri) {
-        // Capturamos la lista actual para evitar cambios durante el proceso
         val datosAExportar = listaActual.toList()
         
         lifecycleScope.launch(Dispatchers.IO) {
@@ -100,14 +99,12 @@ class HistorialInventarioActivity : AppCompatActivity() {
                 val workbook = XSSFWorkbook()
                 val sheet = workbook.createSheet("Historial Inventario")
 
-                // 1. Crear Cabeceras
                 val headerRow = sheet.createRow(0)
                 val headers = arrayOf("Producto", "Código", "Tipo", "Cantidad", "Fecha", "Usuario", "Categoría", "Notas")
                 headers.forEachIndexed { index, title ->
                     headerRow.createCell(index).setCellValue(title)
                 }
 
-                // 2. Llenar Datos
                 var rowIdx = 1
                 var totalEntradas = 0
                 var totalSalidas = 0
@@ -126,7 +123,6 @@ class HistorialInventarioActivity : AppCompatActivity() {
                     if (mov.tipo.lowercase().contains("entrada")) totalEntradas++ else totalSalidas++
                 }
 
-                // 3. Añadir Resumen
                 rowIdx += 2
                 val resumenRow = sheet.createRow(rowIdx++)
                 resumenRow.createCell(0).setCellValue("RESUMEN")
@@ -143,7 +139,6 @@ class HistorialInventarioActivity : AppCompatActivity() {
                 salRow.createCell(0).setCellValue("Salidas")
                 salRow.createCell(1).setCellValue(totalSalidas.toDouble())
 
-                // 4. Escribir al Stream
                 contentResolver.openOutputStream(uri)?.use { outputStream ->
                     workbook.write(outputStream)
                     outputStream.flush()
@@ -186,7 +181,6 @@ class HistorialInventarioActivity : AppCompatActivity() {
                 val response = RetrofitClient.instance.getMovimientos("Bearer $token")
                 if (response.isSuccessful) {
                     val body = response.body() ?: emptyList()
-                    // Ordenamos por fecha descendente
                     listaMovimientosCompleta = body.sortedByDescending { it.createdAt ?: "" }
                     listaActual = listaMovimientosCompleta
                     adapter.actualizar(listaActual)
@@ -224,10 +218,36 @@ class HistorialInventarioActivity : AppCompatActivity() {
     }
 
     private fun mostrarDatosUsuario() {
+        val txtNombre = findViewById<TextView>(R.id.txtUserNameHeader)
+        val txtRoleCompany = findViewById<TextView>(R.id.txtUserRoleCompanyHeader)
+        val imgProfile = findViewById<ImageView>(R.id.profileImageHeader)
+        
         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        findViewById<TextView>(R.id.txtUserNameHeader)?.text = prefs.getString("user_name", "Usuario")
-        findViewById<TextView>(R.id.txtUserRoleCompanyHeader)?.text =
-            "${prefs.getString("user_role", "Admin")} • ${prefs.getString("user_company", "Empresa")}"
+        val nombre = prefs.getString("user_name", "Usuario")
+        val rol = prefs.getString("user_role", "Admin")
+        val empresa = prefs.getString("user_company", "Empresa")
+        val fotoPath = prefs.getString("user_photo", "")
+
+        txtNombre?.text = nombre
+        txtRoleCompany?.text = "$rol • $empresa"
+
+        if (imgProfile != null) {
+            if (!fotoPath.isNullOrEmpty()) {
+                val cleanPath = if (fotoPath.startsWith("/")) fotoPath.substring(1) else fotoPath
+                val fullUrl = if (fotoPath.startsWith("http")) fotoPath else "${RetrofitClient.BASE_URL}storage/$cleanPath"
+                
+                Glide.with(this)
+                    .load(fullUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .placeholder(R.drawable.ic_user)
+                    .error(R.drawable.ic_user)
+                    .circleCrop()
+                    .into(imgProfile)
+            } else {
+                imgProfile.setImageResource(R.drawable.ic_user)
+            }
+        }
     }
 
     private fun setupBottomNavigation() {

@@ -78,8 +78,12 @@
         <item name="android:background">@color/grayBorder</item>
     </style>
 
-    <style name="circleImage">
+    <!-- Estilo para imágenes circulares (usado en múltiples layouts) -->
+    <style name="CircleImage">
         <item name="cornerSize">50%</item>
     </style>
+
+    <!-- Alias para compatibilidad con layouts que usan minúsculas -->
+    <style name="circleImage" parent="CircleImage" />
 
 </resources>

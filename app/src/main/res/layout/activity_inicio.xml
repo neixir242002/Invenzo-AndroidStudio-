@@ -16,7 +16,6 @@
         android:padding="20dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Notificaciones a la izquierda -->
         <FrameLayout
             android:id="@+id/btnNotificationsTop"
             android:layout_width="32dp"
@@ -56,408 +55,430 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView2"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@id/bottomNavDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <TextView
-                android:id="@+id/txtWelcomeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:text="Bienvenido"
-                android:textColor="@color/textPrimary"
-                android:textSize="22sp"
-                android:textFontWeight="600" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Resumen de inventario"
-                android:textColor="@color/textSecondary"
-                android:textSize="14sp"
-                android:layout_marginBottom="20dp" />
-
-            <!-- FILA 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/DashboardCard"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/txtWelcomeTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
-                        <ImageView
-                            android:id="@+id/iconProducts"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_blue_icon"
-                            android:padding="8dp"
-                            android:src="@drawable/icons8_caja_llena_24"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/primaryColor" />
-                        <TextView
-                            android:id="@+id/lblProducts"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Productos"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="13sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/iconProducts" />
-                        <TextView
-                            android:id="@+id/productsNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="24sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/lblProducts" />
-                        <TextView
-                            android:id="@+id/productsStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="0 registrados"
-                            android:textColor="@color/successColor"
-                            android:textSize="11sp"
-                            android:fontFamily="sans-serif"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/productsNumber" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
+                    android:fontFamily="sans-serif"
+                    android:text="Bienvenido"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="22sp"
+                    android:textFontWeight="600" />
 
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/DashboardCard"
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_weight="1">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
-                        <ImageView
-                            android:id="@+id/iconStock"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_red_icon"
-                            android:padding="8dp"
-                            android:src="@drawable/icons8_alerta_24"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/dangerColor" />
-                        <TextView
-                            android:id="@+id/lblStock"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Stock Bajo"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="13sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/iconStock" />
-                        <TextView
-                            android:id="@+id/stockNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="24sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/lblStock" />
-                        <TextView
-                            android:id="@+id/stockStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Sin alertas"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="11sp"
-                            android:fontFamily="sans-serif"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/stockNumber" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
+                    android:text="Resumen de inventario"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="20dp" />
 
-            <!-- FILA 2 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardCategorias"
-                    style="@style/DashboardCard"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
-                        <ImageView
-                            android:id="@+id/iconCategory"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_orange_icon"
-                            android:padding="8dp"
-                            android:src="@drawable/ic_categories"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/warningColor" />
-                        <TextView
-                            android:id="@+id/lblCategory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Categorías"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="13sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/iconCategory" />
-                        <TextView
-                            android:id="@+id/movementNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="24sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/lblCategory" />
-                        <TextView
-                            android:id="@+id/categoryStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="0 activas"
-                            android:textColor="@color/successColor"
-                            android:textSize="11sp"
-                            android:fontFamily="sans-serif"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/movementNumber" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/DashboardCard"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_weight="1">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
-                        <ImageView
-                            android:id="@+id/iconValue"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_green_icon"
-                            android:padding="8dp"
-                            android:src="@drawable/icons8_ventas_totales_24"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="@color/successColor" />
-                        <TextView
-                            android:id="@+id/lblValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Valor Total"
-                            android:textColor="@color/textSecondary"
-                            android:textSize="13sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/iconValue" />
-                        <TextView
-                            android:id="@+id/valueNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="20sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/lblValue" />
-                        <TextView
-                            android:id="@+id/valueStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="Inventario activo"
-                            android:textColor="@color/successColor"
-                            android:textSize="11sp"
-                            android:fontFamily="sans-serif"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/valueNumber" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-            <!-- Gráfica Salud del Inventario -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="16dp">
+                <!-- FILA 1 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/DashboardCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+                            <ImageView
+                                android:id="@+id/iconProducts"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:background="@drawable/bg_blue_icon"
+                                android:padding="8dp"
+                                android:src="@drawable/icons8_caja_llena_24"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/primaryColor" />
+                            <TextView
+                                android:id="@+id/lblProducts"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Productos"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="13sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/iconProducts" />
+                            <TextView
+                                android:id="@+id/productsNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="--"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="24sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/lblProducts" />
+                            <TextView
+                                android:id="@+id/productsStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="0 registrados"
+                                android:textColor="@color/successColor"
+                                android:textSize="11sp"
+                                android:fontFamily="sans-serif"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/productsNumber" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/DashboardCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+                            <ImageView
+                                android:id="@+id/iconStock"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:background="@drawable/bg_red_icon"
+                                android:padding="8dp"
+                                android:src="@drawable/icons8_alerta_24"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/dangerColor" />
+                            <TextView
+                                android:id="@+id/lblStock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Stock Bajo"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="13sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/iconStock" />
+                            <TextView
+                                android:id="@+id/stockNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="--"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="24sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/lblStock" />
+                            <TextView
+                                android:id="@+id/stockStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Sin alertas"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="11sp"
+                                android:fontFamily="sans-serif"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/stockNumber" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <!-- FILA 2 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardCategorias"
+                        style="@style/DashboardCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+                            <ImageView
+                                android:id="@+id/iconCategory"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:background="@drawable/bg_orange_icon"
+                                android:padding="8dp"
+                                android:src="@drawable/ic_categories"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/warningColor" />
+                            <TextView
+                                android:id="@+id/lblCategory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Categorías"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="13sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/iconCategory" />
+                            <TextView
+                                android:id="@+id/movementNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="--"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="24sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/lblCategory" />
+                            <TextView
+                                android:id="@+id/categoryStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="0 activas"
+                                android:textColor="@color/successColor"
+                                android:textSize="11sp"
+                                android:fontFamily="sans-serif"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/movementNumber" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/DashboardCard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp">
+                            <ImageView
+                                android:id="@+id/iconValue"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:background="@drawable/bg_green_icon"
+                                android:padding="8dp"
+                                android:src="@drawable/icons8_ventas_totales_24"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:tint="@color/successColor" />
+                            <TextView
+                                android:id="@+id/lblValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:text="Valor Total"
+                                android:textColor="@color/textSecondary"
+                                android:textSize="13sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/iconValue" />
+                            <TextView
+                                android:id="@+id/valueNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="--"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="20sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/lblValue" />
+                            <TextView
+                                android:id="@+id/valueStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Inventario activo"
+                                android:textColor="@color/successColor"
+                                android:textSize="11sp"
+                                android:fontFamily="sans-serif"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/valueNumber" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <!-- Gráfica Salud del Inventario -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/DashboardCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="0dp"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Salud del Inventario"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="16sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600" />
-                        <TextView
-                            android:id="@+id/btnVerDetallesInventario"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ver detalles"
-                            android:textColor="@color/primaryColor"
-                            android:textSize="13sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Salud del Inventario"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="16sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600" />
+                            <TextView
+                                android:id="@+id/btnVerDetallesInventario"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ver detalles"
+                                android:textColor="@color/primaryColor"
+                                android:textSize="13sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600" />
+                        </LinearLayout>
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/chartInventario"
+                            android:layout_width="match_parent"
+                            android:layout_height="196dp"
+                            android:layout_marginTop="16dp" />
                     </LinearLayout>
-                    <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/chartInventario"
-                        android:layout_width="match_parent"
-                        android:layout_height="196dp"
-                        android:layout_marginTop="16dp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
-            <!-- Gráfica Movimientos de Inventario -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"> <!-- REDUCED FROM 100dp -->
-                <LinearLayout
+                <!-- Gráfica Movimientos de Inventario -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/DashboardCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:layout_marginBottom="20dp"> <!-- REDUCED FROM 100dp -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="0dp"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Movimientos de Inventario"
-                            android:textColor="@color/textPrimary"
-                            android:textSize="16sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600" />
-                        <TextView
-                            android:id="@+id/btnVerDetallesMovimientos"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ver detalles"
-                            android:textColor="@color/primaryColor"
-                            android:textSize="13sp"
-                            android:fontFamily="sans-serif"
-                            android:textFontWeight="600" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Movimientos de Inventario"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="16sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600" />
+                            <TextView
+                                android:id="@+id/btnVerDetallesMovimientos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ver detalles"
+                                android:textColor="@color/primaryColor"
+                                android:textSize="13sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600" />
+                        </LinearLayout>
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/chartMovimientos"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="16dp" />
                     </LinearLayout>
-                    <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/chartMovimientos"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="16dp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
 
-            <!-- Gráfica Categorías (PieChart) -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="100dp"> <!-- MOVED 100dp MARGIN HERE -->
-
-                <LinearLayout
+                <!-- Gráfica Categorías (PieChart) -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/DashboardCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif"
-                        android:text="Distribución por Categorías"
-                        android:textColor="@color/textPrimary"
-                        android:textFontWeight="600"
-                        android:textSize="16sp" />
-
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/chartCategorias"
+                    android:layout_marginBottom="100dp"> <!-- MOVED 100dp MARGIN HERE -->
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:layout_marginTop="16dp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Distribución por Categorías"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="16sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600" />
+
+                            <TextView
+                                android:id="@+id/btnVerDetallesCategoris"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ver detalles"
+                                android:textColor="@color/primaryColor"
+                                android:textSize="13sp"
+                                android:fontFamily="sans-serif"
+                                android:textFontWeight="600" />
+                            </LinearLayout>
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/chartCategorias"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:layout_marginTop="16dp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <View
         android:id="@+id/bottomNavDivider"
