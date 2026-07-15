@@ -41,7 +41,6 @@
 
         <activity android:name=".EditarProductoActivity"/>
         <activity android:name=".EditarCategoriaActivity"/>
-        <activity android:name=".ConfiguracionActivity"/>
         <activity android:name=".ConfigNotificacionesActivity"/>
         <activity android:name=".EditarUsuarioActivity"/>
         <activity android:name=".NuevoUsuarioActivity"/>

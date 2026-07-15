@@ -9,6 +9,13 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
     // Cambiamos 127.0.0.1 por tu IP real para que el celular encuentre el servidor
     const val BASE_URL = "http://127.0.0.1:8000/"
+
+//    Puerto VPN Exlusivo de TAILSCALE, permite conectar la api de laravel a cualqier dispocitivo que use tailscale
+//    const val BASE_URL = "http://100.110.205.13:8000/"
+
+//    =========================================
+//    NO SE IMPLEMENTO EN LA SUSTENTACION FINAL
+//    =========================================
     
     private val client = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
