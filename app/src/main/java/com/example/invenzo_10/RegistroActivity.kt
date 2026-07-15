@@ -67,7 +67,8 @@ class RegistroActivity : AppCompatActivity() {
     }
 
     private fun ejecutarRegistro(nombre: String, email: String, pass: String, confirm: String, empresa: String) {
-        val request = RegisterRequest(nombre, email, pass, confirm, empresa)
+        // Asignamos automáticamente el rol de administrador_principal al registrarse desde el inicio
+        val request = RegisterRequest(nombre, email, pass, confirm, empresa, "administrador_principal")
 
         // Bloquear UI para evitar doble clic y mostrar carga
         btnRegistrar.isEnabled = false
@@ -77,23 +78,31 @@ class RegistroActivity : AppCompatActivity() {
             try {
                 val response = RetrofitClient.instance.register(request)
                 if (response.isSuccessful) {
-                    Toast.makeText(this@RegistroActivity, "¡Registro exitoso! Revisa tu correo", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@RegistroActivity, "¡Registro exitoso!", Toast.LENGTH_LONG).show()
                     finish()
                 } else {
                     val errorJson = response.errorBody()?.string()
-                    Log.e("RegistroError", "Error del servidor: $errorJson")
+                    Log.e("RegistroError", "Código HTTP: ${response.code()}")
+                    Log.e("RegistroError", "Respuesta: $errorJson")
                     
                     val mensaje = try {
                         val json = JSONObject(errorJson ?: "{}")
-                        json.optString("message", "Error en los datos")
+                        // Intentamos obtener el error específico de los campos (email duplicado, etc)
+                        if (json.has("errors")) {
+                            val errors = json.getJSONObject("errors")
+                            val firstKey = errors.keys().next()
+                            errors.getJSONArray(firstKey).getString(0)
+                        } else {
+                            json.optString("message", "Error en los datos")
+                        }
                     } catch (e: Exception) {
-                        "Datos inválidos"
+                        "Datos inválidos o el usuario ya existe"
                     }
                     Toast.makeText(this@RegistroActivity, mensaje, Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
                 Log.e("RegistroError", "Error de red: ${e.message}", e)
-                Toast.makeText(this@RegistroActivity, "Error de conexión con el servidor", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@RegistroActivity, "Error de conexión: Revisa tu internet o la IP del servidor", Toast.LENGTH_LONG).show()
             } finally {
                 // Desbloquear UI
                 btnRegistrar.isEnabled = true

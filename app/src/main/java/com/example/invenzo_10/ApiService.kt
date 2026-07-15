@@ -15,6 +15,62 @@ interface ApiService {
     @POST("api/register")
     suspend fun register(@Body request: RegisterRequest): Response<GenericResponse>
 
+    @Headers("Accept: application/json")
+    @POST("api/forgot-password")
+    suspend fun sendResetLink(@Body request: Map<String, String>): Response<GenericResponse>
+
+    @Headers("Accept: application/json")
+    @POST("api/reset-password")
+    suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<GenericResponse>
+
+    // --- USUARIOS ---
+    @Headers("Accept: application/json")
+    @GET("api/usuarios")
+    suspend fun getUsuarios(@Header("Authorization") token: String): Response<List<UserData>>
+
+    @Headers("Accept: application/json")
+    @GET("api/user")
+    suspend fun getPerfil(@Header("Authorization") token: String): Response<UserData>
+
+    @Headers("Accept: application/json")
+    @POST("api/usuarios")
+    suspend fun crearUsuario(
+        @Header("Authorization") token: String,
+        @Body request: UserCreateRequest
+    ): Response<GenericResponse>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+
+    @PUT("api/usuarios/{id}")
+
+    suspend fun actualizarUsuario(
+
+        @Header("Authorization") token: String,
+
+        @Path("id") id: Int,
+
+        @Body request: ProfileUpdateRequest
+
+    ): Response<UserUpdateResponse>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+
+    @PUT("api/profile")
+
+    suspend fun actualizarPerfil(
+
+        @Header("Authorization") token: String,
+
+        @Body request: ProfileUpdateRequest
+
+    ): Response<UserUpdateResponse>
+    @Multipart
+    @POST("api/profile/photo")
+    suspend fun uploadPhoto(
+        @Header("Authorization") token: String,
+        @Part foto: MultipartBody.Part
+    ): Response<UserUpdateResponse>
+
     // --- PRODUCTOS ---
     @Headers("Accept: application/json")
     @GET("api/productos")
@@ -24,24 +80,35 @@ interface ApiService {
     @DELETE("api/productos/{id}")
     suspend fun eliminarProducto(@Header("Authorization") token: String, @Path("id") id: Int): Response<GenericResponse>
 
-    // Cambiado a POST: Muchos servidores locales rechazan PATCH/PUT en rutas de acción personalizadas
-    @Headers(
-        "Content-Type: application/json",
-        "Accept: application/json"
-    )
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("api/productos/{id}")
     suspend fun toggleStatusProducto(
         @Header("Authorization") token: String,
         @Path("id") id: Int,
         @Body request: EstadoProductoRequest
     ): Response<GenericResponse>
-    // Regresamos a PUT: Si decía "guardado" pero no cambiaba nada, el servidor lo recibía pero quizás ignoraba el body
+
     @Headers("Content-Type: application/json", "Accept: application/json")
     @PUT("api/productos/{id}")
     suspend fun actualizarProducto(
         @Header("Authorization") token: String,
         @Path("id") id: Int,
         @Body request: EditarProductoRequest
+    ): Response<GenericResponse>
+
+    @Multipart
+    @POST("api/productos/{id}")
+    suspend fun actualizarProductoMultipart(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Part("_method") method: RequestBody,
+        @Part("nombre") nombre: RequestBody,
+        @Part("codigo") codigo: RequestBody,
+        @Part("categoria_id") categoriaId: RequestBody,
+        @Part("precio") precio: RequestBody,
+        @Part("cantidad") cantidad: RequestBody,
+        @Part("stock_minimo") stockMinimo: RequestBody,
+        @Part foto: MultipartBody.Part?
     ): Response<GenericResponse>
 
     @Multipart
@@ -54,6 +121,7 @@ interface ApiService {
         @Part("precio") precio: RequestBody,
         @Part("cantidad") cantidad: RequestBody,
         @Part("stock_minimo") stockMinimo: RequestBody,
+        @Part("activo") activo: RequestBody,
         @Part foto: MultipartBody.Part
     ): Response<GenericResponse>
 
@@ -69,8 +137,23 @@ interface ApiService {
         @Body request: CategoriaRequest
     ): Response<GenericResponse>
 
-    // --- MOVIMIENTOS ---
     @Headers("Accept: application/json")
+    @PUT("api/categorias/{id}")
+    suspend fun actualizarCategoria(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body request: CategoriaRequest
+    ): Response<GenericResponse>
+
+    @Headers("Accept: application/json")
+    @DELETE("api/categorias/{id}")
+    suspend fun eliminarCategoria(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Response<GenericResponse>
+
+    // --- MOVIMIENTOS ---
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @POST("api/movimientos")
     suspend fun registrarMovimiento(
         @Header("Authorization") token: String,
@@ -82,6 +165,44 @@ interface ApiService {
     suspend fun getMovimientos(
         @Header("Authorization") token: String
     ): Response<List<Movimiento>>
+
+    // --- AUDITORIA ---
+    @Headers("Accept: application/json")
+    @GET("api/auditorias")
+    suspend fun getAuditorias(
+        @Header("Authorization") token: String
+    ): Response<List<Auditoria>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("api/auditorias")
+    suspend fun registrarAuditoria(
+        @Header("Authorization") token: String,
+        @Body request: AuditoriaRequest
+    ): Response<GenericResponse>
+
+    @DELETE("api/auditorias/limpiar")
+    suspend fun limpiarAuditorias(
+        @Header("Authorization") token: String
+    ): Response<GenericResponse>
+
+    // --- NOTIFICACIONES ---
+    @Headers("Accept: application/json")
+    @GET("api/notificaciones")
+    suspend fun getNotificaciones(
+        @Header("Authorization") token: String
+    ): Response<List<Notificacion>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST("api/notificaciones")
+    suspend fun crearNotificacion(
+        @Header("Authorization") token: String,
+        @Body request: NotificacionRequest
+    ): Response<GenericResponse>
+
+    @DELETE("api/notificaciones/limpiar")
+    suspend fun limpiarNotificaciones(
+        @Header("Authorization") token: String
+    ): Response<GenericResponse>
 
     //================ REPORTES DASHBOARD =================//
 

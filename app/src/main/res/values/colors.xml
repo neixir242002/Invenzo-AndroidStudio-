@@ -3,52 +3,49 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- UI Colors from the floating nav image -->
-    <color name="navBackgroundFloating">#FFFFFF</color>
-    <color name="navInactiveIcon">#9CA3AF</color>
-    <color name="navActiveIcon">#111827</color>
-    <color name="navIndicatorGreen">#84CC16</color>
-    <color name="navIndicator">#84CC16</color>
+    <!-- UI Colors - Adjusted to a slightly deeper professional blue -->
+    <color name="primaryColor">#1D4ED8</color> <!-- Blue 700 (Slightly darker than 600) -->
+    <color name="primaryDark">#1E293B</color> <!-- Slate 800 (Sidebar/Dark) -->
+    <color name="primaryLight">#DBEAFE</color> <!-- Blue 100 -->
 
-    <!-- Dashboard/Project Palette -->
-    <color name="primaryDark">#00002A</color>
-    <color name="primaryColor">#1A3F75</color>
-    <color name="blueMedium">#4E6A9C</color>
-    <color name="blueSoft">#4EA4CC</color>
-    <color name="blueVeryLight">#D5E2EC</color>
-
-    <color name="backgroundColor">#F1F5F9</color>
+    <color name="backgroundColor">#F8FAFC</color> <!-- Slate 50 -->
     <color name="cardColor">#FFFFFF</color>
-    <color name="inputBackground">#FFFFFF</color>
-    <color name="iconBackground">#E3F2FD</color>
-    <color name="textLight">#E3F2FD</color>
-    <color name="white_4d">#4DFFFFFF</color>
 
-    <!--Activar y desactivar -->
-    <color name="activar">#018C1A</color>
-    <color name="desactivar">#FF0000</color>
+    <!-- Text Colors -->
+    <color name="textPrimary">#0F172A</color> <!-- Slate 900 -->
+    <color name="textSecondary">#64748B</color> <!-- Slate 500 -->
 
-    <color name="textPrimary">#111827</color>
-    <color name="textSecondary">#6B7280</color>
-    <color name="grayBorder">#D5E2EC</color>
+    <!-- Semantic Colors (Success, Warning, Danger) -->
+    <color name="successColor">#059669</color> <!-- Emerald 600 -->
+    <color name="successLight">#D1FAE5</color> <!-- Emerald 100 -->
 
-    <color name="successColor">#10B981</color>
-    <color name="successLight">#D1FAE5</color>
+    <color name="warningColor">#D97706</color> <!-- Amber 600 -->
+    <color name="warningLight">#FEF3C7</color> <!-- Amber 100 -->
 
-    <color name="warningColor">#F59E0B</color>
-    <color name="warningLight">#FEF3C7</color>
+    <color name="dangerColor">#DC2626</color> <!-- Red 600 -->
+    <color name="dangerLight">#FEE2E2</color> <!-- Red 100 -->
 
-    <color name="dangerColor">#EF4444</color>
-    <color name="dangerLight">#FEE2E2</color>
+    <color name="grayBorder">#E2E8F0</color> <!-- Slate 200 -->
 
-    <!-- Compatibility Aliases -->
-    <color name="colorPrimary">#1A3F75</color>
-    <color name="colorPrimaryDark">#00002A</color>
-    <color name="primaryLight">#D5E2EC</color>
-    <color name="bluePrimary">#1A3F75</color>
-    <color name="ic_launcherppp">#1A3F75</color>
+    <!-- Navigation / Sidebar specific -->
+    <color name="sidebarBackground">#0F172A</color> <!-- Slate 900 -->
+    <color name="sidebarItemActive">#1E293B</color>
+    <color name="sidebarText">#94A3B8</color> <!-- Slate 400 -->
+    <color name="sidebarTextActive">#FFFFFF</color>
 
-    <!-- Launcher Colors -->
-    <color name="ic_laun_background">#1A3F75</color>
-    <color name="ic_laun_categoria_background">#1A3F75</color>
+    <!-- Legacy / Compatibility Aliases -->
+    <color name="colorPrimary">#1D4ED8</color>
+    <color name="colorPrimaryDark">#1E293B</color>
+    <color name="bluePrimary">#1D4ED8</color>
+    <color name="navBackgroundFloating">#FFFFFF</color>
+    <color name="navInactiveIcon">#94A3B8</color>
+    <color name="navActiveIcon">#1D4ED8</color>
+    <color name="navIndicator">#1D4ED8</color>
+    <color name="iconBackground">#F1F5F9</color>
+
+    <!-- Missing colors added to fix build errors -->
+    <color name="navIndicatorGreen">#059669</color>
+    <color name="ic_laun_background">#1D4ED8</color>
+    <color name="ic_laun_categoria_background">#1D4ED8</color>
+    <color name="ic_launcherppp">#1D4ED8</color>
 </resources>

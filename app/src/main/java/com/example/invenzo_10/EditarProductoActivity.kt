@@ -1,172 +1,113 @@
 package com.example.invenzo_10
 
 
-import android.app.Activity
-import android.content.Context
-
-import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-
 import android.util.Log
+import android.view.View
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.signature.ObjectKey
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.io.FileOutputStream
 
 class EditarProductoActivity : AppCompatActivity() {
 
-    private lateinit var imgProducto: ImageView
     private lateinit var edtNombre: EditText
-    private lateinit var edtCodigo: EditText
     private lateinit var edtPrecio: EditText
+    private lateinit var edtCodigo: EditText
     private lateinit var edtStock: EditText
     private lateinit var edtStockMinimo: EditText
-    private lateinit var spCategoria: Spinner
-    private lateinit var txtEstado: TextView
-    private lateinit var btnEstado: Button
-    private lateinit var btnGuardar: Button
 
-    private var activo = true
-    private var productId: Int = -1
-    private val listaCategorias = mutableListOf<Categoria>()
-    private var categoriaNombreInicial: String? = null
+    private lateinit var spCategoria: Spinner
+    private lateinit var imgProducto: ImageView
+
+    private var productoId: Int = -1
+    private var listaCategorias: List<Categoria> = emptyList()
+    private var nombreCategoriaActual: String? = null
+    private var imagenTemporalUri: Uri? = null
+    private var imgPreviewDialog: ImageView? = null
+    private var rutaImagenActual: String? = null
+
+    private val seleccionarImagen =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                imagenTemporalUri = it
+                imgPreviewDialog?.setImageURI(it)
+                imgProducto.setImageURI(it)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            setContentView(R.layout.activity_editar_producto)
+        applyEdgeToEdgeWithInsets(null)
+        setContentView(R.layout.activity_editar_producto)
 
-            imgProducto = findViewById(R.id.imgProducto)
-            edtNombre = findViewById(R.id.edtNombre)
-            edtCodigo = findViewById(R.id.edtCodigo)
-            edtPrecio = findViewById(R.id.edtPrecio)
-            edtStock = findViewById(R.id.edtStock)
-            edtStockMinimo = findViewById(R.id.edtStockMinimo)
-            spCategoria = findViewById(R.id.spCategoria)
-            txtEstado = findViewById(R.id.txtEstado)
-            btnEstado = findViewById(R.id.btnEstado)
-            btnGuardar = findViewById(R.id.btnGuardar)
+        val topBar = findViewById<View>(R.id.topBar)
+        if (topBar != null) applyEdgeToEdgeWithInsets(topBar)
 
-            findViewById<ImageButton>(R.id.btnBack).setOnClickListener { finish() }
+        productoId = intent.getIntExtra("id", -1)
+        val nombreProd = intent.getStringExtra("nombre") ?: ""
+        val codigoProd = intent.getStringExtra("codigo") ?: ""
+        nombreCategoriaActual = intent.getStringExtra("categoria")
+        rutaImagenActual = intent.getStringExtra("rutaImagen")
 
-            productId = intent.getIntExtra("id", -1)
-            val nombre = intent.getStringExtra("nombre") ?: ""
-            val codigo = intent.getStringExtra("codigo") ?: ""
-            categoriaNombreInicial = intent.getStringExtra("categoria")
-            val precio = intent.getDoubleExtra("precio", 0.0)
-            val stock = intent.getIntExtra("stock", 0)
-            val stockMinimo = intent.getIntExtra("stockmini", 0)
-            val rutaImagen = intent.getStringExtra("rutaImagen") ?: ""
-            activo = intent.getBooleanExtra("activo", true)
-
-            cargarCategorias()
-
-            edtNombre.setText(nombre)
-            edtCodigo.setText(codigo)
-            edtPrecio.setText(precio.toString())
-            edtStock.setText(stock.toString())
-            edtStockMinimo.setText(stockMinimo.toString())
-
-            if (rutaImagen.isNotEmpty()) {
-                val archivo = File(rutaImagen)
-                if (archivo.exists()) {
-                    imgProducto.setImageBitmap(BitmapFactory.decodeFile(archivo.absolutePath))
-                }
-            }
-
-            actualizarEstadoUI()
-
-            btnEstado.setOnClickListener { toggleEstadoEnServidor() }
-            btnGuardar.setOnClickListener { guardarCambiosEnServidor() }
-
+        val precioProd = try {
+            intent.getDoubleExtra("precio", 0.0)
         } catch (e: Exception) {
-            Log.e("EDITAR", "Error al iniciar: ${e.message}")
-            Toast.makeText(this, "Error al abrir edición", Toast.LENGTH_SHORT).show()
-            finish()
+            intent.getStringExtra("precio")?.toDoubleOrNull() ?: 0.0
         }
+
+        val stockProd = intent.getIntExtra("stock", 0)
+        val stockMinProd = intent.getIntExtra("stockmini", 0)
+
+        edtNombre = findViewById(R.id.edtNombre)
+        edtPrecio = findViewById(R.id.edtPrecio)
+        edtCodigo = findViewById(R.id.edtCodigo)
+        edtStock = findViewById(R.id.edtStock)
+        edtStockMinimo = findViewById(R.id.edtStockMinimo)
+        spCategoria = findViewById(R.id.spCategoria)
+        imgProducto = findViewById(R.id.imgProducto)
+        val layoutImagen = findViewById<View>(R.id.layoutImagen)
+
+        edtNombre.setText(nombreProd)
+        edtCodigo.setText(codigoProd)
+        edtPrecio.setText(precioProd.toString())
+        edtStock.setText(stockProd.toString())
+        edtStockMinimo.setText(stockMinProd.toString())
+
+        cargarImagenActual()
+
+        cargarCategorias()
+
+        findViewById<ImageView>(R.id.btnBack)?.setOnClickListener { finish() }
+        findViewById<Button>(R.id.btnGuardar)?.setOnClickListener { actualizarProducto() }
+        layoutImagen?.setOnClickListener { mostrarDialogoImagen() }
     }
 
-    private fun toggleEstadoEnServidor() {
-        if (productId == -1) return
-        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val token = prefs.getString("token", "") ?: ""
-
-        lifecycleScope.launch {
-            try {
-                val nuevoEstado = if (activo) 0 else 1
-
-                val response = RetrofitClient.instance.toggleStatusProducto(
-                    "Bearer $token",
-                    productId,
-                    EstadoProductoRequest(nuevoEstado)
-                )
-                if (response.isSuccessful) {
-                    activo = nuevoEstado == 1
-                    actualizarEstadoUI()
-
-                    Toast.makeText(
-                        this@EditarProductoActivity,
-                        "Estado actualizado",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    val errorMsg = response.errorBody()?.string() ?: "Error desconocido"
-                    Log.e("EDITAR", "Servidor rechazó toggle: $errorMsg")
-                    Toast.makeText(this@EditarProductoActivity, "El servidor rechazó el cambio", Toast.LENGTH_SHORT).show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this@EditarProductoActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun guardarCambiosEnServidor() {
-        if (productId == -1) return
-
-        val nombre = edtNombre.text.toString().trim()
-        val codigo = edtCodigo.text.toString().trim()
-        val precio = edtPrecio.text.toString().toDoubleOrNull() ?: 0.0
-        val stock = edtStock.text.toString().toIntOrNull() ?: 0
-        val stockMin = edtStockMinimo.text.toString().toIntOrNull() ?: 0
-
-        if (nombre.isEmpty() || codigo.isEmpty() || listaCategorias.isEmpty()) {
-            Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val catId = listaCategorias[spCategoria.selectedItemPosition].id
-
-        val request = EditarProductoRequest(
-            nombre = nombre,
-            codigo = codigo,
-            categoria_id = catId,
-            cantidad = stock,
-            stock_minimo = stockMin,
-            precio = precio
-        )
-        val token = getSharedPreferences("auth", MODE_PRIVATE).getString("token", "") ?: ""
-
-        lifecycleScope.launch {
-            try {
-
-                val response = RetrofitClient.instance.actualizarProducto("Bearer $token", productId, request)
-                if (response.isSuccessful) {
-                    Toast.makeText(
-                        this@EditarProductoActivity,
-                        "Producto actualizado",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    setResult(Activity.RESULT_OK)
-                    finish()
-                }
-            } catch (e: Exception) {
-                Log.e("EDITAR", "Excepción al guardar", e)
-                Toast.makeText(this@EditarProductoActivity, "Error de red", Toast.LENGTH_SHORT).show()
-            }
+    private fun cargarImagenActual() {
+        rutaImagenActual?.let {
+            val urlCompleta = RetrofitClient.obtenerUrlRealtime(it)
+            Glide.with(this)
+                .load(urlCompleta)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_menu_report_image)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(imgProducto)
         }
     }
 
@@ -176,35 +117,144 @@ class EditarProductoActivity : AppCompatActivity() {
             try {
                 val response = RetrofitClient.instance.getCategorias("Bearer $token")
                 if (response.isSuccessful) {
-                    listaCategorias.clear()
-                    response.body()?.let { categorias ->
-                        listaCategorias.addAll(categorias)
-                        val nombres = listaCategorias.map { it.nombre }
-                        val adapter = ArrayAdapter(this@EditarProductoActivity, android.R.layout.simple_spinner_item, nombres)
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        spCategoria.adapter = adapter
+                    listaCategorias = response.body() ?: emptyList()
+                    val nombres = listaCategorias.map { it.nombre }
+                    val adapter = ArrayAdapter(this@EditarProductoActivity, android.R.layout.simple_spinner_item, nombres)
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    spCategoria.adapter = adapter
 
-                        categoriaNombreInicial?.let { nom ->
-                            val pos = nombres.indexOf(nom)
-                            if (pos != -1) spCategoria.setSelection(pos)
-                        }
+                    nombreCategoriaActual?.let { nombre ->
+                        val index = nombres.indexOf(nombre)
+                        if (index != -1) spCategoria.setSelection(index)
                     }
                 }
-            } catch (e: Exception) { Log.e("EDITAR", "Error categorías", e) }
+            } catch (e: Exception) {
+                Log.e("EDIT", "Error al cargar categorías", e)
+
+            }
         }
+
+    private fun actualizarProducto() {
+        val nombre = edtNombre.text.toString().trim()
+        val codigo = edtCodigo.text.toString().trim()
+        val precio = edtPrecio.text.toString().toDoubleOrNull() ?: 0.0
+        val stock = edtStock.text.toString().toIntOrNull() ?: 0
+        val stockMin = edtStockMinimo.text.toString().toIntOrNull() ?: 0
+
+        val indexSeleccionado = spCategoria.selectedItemPosition
+        val categoriaId = if (indexSeleccionado != -1 && indexSeleccionado < listaCategorias.size) {
+            listaCategorias[indexSeleccionado].id
+        } else {
+            1
+        }
+
+        if (nombre.isEmpty() || codigo.isEmpty()) {
+            Toast.makeText(this, "Nombre y código son obligatorios", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val token = getSharedPreferences("auth", MODE_PRIVATE).getString("token", "") ?: ""
+
+        lifecycleScope.launch {
+            try {
+                val response = if (imagenTemporalUri != null) {
+                    val archivo = uriToFile(imagenTemporalUri!!)
+                    val requestFile = archivo.asRequestBody("image/*".toMediaTypeOrNull())
+                    val fotoPart = MultipartBody.Part.createFormData("foto", archivo.name, requestFile)
+
+                    RetrofitClient.instance.actualizarProductoMultipart(
+                        "Bearer $token",
+                        productoId,
+                        "PUT".toRequestBody("text/plain".toMediaTypeOrNull()),
+                        nombre.toRequestBody("text/plain".toMediaTypeOrNull()),
+                        codigo.toRequestBody("text/plain".toMediaTypeOrNull()),
+                        categoriaId.toString().toRequestBody("text/plain".toMediaTypeOrNull()),
+                        precio.toString().toRequestBody("text/plain".toMediaTypeOrNull()),
+                        stock.toString().toRequestBody("text/plain".toMediaTypeOrNull()),
+                        stockMin.toString().toRequestBody("text/plain".toMediaTypeOrNull()),
+                        fotoPart
+                    )
+                } else {
+                    val request = EditarProductoRequest(nombre, codigo, categoriaId, stock, stockMin, precio)
+                    RetrofitClient.instance.actualizarProducto("Bearer $token", productoId, request)
+                }
+
+                if (response.isSuccessful) {
+                    Toast.makeText(this@EditarProductoActivity, "Producto actualizado", Toast.LENGTH_SHORT).show()
+
+                    rutaImagenActual?.let {
+                        val urlCompleta = RetrofitClient.obtenerUrlRealtime(it)
+                        Glide.with(this@EditarProductoActivity)
+                            .load(urlCompleta)
+                            .signature(ObjectKey(System.currentTimeMillis().toString()))
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                            .into(imgProducto)
+                    }
+
+                    finish()
+                } else {
+                    Toast.makeText(this@EditarProductoActivity, "Error al actualizar", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@EditarProductoActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+                Log.e("EDIT", "Fallo actualizar producto", e)
+            }
+        }
+
+    private fun mostrarDialogoImagen() {
+        val vista = layoutInflater.inflate(R.layout.dialog_imagen_producto, null)
+        imgPreviewDialog = vista.findViewById(R.id.imgPreview)
+        val btnSeleccionar = vista.findViewById<Button>(R.id.btnSeleccionar)
+
+        imagenTemporalUri?.let {
+            imgPreviewDialog?.setImageURI(it)
+        } ?: run {
+            rutaImagenActual?.let {
+                val urlCompleta = RetrofitClient.obtenerUrlRealtime(it)
+                Glide.with(this)
+                    .load(urlCompleta)
+                    .signature(ObjectKey(System.currentTimeMillis().toString()))
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(imgPreviewDialog!!)
+            }
+        }
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle("Seleccionar imagen")
+            .setView(vista)
+            .setCancelable(false)
+            .setPositiveButton("Guardar", null)
+            .setNegativeButton("Cancelar") { d, _ -> d.dismiss() }
+            .create()
+
+        btnSeleccionar.setOnClickListener { seleccionarImagen.launch("image/*") }
+
+        dialog.setOnShowListener {
+            val btnGuardarDialogo = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            btnGuardarDialogo.setOnClickListener {
+                if (imagenTemporalUri != null) {
+                    imgProducto.setImageURI(imagenTemporalUri)
+                }
+                dialog.dismiss()
+            }
+        }
+        dialog.show()
     }
 
-    private fun actualizarEstadoUI() {
-        if (activo) {
-            txtEstado.text = "Activo"
-            txtEstado.setTextColor(Color.parseColor("#4CAF50"))
-            btnEstado.text = "Desactivar producto"
-            btnEstado.setBackgroundColor(ContextCompat.getColor(this, R.color.desactivar))
-        } else {
-            txtEstado.text = "Inactivo"
-            txtEstado.setTextColor(Color.RED)
-            btnEstado.text = "Activar producto"
-            btnEstado.setBackgroundColor(ContextCompat.getColor(this, R.color.activar))
+    private fun uriToFile(uri: Uri): File {
+        val inputStream = contentResolver.openInputStream(uri)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        inputStream?.close()
+
+        val directorio = File(cacheDir, "productos").apply { if (!exists()) mkdirs() }
+        val archivo = File(directorio, "producto_edit_${System.currentTimeMillis()}.jpg")
+        FileOutputStream(archivo).use { fos ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos)
+            fos.flush()
         }
+        return archivo
     }
+
 }

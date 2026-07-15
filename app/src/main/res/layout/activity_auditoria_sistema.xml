@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FAFC">
+    android:background="@color/backgroundColor">
 
-    <!-- TOP BAR -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topBar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_light_background"
+        android:background="@color/white"
+        android:elevation="2dp"
         android:padding="20dp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:contentDescription="@string/desc_back_button"
-            android:rotation="900"
-            android:rotationX="6"
+            android:rotation="180"
             android:rotationY="180"
             android:src="@drawable/ic_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,29 +30,87 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/primaryColor" />
 
+        <FrameLayout
+            android:id="@+id/btnNotificationsTop"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/userHeaderInclude"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bell"
+                app:tint="@color/textSecondary" />
+
+            <TextView
+                android:id="@+id/txtNotificationBadge"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="top|end"
+                android:background="@drawable/red_dot"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <include
+            android:id="@+id/userHeaderInclude"
             layout="@layout/layout_user_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Fila de Búsqueda y Filtros -->
+    <LinearLayout
+        android:id="@+id/titleSection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/txtMainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/audit_system_title"
+            android:textColor="@color/textPrimary"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/audit_system_desc"
+            android:textColor="@color/textSecondary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/searchRow"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/topBar">
+        app:layout_constraintTop_toBottomOf="@id/titleSection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Barra de Búsqueda -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -65,160 +124,153 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/search_24dp_000000_fill0_wght400_grad0_opsz24"
-                app:tint="#94A3B8" />
+                app:tint="@color/textSecondary" />
 
             <EditText
+                android:id="@+id/etBuscarAuditoria"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:hint="Buscar..."
+                android:hint="Buscar por usuario o acción..."
+                android:inputType="text"
                 android:paddingStart="10dp"
+                android:textColor="@color/textPrimary"
+                android:textColorHint="@color/textSecondary"
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Dropdown Módulos -->
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:hintEnabled="false">
-
-            <AutoCompleteTextView
-                android:layout_width="160dp"
-                android:layout_height="45dp"
-                android:padding="0dp"
-                android:text="Todos los módulos"
-                android:textSize="13sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Botón Limpiar -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnClear"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <Spinner
+            android:id="@+id/spinnerModulos"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:layout_marginStart="12dp"
-            android:text="Limpiar Auditoría"
-            android:textAllCaps="false"
-            android:textColor="#0F172A"
-            app:cornerRadius="8dp"
-            app:icon="@drawable/ic_more"
-            app:iconTint="#0F172A"
-            app:strokeColor="#E2E8F0" />
+            android:background="@drawable/fondo_redondo"
+            android:backgroundTint="@color/white"
+            android:elevation="0dp"
+            android:paddingHorizontal="8dp"
+            android:spinnerMode="dropdown" />
     </LinearLayout>
 
-    <!-- Contenedor de la Tabla -->
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
+        android:id="@+id/cardContent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="20dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="12dp"
         app:cardElevation="2dp"
+        app:strokeColor="@color/grayBorder"
+        app:strokeWidth="1dp"
+        app:layout_constraintTop_toBottomOf="@id/searchRow"
         app:layout_constraintBottom_toTopOf="@id/bottomNavDivider"
-        app:layout_constraintTop_toBottomOf="@id/searchRow">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- Encabezado de Tabla -->
-            <LinearLayout
-                android:id="@+id/tableHeader"
-                android:layout_width="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/headerCard"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="#F8FAFC"
-                android:orientation="horizontal"
-                android:padding="15dp"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="USUARIO" android:textColor="#64748B" android:textSize="11sp" android:textStyle="bold" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="ACCIÓN" android:textColor="#64748B" android:textSize="11sp" android:textStyle="bold" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="MÓDULO" android:textColor="#64748B" android:textSize="11sp" android:textStyle="bold" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="FECHA" android:textColor="#64748B" android:textSize="11sp" android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- Estado Vacío -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No hay registros."
-                android:textColor="#94A3B8"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/backgroundColor"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tableHeader" />
-
-            <!-- Paginación -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    app:cardBackgroundColor="#EFF6FF"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="8dp"
-                        android:rotation="180"
-                        android:src="@drawable/ic_arrow"
-                        app:tint="#3B82F6" />
-                </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:text="Registros de Actividad"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.card.MaterialCardView
+                <TextView
+                    android:id="@+id/txtPageIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/bg_user_pill"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="2dp"
+                    android:text="1 / 1"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btnLimpiarAuditorias"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:layout_marginStart="8dp"
-                    app:cardBackgroundColor="#DBEAFE"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_arrow"
-                        app:tint="#3B82F6" />
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
+                    android:layout_marginEnd="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_delete_trash"
+                    app:tint="@color/dangerColor"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="@id/txtPageIndicator"
+                    app:layout_constraintEnd_toStartOf="@id/txtPageIndicator"
+                    app:layout_constraintTop_toTopOf="@id/txtPageIndicator" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/dividerHeader"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/grayBorder"
+                app:layout_constraintTop_toBottomOf="@id/headerCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vpAuditoria"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/dividerHeader"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/txtEmpty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="No hay registros de actividad."
+                android:textColor="@color/textSecondary"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/dividerHeader"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </com.google.android.material.card.MaterialCardView>
 
     <View
         android:id="@+id/bottomNavDivider"
-        style="@style/Divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="#E2E8F0"
+        android:background="@color/grayBorder"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- BOTTOM NAV -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:backgroundTint="@color/white"
         android:elevation="8dp"
-        android:theme="@style/Theme.Material3.Light"
-        app:itemIconTint="@color/nav_item_color_state"
-        app:itemTextColor="@color/nav_item_color_state"
+        app:backgroundTint="@color/white"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

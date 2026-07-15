@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="@color/cardColor">
+    android:background="@color/white">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardProfile"
@@ -13,7 +13,7 @@
         android:layout_height="56dp"
         app:cardCornerRadius="28dp"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/iconBackground"
+        app:cardBackgroundColor="@color/primaryLight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,6 +24,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_user"
+            android:padding="12dp"
             app:tint="@color/primaryColor" />
 
         <TextView
@@ -31,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/sample_initials"
+            android:text="DR"
             android:textColor="@color/primaryColor"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -44,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="@string/sample_user_name"
+        android:text="David Ramos"
         android:textColor="@color/textPrimary"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -57,7 +58,7 @@
         android:id="@+id/txtRole"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/sample_user_role"
+        android:text="Administrador"
         android:textColor="@color/textSecondary"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@id/txtName"
@@ -82,7 +83,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
-            android:text="@string/active"
+            android:text="Activo"
             android:textColor="@color/successColor"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -102,7 +103,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="@color/inputBackground"
+        android:background="@color/grayBorder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/txtName" />
