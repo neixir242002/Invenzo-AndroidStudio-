@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="0dp"
     android:layout_marginVertical="1dp"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp"
     app:strokeColor="@color/grayBorder"
@@ -98,6 +99,7 @@
                 android:background="@drawable/bg_green_icon"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
+                android:textColor="@color/successColor"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 tools:text="Activo" />

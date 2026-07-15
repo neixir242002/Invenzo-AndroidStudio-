@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="0dp">
+
+    <!-- Indicador visual izquierdo -->
+    <View
+        android:id="@+id/iconContainerAudit"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:background="@drawable/bg_circle_light_blue"
+        app:layout_constraintBottom_toTopOf="@+id/dividerAudit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgAuditIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@string/inventory_control_title"
+        android:src="@drawable/search_24dp_000000_fill0_wght400_grad0_opsz24"
+        app:layout_constraintBottom_toBottomOf="@id/iconContainerAudit"
+        app:layout_constraintEnd_toEndOf="@id/iconContainerAudit"
+        app:layout_constraintStart_toStartOf="@id/iconContainerAudit"
+        app:layout_constraintTop_toTopOf="@id/iconContainerAudit"
+        app:tint="@color/primaryColor" />
+
+    <!-- Información central -->
+    <TextView
+        android:id="@+id/txtModuloAudit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Módulo"
+        android:textColor="@color/textPrimary"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/txtUsuarioAudit"
+        app:layout_constraintStart_toEndOf="@id/iconContainerAudit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtFechaAudit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Fecha y hora"
+        android:textColor="@color/textSecondary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtAccionAudit"
+        app:layout_constraintStart_toStartOf="@id/txtModuloAudit"
+        app:layout_constraintTop_toBottomOf="@id/txtModuloAudit" />
+
+    <!-- Información derecha -->
+    <TextView
+        android:id="@+id/txtUsuarioAudit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usuario"
+        android:textColor="@color/textPrimary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtAccionAudit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_user_pill"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+        android:text="Acción"
+        android:textColor="@color/primaryColor"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtUsuarioAudit" />
+
+    <!-- Línea divisoria inferior -->
+    <View
+        android:id="@+id/dividerAudit"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/grayBorder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/txtModuloAudit"
+        app:layout_constraintTop_toBottomOf="@id/txtFechaAudit" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

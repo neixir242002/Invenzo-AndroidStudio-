@@ -44,6 +44,9 @@
     <string name="terms_conditions">Terms &amp; Conditions</string>
     <string name="about_app">About App</string>
 
+    <string name="create_category">Create Category</string>
+    <string name="new_category">New Category</string>
+
     <!-- Users Activity strings -->
     <string name="users_title">Users</string>
     <string name="total_users">Total Users</string>

@@ -4,19 +4,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <!-- Icono de Notificaciones -->
-    <ImageView
-        android:id="@+id/btnNotificationsHeader"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
-        android:padding="6dp"
-        android:src="@drawable/ic_bell"
-        app:layout_constraintBottom_toBottomOf="@id/userPill"
-        app:layout_constraintEnd_toStartOf="@id/userPill"
-        app:layout_constraintTop_toTopOf="@id/userPill"
-        app:tint="#64748B" />
-
     <!-- Contenedor del Usuario (Pill) -->
     <LinearLayout
         android:id="@+id/userPill"
@@ -32,24 +19,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profileImageHeader"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@drawable/bg_circle_light_blue"
-            android:padding="6dp"
+            android:background="@color/primaryLight"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_user"
-            app:tint="#0284C7" />
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="@color/white"
+            app:strokeWidth="0.5dp" />
 
-        <TextView
-            android:id="@+id/txtUserNameHeader"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="David Ramos"
-            android:textColor="#111827"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtUserNameHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="David Ramos"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="600" />
+
+            <TextView
+                android:id="@+id/txtUserRoleCompanyHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Admin • Empresa"
+                android:textColor="@color/textSecondary"
+                android:textSize="11sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

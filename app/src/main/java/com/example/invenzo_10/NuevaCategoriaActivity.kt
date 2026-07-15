@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -16,39 +15,34 @@ import kotlinx.coroutines.launch
 
 class NuevaCategoriaActivity : AppCompatActivity() {
     private lateinit var inputNombre: TextInputLayout
-    private lateinit var inputDescripcion: TextInputLayout
     private lateinit var editNombre: TextInputEditText
     private lateinit var editDescripcion: TextInputEditText
+    private lateinit var statusTipe: MaterialAutoCompleteTextView
     private lateinit var btnCrear: Button
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        
+        applyEdgeToEdgeWithInsets(null)
         setContentView(R.layout.activity_nuevo_categoria)
+        applyEdgeToEdgeWithInsets(findViewById(R.id.topBar))
 
         initViews()
+        setupStatusDropdown()
         setupValidation()
         setupClickListeners()
-        setupStatusDropdown()
     }
 
     private fun initViews() {
         inputNombre = findViewById(R.id.inputNombre)
-        inputDescripcion = findViewById(R.id.inputDescripcion)
         editNombre = findViewById(R.id.editNombre)
         editDescripcion = findViewById(R.id.editDescripcion)
+        statusTipe = findViewById(R.id.status_tipe)
         btnCrear = findViewById(R.id.buttonCrear)
     }
 
-    private fun setupClickListeners() {
-        findViewById<android.view.View>(R.id.btnBack).setOnClickListener {
-            finish()
-        }
-    }
-
     private fun setupStatusDropdown() {
-        val statusTipe = findViewById<MaterialAutoCompleteTextView>(R.id.status_tipe)
         val items = arrayOf("Activo", "Inactivo")
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
         statusTipe.setAdapter(adapter)
@@ -57,84 +51,60 @@ class NuevaCategoriaActivity : AppCompatActivity() {
 
     private fun setupValidation() {
         btnCrear.setOnClickListener {
-            if (validateFields()) {
+            val nombre = editNombre.text.toString().trim()
+            if (nombre.isEmpty()) {
+                inputNombre.error = "El nombre es obligatorio"
+            } else {
+                inputNombre.error = null
                 crearCategoria()
             }
         }
     }
 
-    private fun validateFields(): Boolean {
-        var valid = true
-        val nombre = editNombre.text.toString().trim()
-        val descripcion = editDescripcion.text.toString().trim()
-
-        if (nombre.isEmpty()) {
-            inputNombre.error = "El nombre es obligatorio"
-            valid = false
-        } else {
-            inputNombre.error = null
+    private fun setupClickListeners() {
+        findViewById<android.view.View>(R.id.btnBack)?.setOnClickListener {
+            finish()
         }
-
-        if (descripcion.isEmpty()) {
-            inputDescripcion.error = "La descripción es obligatoria"
-            valid = false
-        } else if (descripcion.length < 5) {
-            inputDescripcion.error = "Descripción muy corta"
-            valid = false
-        } else {
-            inputDescripcion.error = null
-        }
-        return valid
     }
 
     private fun crearCategoria() {
-
         val prefs = getSharedPreferences("auth", MODE_PRIVATE)
         val token = prefs.getString("token", "") ?: ""
-
-        val request = CategoriaRequest(
-            nombre = editNombre.text.toString(),
-            descripcion = editDescripcion.text.toString()
-        )
+        val isActive = if (statusTipe.text.toString() == "Activo") 1 else 0
+        val nombreCat = editNombre.text.toString().trim()
 
         lifecycleScope.launch {
-
             try {
-
-                val response = RetrofitClient.instance.agregarCategoria(
-                    "Bearer $token",
-                    request
+                btnCrear.isEnabled = false
+                val request = CategoriaRequest(
+                    nombre = nombreCat,
+                    descripcion = editDescripcion.text.toString().trim(),
+                    activa = isActive
                 )
 
+                val response = RetrofitClient.instance.agregarCategoria("Bearer $token", request)
+
                 if (response.isSuccessful) {
-
-                    Toast.makeText(
-                        this@NuevaCategoriaActivity,
-                        "Categoría creada",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
+                    // ESPERAR a que la auditoría se registre antes de hacer finish()
+                    try {
+                        RetrofitClient.instance.registrarAuditoria(
+                            "Bearer $token", 
+                            AuditoriaRequest("Creó la categoría: $nombreCat", "Categorías")
+                        )
+                    } catch (e: Exception) {
+                        Log.e("AUDIT", "Error silencioso en auditoría", e)
+                    }
+                    
+                    Toast.makeText(this@NuevaCategoriaActivity, "Categoría creada con éxito", Toast.LENGTH_SHORT).show()
                     finish()
-
                 } else {
-
-                    Log.e("CATEGORIA", response.errorBody()?.string() ?: "")
-
-                    Toast.makeText(
-                        this@NuevaCategoriaActivity,
-                        "Error al crear categoría",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
+                    Toast.makeText(this@NuevaCategoriaActivity, "Error al guardar en el servidor", Toast.LENGTH_LONG).show()
                 }
-
             } catch (e: Exception) {
-
-                Log.e("CATEGORIA", e.toString())
-
+                Toast.makeText(this@NuevaCategoriaActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+            } finally {
+                btnCrear.isEnabled = true
             }
-
         }
-
     }
 }

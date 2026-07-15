@@ -31,7 +31,8 @@ class ReporteProductoAdapter(private var productos: List<Producto>) :
         val context = holder.itemView.context
 
         holder.txtNombre.text = p.nombre
-        holder.txtCategoria.text = p.categoria.nombre
+        // Uso de safe call para categoría nullable
+        holder.txtCategoria.text = p.categoria?.nombre ?: "Sin categoría"
         holder.txtStock.text = "Stock: ${p.cantidad}"
 
         val stockLevel = when {

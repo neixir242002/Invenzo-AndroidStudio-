@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-
     <!-- HEADER PRINCIPAL -->
     <LinearLayout
         android:id="@+id/topBar"
@@ -19,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/cardview_light_background"
+            android:background="@color/white"
             android:padding="20dp">
 
             <ImageView
@@ -27,13 +26,45 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:rotation="180"
+                android:rotationY="180"
                 android:src="@drawable/ic_arrow"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:tint="@color/primaryColor"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/primaryColor" />
+
+            <FrameLayout
+                android:id="@+id/btnNotificationsTop"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/userHeaderInclude"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_bell"
+                    app:tint="@color/textSecondary" />
+
+                <TextView
+                    android:id="@+id/txtNotificationBadge"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="top|end"
+                    android:background="@drawable/red_dot"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="8sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </FrameLayout>
 
             <include
+                android:id="@+id/userHeaderInclude"
                 layout="@layout/layout_user_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/inventory_control_title"
-                android:textColor="@color/primaryColor"
+                android:textColor="@color/textPrimary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -80,11 +111,14 @@
 
             <!-- CARD DE REGISTRO PROFESIONAL -->
             <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardElevation="4dp">
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/grayBorder"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -95,7 +129,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#F8FAFC">
+                        android:background="@color/backgroundColor">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -124,7 +158,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#F1F5F9" />
+                        android:background="@color/grayBorder" />
 
                     <!-- Formulario -->
                     <LinearLayout
@@ -139,7 +173,9 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_product_required"
                             app:startIconDrawable="@drawable/ic_inventory"
-                            app:startIconTint="@color/primaryColor">
+                            app:startIconTint="@color/primaryColor"
+                            app:boxStrokeColor="@color/primaryColor"
+                            app:hintTextColor="@color/primaryColor">
 
                             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                                 android:id="@+id/spinnerProducto"
@@ -163,7 +199,9 @@
                                 android:layout_weight="1"
                                 android:hint="@string/hint_type_required"
                                 app:startIconDrawable="@drawable/icons8_ventas_totales_24"
-                                app:startIconTint="@color/primaryColor">
+                                app:startIconTint="@color/primaryColor"
+                                app:boxStrokeColor="@color/primaryColor"
+                                app:hintTextColor="@color/primaryColor">
 
                                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                                     android:id="@+id/spinnerTipo"
@@ -180,7 +218,9 @@
                                 android:layout_weight="1"
                                 android:hint="@string/hint_quantity_required"
                                 app:startIconDrawable="@drawable/icons8_caja_llena_24"
-                                app:startIconTint="@color/primaryColor">
+                                app:startIconTint="@color/primaryColor"
+                                app:boxStrokeColor="@color/primaryColor"
+                                app:hintTextColor="@color/primaryColor">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/etCantidad"
@@ -197,7 +237,9 @@
                             android:layout_marginTop="12dp"
                             android:hint="@string/observations"
                             app:startIconDrawable="@drawable/ic_menu"
-                            app:startIconTint="@color/primaryColor">
+                            app:startIconTint="@color/primaryColor"
+                            app:boxStrokeColor="@color/primaryColor"
+                            app:hintTextColor="@color/primaryColor">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etObservaciones"
@@ -210,23 +252,31 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnRegistrar"
-                            style="@style/InvenzoButton"
                             android:layout_width="match_parent"
                             android:layout_height="55dp"
                             android:layout_marginTop="20dp"
                             android:text="@string/register_movement"
+                            android:textAllCaps="false"
                             android:textStyle="bold"
-                            app:icon="@drawable/icons8_aumentar_las_ganancias_24" />
+                            android:textColor="@color/white"
+                            app:backgroundTint="@color/primaryColor"
+                            app:cornerRadius="8dp"
+                            app:icon="@drawable/icons8_aumentar_las_ganancias_24"
+                            app:iconTint="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- SECCIÓN MOVIMIENTOS RECIENTES -->
             <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/grayBorder"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -236,7 +286,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#F8FAFC">
+                        android:background="@color/backgroundColor">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -270,7 +320,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#F1F5F9" />
+                        android:background="@color/grayBorder" />
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/vpMovimientos"
@@ -282,11 +332,15 @@
 
             <!-- SECCIÓN RESUMEN STOCK -->
             <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/grayBorder"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -296,7 +350,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#F8FAFC">
+                        android:background="@color/backgroundColor">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -330,7 +384,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#F1F5F9" />
+                        android:background="@color/grayBorder" />
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/vpResumenStock"
@@ -345,10 +399,9 @@
 
     <View
         android:id="@+id/bottomNavDivider"
-        style="@style/Divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="#E2E8F0"
+        android:background="@color/grayBorder"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

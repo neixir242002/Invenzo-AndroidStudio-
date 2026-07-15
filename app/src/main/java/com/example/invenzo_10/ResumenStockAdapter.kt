@@ -31,7 +31,8 @@ class ResumenStockAdapter(
         val context = holder.itemView.context
 
         holder.txtProducto.text = producto.nombre
-        holder.txtCategoria.text = "Categoría: ${producto.categoria.nombre}"
+        // Corregido: Uso de safe call para categoría nula
+        holder.txtCategoria.text = "Categoría: ${producto.categoria?.nombre ?: "Sin categoría"}"
         holder.txtStock.text = "Stock: ${producto.cantidad}"
 
         when {

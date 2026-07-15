@@ -3,11 +3,9 @@ package com.example.invenzo_10
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
@@ -25,17 +23,22 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        enableEdgeToEdge()
+        // isLightStatusBar = false para que los iconos de la barra sean blancos sobre el fondo azul
+        applyEdgeToEdgeWithInsets(null, false)
         setContentView(R.layout.activity_main)
+        
+        // Ajustamos el padding del contenedor del logo para evitar el notch/barra de estado
+        applyEdgeToEdgeWithInsets(findViewById(R.id.logoContainer), false)
 
         val inputCorreo = findViewById<TextInputLayout>(R.id.inputCorreo)
         val inputPassword = findViewById<TextInputLayout>(R.id.inputPassword)
         val btnLogin = findViewById<Button>(R.id.inicioSecion)
         val tvRegister = findViewById<TextView>(R.id.register)
+        val tvForgotPass = findViewById<TextView>(R.id.restContraseña)
 
-        btnLogin.setOnClickListener {
-            val correo = inputCorreo.editText?.text.toString().trim()
-            val password = inputPassword.editText?.text.toString().trim()
+        btnLogin?.setOnClickListener {
+            val correo = inputCorreo?.editText?.text.toString().trim()
+            val password = inputPassword?.editText?.text.toString().trim()
 
             if (correo.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
@@ -44,8 +47,12 @@ class MainActivity : AppCompatActivity() {
             ejecutarLogin(correo, password)
         }
 
-        tvRegister.setOnClickListener {
+        tvRegister?.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))
+        }
+
+        tvForgotPass?.setOnClickListener {
+            startActivity(Intent(this, RestablecerPasswordActivity::class.java))
         }
     }
 
@@ -58,27 +65,36 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     val token = loginResponse?.token
-                    Log.d("TOKEN", token ?: "TOKEN NULO")
+                    val user = loginResponse?.user
 
-                    if (!token.isNullOrEmpty()) {
+                    if (!token.isNullOrEmpty() && user != null) {
+                        val rolOriginal = user.rol ?: ""
+                        val rolNormalizado = when {
+                            rolOriginal.equals("administrador_principal", ignoreCase = true) -> "Administrador Principal"
+                            rolOriginal.equals("administrador", ignoreCase = true) -> "Administrador"
+                            rolOriginal.contains("aux", ignoreCase = true) -> "Auxiliar"
+                            else -> "Administrador Principal"
+                        }
+
                         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
                         prefs.edit().apply {
                             putString("token", token)
-                            putString("user_name", loginResponse.user?.nombre)
+                            putInt("user_id", user.id)
+                            putString("user_name", user.nombre)
+                            putString("user_email", user.email)
+                            putString("user_role", rolNormalizado)
+                            putString("user_company", user.empresa?.nombre ?: "Empresa")
+                            putString("user_photo", user.foto)
                             apply()
                         }
-                        Toast.makeText(this@MainActivity, "Bienvenido ${loginResponse.user?.nombre}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity, "Bienvenido ${user.nombre}", Toast.LENGTH_SHORT).show()
                         navigateTo(ActivityInicio::class.java, true)
                     }
                 } else {
-                    val errorMsg = response.errorBody()?.string() ?: "Error desconocido"
-                    Log.e("LoginError", "Error servidor: $errorMsg")
                     Toast.makeText(this@MainActivity, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                // AQUÍ VERÁS EL ERROR REAL EN LOGCAT
-                Log.e("LoginError", "Fallo de conexión: ${e.message}", e)
-                Toast.makeText(this@MainActivity, "Error: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "Error de conexión", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -87,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, destination)
         startActivity(intent)
         @Suppress("DEPRECATION")
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         if (finishCurrent) finish()
     }
 }

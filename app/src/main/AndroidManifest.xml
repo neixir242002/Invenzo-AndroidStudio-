@@ -44,10 +44,28 @@
         <activity android:name=".EditarProductoActivity"/>
         <activity android:name=".EditarCategoriaActivity"/>
         <activity android:name=".ConfiguracionActivity"/>
+        <activity android:name=".ConfigNotificacionesActivity"/>
         <activity android:name=".EditarUsuarioActivity"/>
         <activity android:name=".NuevoUsuarioActivity"/>
         <activity android:name=".UsuariosActivity"/>
-        <activity android:name=".RestablecerPasswordActivity"/>
+
+        <!-- CONFIGURACIÓN PARA RECIBIR EL LINK DEL CORREO -->
+        <activity
+            android:name=".RestablecerPasswordActivity"
+            android:exported="true">
+            <intent-filter android:label="Restablecer Contraseña">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Esquema para capturar el link de Laravel -->
+                <data android:scheme="http" android:host="127.0.0.1" android:port="8000" android:pathPrefix="/reset-password" />
+                <data android:scheme="https" android:host="127.0.0.1" android:port="8000" android:pathPrefix="/reset-password" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".AuditoriaActivity"/>
+        <activity android:name=".HistorialInventarioActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>

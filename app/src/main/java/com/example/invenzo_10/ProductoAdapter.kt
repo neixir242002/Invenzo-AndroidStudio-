@@ -1,7 +1,6 @@
 package com.example.invenzo_10
 
-import android.annotation.SuppressLint
-import android.graphics.BitmapFactory
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import java.io.File
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+
 
 class ProductoAdapter(
     private val lista: MutableList<Producto>,
@@ -70,35 +73,51 @@ class ProductoAdapter(
         val producto = lista[position]
 
         holder.nombre.text = producto.nombre
-        holder.codigo.text = producto.codigo
-        holder.categoria.text = producto.categoria.nombre
+
+        holder.codigo.text = "#${producto.codigo}"
+        holder.categoria.text = producto.categoria?.nombre ?: "Sin categoría"
         holder.stock.text = "Stock: ${producto.cantidad}"
-        holder.precio.text = "$ ${producto.precio}"
+        holder.precio.text = "$${producto.precio}"
 
+        // USAMOS LA FUNCIÓN REALTIME PARA EVITAR CACHÉ COMPLETAMENTE
+        val urlImagen = RetrofitClient.obtenerUrlRealtime(producto.foto)
+        
+        Glide.with(context)
+            .load(urlImagen)
+            .placeholder(R.drawable.ic_launcher_background) 
+            .error(R.drawable.ic_launcher_background)
+            .diskCacheStrategy(DiskCacheStrategy.NONE) 
+            .skipMemoryCache(true)
+            .transform(CenterCrop(), RoundedCorners(24))
+            .into(holder.imagen)
 
-        //==============================
-        // Estado del Stock
-        //==============================
+        // --- ESTADO DE STOCK ---
         when {
 
             producto.cantidad == 0 -> {
 
                 holder.estado.text = "Sin stock"
-                holder.estado.setTextColor(Color.RED)
+                holder.estado.setBackgroundResource(R.drawable.bg_red_icon)
+                holder.estado.setTextColor(ContextCompat.getColor(context, R.color.dangerColor))
+                holder.estado.backgroundTintList = null
 
             }
 
             producto.cantidad <= producto.stockMinimo -> {
 
                 holder.estado.text = "Stock bajo"
-                holder.estado.setTextColor(Color.parseColor("#FF9800"))
+                holder.estado.setBackgroundResource(R.drawable.bg_orange_icon)
+                holder.estado.setTextColor(Color.parseColor("#F97316"))
+                holder.estado.backgroundTintList = null
 
             }
 
             else -> {
 
                 holder.estado.text = "Disponible"
-                holder.estado.setTextColor(Color.parseColor("#4CAF50"))
+                holder.estado.setBackgroundResource(R.drawable.bg_green_icon)
+                holder.estado.setTextColor(ContextCompat.getColor(context, R.color.successColor))
+                holder.estado.backgroundTintList = null
 
             }
         }
@@ -110,32 +129,21 @@ class ProductoAdapter(
         if (producto.activo == 1) {
 
             holder.accion.text = "Activo"
-            holder.accion.setTextColor(Color.parseColor("#4CAF50"))
+            holder.accion.setBackgroundResource(R.drawable.bg_green_icon)
+            holder.accion.setTextColor(Color.parseColor("#059669"))
+            holder.accion.backgroundTintList = null
 
         } else {
 
             holder.accion.text = "Inactivo"
-            holder.accion.setTextColor(Color.RED)
-
-        }
-        holder.imagen.setOnClickListener {
-
-            val dialog = AlertDialog.Builder(holder.itemView.context)
-                .setTitle(producto.nombre)
-                .setMessage("¿Qué desea hacer?")
-                .setPositiveButton("Editar producto") { _, _ ->
-                    onEditar(producto, position)
-                }
-                .setNegativeButton("Cancelar", null)
-                .create()
-
-            dialog.show()
-
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                .setTextColor(holder.itemView.context.getColor(R.color.primaryColor))
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-                .setTextColor(holder.itemView.context.getColor(R.color.dangerColor))
+            holder.accion.setBackgroundResource(R.drawable.bg_user_pill)
+            holder.accion.setTextColor(Color.parseColor("#64748B"))
+            holder.accion.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#E2E8F0"))
         }
 
+        holder.itemView.setOnClickListener {
+            onAction(producto, position, "SHOW_OPTIONS")
+        }
     }
 }
+
