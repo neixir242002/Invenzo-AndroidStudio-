@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     // BASE_URL original para conexión via USB/ADB Reverse
-    const val BASE_URL = "http://127.0.0.1:8000/"
-    
+    const val BASE_URL = "http://100.110.205.13:8000/"
+
     private val client = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
