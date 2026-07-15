@@ -29,10 +29,6 @@ interface ApiService {
     suspend fun getUsuarios(@Header("Authorization") token: String): Response<List<UserData>>
 
     @Headers("Accept: application/json")
-    @GET("api/user")
-    suspend fun getPerfil(@Header("Authorization") token: String): Response<UserData>
-
-    @Headers("Accept: application/json")
     @POST("api/usuarios")
     suspend fun crearUsuario(
         @Header("Authorization") token: String,
@@ -40,30 +36,20 @@ interface ApiService {
     ): Response<GenericResponse>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
-
     @PUT("api/usuarios/{id}")
-
     suspend fun actualizarUsuario(
-
         @Header("Authorization") token: String,
-
         @Path("id") id: Int,
-
         @Body request: ProfileUpdateRequest
-
     ): Response<UserUpdateResponse>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
-
     @PUT("api/profile")
-
     suspend fun actualizarPerfil(
-
         @Header("Authorization") token: String,
-
         @Body request: ProfileUpdateRequest
-
     ): Response<UserUpdateResponse>
+
     @Multipart
     @POST("api/profile/photo")
     suspend fun uploadPhoto(
@@ -74,7 +60,10 @@ interface ApiService {
     // --- PRODUCTOS ---
     @Headers("Accept: application/json")
     @GET("api/productos")
-    suspend fun getProductos(@Header("Authorization") token: String): Response<List<Producto>>
+    suspend fun getProductos(
+        @Header("Authorization") token: String,
+        @Query("t") timestamp: Long = System.currentTimeMillis()
+    ): Response<List<Producto>>
 
     @Headers("Accept: application/json")
     @DELETE("api/productos/{id}")
@@ -110,7 +99,6 @@ interface ApiService {
         @Part("stock_minimo") stockMinimo: RequestBody,
         @Part foto: MultipartBody.Part?
     ): Response<GenericResponse>
-
     @Multipart
     @POST("api/productos")
     suspend fun agregarProducto(
@@ -203,20 +191,6 @@ interface ApiService {
     suspend fun limpiarNotificaciones(
         @Header("Authorization") token: String
     ): Response<GenericResponse>
-
-    //================ REPORTES DASHBOARD =================//
-
-    @Headers("Accept: application/json")
-    @GET("api/reportes/general")
-    suspend fun getReporteGeneral(
-        @Header("Authorization") token: String
-    ): Response<ReporteGeneral>
-
-    @Headers("Accept: application/json")
-    @GET("api/reportes/estadisticas-mensuales")
-    suspend fun getEstadisticasMensuales(
-        @Header("Authorization") token: String
-    ): Response<List<EstadisticaMensual>>
 
     @Headers("Accept: application/json")
     @GET("api/reportes/movimientos-semanales")

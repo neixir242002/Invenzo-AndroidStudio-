@@ -301,27 +301,69 @@
                     android:textColor="@color/textSecondary" />
             </LinearLayout>
 
-            <!-- LISTADO (ViewPager2) -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- SECCIÓN PRODUCTOS REPORTE -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/txtPagina"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1 / 1"
-                    android:textColor="@color/primaryColor"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="100dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/grayBorder"
+                app:strokeWidth="1dp">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPagerProductosReporte"
-                android:layout_width="match_parent"
-                android:layout_height="650dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="100dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/backgroundColor">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="15dp"
+                            android:text="Detalle de Productos"
+                            android:textColor="@color/textPrimary"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txtPagina"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/bg_user_pill"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="2dp"
+                            android:text="1 / 1"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grayBorder" />
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewPagerProductosReporte"
+                        android:layout_width="match_parent"
+                        android:layout_height="650dp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

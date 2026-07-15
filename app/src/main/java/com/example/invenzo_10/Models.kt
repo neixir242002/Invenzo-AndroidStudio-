@@ -21,14 +21,11 @@ data class UserUpdateResponse(
 )
 
 data class ProfileUpdateRequest(
-
     val nombre: String,
-
     val email: String,
-
     val rol: String? = null
-
 )
+
 data class UserData(
     val id: Int,
     val nombre: String,
@@ -121,7 +118,6 @@ data class EditarProductoRequest(
 data class EstadoProductoRequest(
     @SerializedName("activo") val activo: Int
 )
-
 data class MovimientoRequest(
     val producto_id: Int,
     val tipo: String,

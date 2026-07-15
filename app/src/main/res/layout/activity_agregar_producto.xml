@@ -83,8 +83,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:scaleType="centerCrop"
-                        android:src="@android:drawable/ic_menu_gallery"
-                        app:tint="@color/textSecondary" />
+                        android:src="@android:drawable/ic_menu_gallery" />
 
                     <TextView
                         android:layout_width="wrap_content"

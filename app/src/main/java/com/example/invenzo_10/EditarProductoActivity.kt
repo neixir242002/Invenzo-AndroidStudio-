@@ -41,12 +41,39 @@ class EditarProductoActivity : AppCompatActivity() {
     private var rutaImagenActual: String? = null
 
     private val seleccionarImagen =
+
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+
             uri?.let {
+
                 imagenTemporalUri = it
-                imgPreviewDialog?.setImageURI(it)
-                imgProducto.setImageURI(it)
+
+                imgPreviewDialog?.let { preview ->
+
+                    Glide.with(this)
+
+                        .load(uri)
+
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+
+                        .skipMemoryCache(true)
+
+                        .into(preview)
+
+                }
+
+                Glide.with(this)
+
+                    .load(uri)
+
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+
+                    .skipMemoryCache(true)
+
+                    .into(imgProducto)
+
             }
+
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -207,7 +234,16 @@ class EditarProductoActivity : AppCompatActivity() {
         val btnSeleccionar = vista.findViewById<Button>(R.id.btnSeleccionar)
 
         imagenTemporalUri?.let {
-            imgPreviewDialog?.setImageURI(it)
+
+            Glide.with(this)
+
+                .load(it)
+
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+
+                .skipMemoryCache(true)
+
+                .into(imgPreviewDialog!!)
         } ?: run {
             rutaImagenActual?.let {
                 val urlCompleta = RetrofitClient.obtenerUrlRealtime(it)
@@ -234,7 +270,17 @@ class EditarProductoActivity : AppCompatActivity() {
             val btnGuardarDialogo = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             btnGuardarDialogo.setOnClickListener {
                 if (imagenTemporalUri != null) {
-                    imgProducto.setImageURI(imagenTemporalUri)
+
+                    Glide.with(this)
+
+                        .load(imagenTemporalUri)
+
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+
+                        .skipMemoryCache(true)
+
+                        .into(imgProducto)
+
                 }
                 dialog.dismiss()
             }

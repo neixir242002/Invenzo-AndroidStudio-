@@ -146,18 +146,22 @@ class ReportesActivity : AppCompatActivity() {
     }
 
     private fun actualizarUIFiltros(seleccionado: TextView, varall: TextView, varall2: TextView) {
+        // Estilo para el botón seleccionado
         seleccionado.setTextColor(ContextCompat.getColor(this, R.color.primaryColor))
+        seleccionado.setBackgroundResource(R.drawable.bg_user_pill)
         seleccionado.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primaryLight))
         seleccionado.setTypeface(null, android.graphics.Typeface.BOLD)
 
         val gris = ContextCompat.getColor(this, R.color.textSecondary)
-        varall.setTextColor(gris)
-        varall.backgroundTintList = null
-        varall.setTypeface(null, android.graphics.Typeface.NORMAL)
-
-        varall2.setTextColor(gris)
-        varall2.backgroundTintList = null
-        varall2.setTypeface(null, android.graphics.Typeface.NORMAL)
+        
+        // Resetear estilo para los botones no seleccionados
+        val deseleccionados = listOf(varall, varall2)
+        deseleccionados.forEach { btn ->
+            btn.setTextColor(gris)
+            btn.background = null
+            btn.backgroundTintList = null
+            btn.setTypeface(null, android.graphics.Typeface.NORMAL)
+        }
     }
 
     private fun aplicarFiltros() {

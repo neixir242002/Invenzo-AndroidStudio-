@@ -74,11 +74,6 @@ class ActivityInicio : AppCompatActivity() {
         btnVerDetallesMovimientos?.setOnClickListener(verDetallesListener)
         btnVerDetallesCategoris?.setOnClickListener(verDetallesListener2)
 
-
-        findViewById<MaterialCardView>(R.id.cardCategorias)?.setOnClickListener {
-            startActivity(Intent(this, CategoriaActivity::class.java))
-        }
-
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.home
 

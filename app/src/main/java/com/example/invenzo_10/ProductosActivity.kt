@@ -43,6 +43,15 @@ class ProductosActivity : AppCompatActivity() {
     private lateinit var etBuscar: EditText
     private lateinit var swipeRefresh: SwipeRefreshLayout
 
+    private val editarProductoLauncher = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            Log.d("PRODUCTOS_DEBUG", "¡Cambio detectado! Recargando lista...")
+            cargarProductos()
+        }
+    }
+
     private val listaProductosAMostrar = mutableListOf<Producto>()
     private var listaCompleta = mutableListOf<Producto>()
     private var filtroActual = "TODOS"
@@ -98,7 +107,6 @@ class ProductosActivity : AppCompatActivity() {
     private fun setupSwipeRefresh() {
         swipeRefresh.setColorSchemeResources(R.color.primaryColor)
         swipeRefresh.setOnRefreshListener {
-            // Esto permite que el usuario actualice en "tiempo real" deslizando hacia abajo
             cargarProductos()
             mostrarDatosUsuario()
         }
@@ -109,14 +117,19 @@ class ProductosActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 swipeRefresh.isRefreshing = true
-                val response = RetrofitClient.instance.getProductos("Bearer $token")
+                Log.d("PRODUCTOS_DEBUG", "Llamando a la API de productos...")
+                // Usamos timestamp para romper caché de Retrofit/OkHttp
+                val response = RetrofitClient.instance.getProductos("Bearer $token", System.currentTimeMillis())
                 if (response.isSuccessful) {
                     listaCompleta.clear()
                     listaCompleta.addAll(response.body() ?: emptyList())
-                    aplicarFiltros()
+                    Log.d("PRODUCTOS_DEBUG", "Se recibieron ${listaCompleta.size} productos.")
+                    aplicarFiltros(isRefresh = true)
+                } else {
+                    Log.e("PRODUCTOS_DEBUG", "Error API: ${response.code()} ${response.errorBody()?.string()}")
                 }
             } catch (e: Exception) {
-                Log.e("API", "Error: ${e.message}")
+                Log.e("PRODUCTOS_DEBUG", "Error de red: ${e.message}")
             } finally {
                 swipeRefresh.isRefreshing = false
             }
@@ -135,7 +148,7 @@ class ProductosActivity : AppCompatActivity() {
         val fotoPath = prefs.getString("user_photo", "")
 
         txtNombre?.text = nombre
-        txtRoleCompany?.text = "${if(rol?.contains("principal") == true) "Administrador Principal" else rol} • $empresa"
+        txtRoleCompany?.text = "${if(rol?.contains("principal", ignoreCase = true) == true) "Administrador Principal" else rol} • $empresa"
 
         if (imgProfile != null) {
             if (!fotoPath.isNullOrEmpty()) {
@@ -154,7 +167,7 @@ class ProductosActivity : AppCompatActivity() {
         }
     }
 
-    private fun aplicarFiltros() {
+    private fun aplicarFiltros(isRefresh: Boolean = false) {
         val textoBusqueda = etBuscar.text.toString().lowercase()
         val filtrados = listaCompleta.filter { producto ->
             val coincideBusqueda = producto.nombre.lowercase().contains(textoBusqueda) ||
@@ -166,12 +179,16 @@ class ProductosActivity : AppCompatActivity() {
             }
             coincideBusqueda && coincidePestaña
         }
+
+        val posicionActual = vpProductos.currentItem
         listaProductosAMostrar.clear()
         listaProductosAMostrar.addAll(filtrados)
         pagerAdapter.actualizar(listaProductosAMostrar)
+        
         if (pagerAdapter.itemCount > 0) {
-            vpProductos.setCurrentItem(0, false)
-            actualizarIndicadorPagina(0)
+            val nuevaPosicion = if (isRefresh && posicionActual < pagerAdapter.itemCount) posicionActual else 0
+            vpProductos.setCurrentItem(nuevaPosicion, false)
+            actualizarIndicadorPagina(nuevaPosicion)
         } else {
             actualizarIndicadorPagina(-1)
         }
@@ -185,7 +202,7 @@ class ProductosActivity : AppCompatActivity() {
     private fun setupBuscador() {
         etBuscar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { aplicarFiltros() }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { aplicarFiltros(isRefresh = false) }
             override fun afterTextChanged(s: Editable?) {}
         })
     }
@@ -211,29 +228,54 @@ class ProductosActivity : AppCompatActivity() {
         seleccionada?.setTypeface(null, android.graphics.Typeface.BOLD)
         seleccionada?.setBackgroundResource(R.drawable.bg_user_pill)
         seleccionada?.backgroundTintList = ContextCompat.getColorStateList(this, R.color.primaryLight)
-        aplicarFiltros()
+        aplicarFiltros(isRefresh = false)
     }
 
     private fun mostrarOpcionesProducto(producto: Producto) {
         val dialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val view = layoutInflater.inflate(R.layout.dialog_producto_options, null)
 
-        view.findViewById<LinearLayout>(R.id.btnEditarProducto).setOnClickListener {
+        val btnEditar = view.findViewById<LinearLayout>(R.id.btnEditarProducto)
+        val btnCambiarEstado = view.findViewById<LinearLayout>(R.id.btnCambiarEstadoProducto)
+        val btnEliminar = view.findViewById<LinearLayout>(R.id.btnEliminarProducto)
+        val txtStatusAction = view.findViewById<TextView>(R.id.txtStatusActionProducto)
+        val imgStatusIcon = view.findViewById<ImageView>(R.id.imgStatusIconProducto)
+
+        val isActive = producto.activo == 1
+
+        if (isActive) {
+            txtStatusAction.text = "Desactivar Producto"
+            imgStatusIcon.setImageResource(R.drawable.ic_lock)
+            imgStatusIcon.setColorFilter(Color.parseColor("#DC2626"))
+        } else {
+            txtStatusAction.text = "Activar Producto"
+            imgStatusIcon.setImageResource(R.drawable.ic_check)
+            imgStatusIcon.setColorFilter(Color.parseColor("#059669"))
+        }
+
+        btnEditar.setOnClickListener {
             val intent = Intent(this, EditarProductoActivity::class.java).apply {
                 putExtra("id", producto.id)
                 putExtra("nombre", producto.nombre)
                 putExtra("codigo", producto.codigo)
+                putExtra("categoria_id", producto.categoria?.id ?: 1)
                 putExtra("categoria", producto.categoria?.nombre)
                 putExtra("precio", producto.precio.toDoubleOrNull() ?: 0.0)
                 putExtra("stock", producto.cantidad)
                 putExtra("stockmini", producto.stockMinimo)
+                putExtra("activo", producto.activo)
                 putExtra("rutaImagen", producto.foto)
             }
-            startActivity(intent)
+            editarProductoLauncher.launch(intent)
             dialog.dismiss()
         }
 
-        view.findViewById<LinearLayout>(R.id.btnEliminarProducto).setOnClickListener {
+        btnCambiarEstado.setOnClickListener {
+            cambiarEstadoProducto(producto, !isActive)
+            dialog.dismiss()
+        }
+
+        btnEliminar.setOnClickListener {
             dialog.dismiss()
             AlertDialog.Builder(this)
                 .setTitle("¿Eliminar?")
@@ -245,6 +287,28 @@ class ProductosActivity : AppCompatActivity() {
 
         dialog.setContentView(view)
         dialog.show()
+    }
+
+    private fun cambiarEstadoProducto(producto: Producto, nuevoEstado: Boolean) {
+        val token = getSharedPreferences("auth", Context.MODE_PRIVATE).getString("token", "") ?: ""
+        val nuevoEstadoInt = if (nuevoEstado) 1 else 0
+
+        val request = EstadoProductoRequest(activo = nuevoEstadoInt)
+
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance.toggleStatusProducto("Bearer $token", producto.id, request)
+                if (response.isSuccessful) {
+                    Toast.makeText(this@ProductosActivity, "Estado actualizado", Toast.LENGTH_SHORT).show()
+                    cargarProductos()
+                } else {
+                    Toast.makeText(this@ProductosActivity, "Error al actualizar", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) { 
+                Log.e("API", "Error: ${e.message}")
+                Toast.makeText(this@ProductosActivity, "Error de conexión", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun eliminarProducto(id: Int) {
@@ -300,13 +364,25 @@ class ProductosActivity : AppCompatActivity() {
                 outputStream = FileOutputStream(File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName))
             }
 
-            outputStream?.use { workbook.write(it); Toast.makeText(this, "Excel guardado", Toast.LENGTH_SHORT).show() }
+            outputStream?.use { 
+                workbook.write(it)
+                Toast.makeText(this, "Excel guardado", Toast.LENGTH_SHORT).show() 
+            }
             workbook.close()
-        } catch (e: Exception) { Toast.makeText(this, "Error al exportar", Toast.LENGTH_SHORT).show() }
+        } catch (e: Exception) { 
+            Log.e("EXPORT", "Error excel", e)
+            Toast.makeText(this, "Error al exportar", Toast.LENGTH_SHORT).show() 
+        }
     }
 
     private fun configurarNavegacion() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val rol = prefs.getString("user_role", "Administrador")
+        if (rol == "Auxiliar") {
+            bottomNav?.menu?.findItem(R.id.categoria)?.isVisible = false
+        }
+
         bottomNav.selectedItemId = R.id.products
         bottomNav.setOnItemSelectedListener { item ->
             if (item.itemId == R.id.products) return@setOnItemSelectedListener true

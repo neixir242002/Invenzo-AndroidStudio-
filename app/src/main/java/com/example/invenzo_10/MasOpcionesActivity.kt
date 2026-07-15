@@ -56,7 +56,6 @@ class MasOpcionesActivity : AppCompatActivity() {
         txtRoleHeader?.text = infoCompleta
 
         if (!fotoPath.isNullOrEmpty()) {
-            // USAMOS URL REALTIME PARA QUE SE ACTUALICE AL INSTANTE
             val fullUrl = RetrofitClient.obtenerUrlRealtime(fotoPath)
             
             val glideRequest = Glide.with(this)
@@ -93,7 +92,7 @@ class MasOpcionesActivity : AppCompatActivity() {
             }
             "Administrador" -> {
                 findViewById<View>(R.id.optUsuarios)?.visibility = View.GONE
-                findViewById<View>(R.id.optCategorias)?.visibility = View.GONE 
+                findViewById<View>(R.id.optCategorias)?.visibility = View.VISIBLE // AHORA VISIBLE PARA ADMINISTRADOR
                 findViewById<View>(R.id.optHistorialInventario)?.visibility = View.VISIBLE
             }
             else -> {
