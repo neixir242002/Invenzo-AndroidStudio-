@@ -8,6 +8,7 @@
     android:background="@color/backgroundColor"
     tools:context=".MasOpcionesActivity">
 
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -17,7 +18,6 @@
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,11 +44,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="28dp">
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp">
+                    android:background="@drawable/bg_card"
+                    android:padding="16dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imgProfile"
@@ -65,8 +65,9 @@
                         app:strokeColor="@color/grayBorder"
                         app:strokeWidth="1dp" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="8dp"
@@ -99,25 +100,27 @@
 
             <!-- SECCIÓN: ADMINISTRACIÓN -->
             <TextView
-                style="@style/InvenzoLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:layout_marginBottom="12dp"
                 android:text="@string/administration"
                 android:textAllCaps="true"
                 android:letterSpacing="0.05"
                 android:textColor="@color/textSecondary" />
-
+            <!-- Administration Group -->
             <com.google.android.material.card.MaterialCardView
-                style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="28dp">
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/grayBorder"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
                     android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -158,12 +161,11 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View style="@style/Divider" android:layout_marginHorizontal="16dp" />
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optInventarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@drawable/bg_card"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
@@ -176,6 +178,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textPrimary" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -196,13 +199,13 @@
                             app:tint="@color/textSecondary" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View style="@style/Divider" android:layout_marginHorizontal="16dp" />
+                    <View style="@style/Divider" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optUsuarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@drawable/bg_card"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
@@ -215,6 +218,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textPrimary" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -282,7 +286,7 @@
                         android:id="@+id/optNotificaciones"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
+                        android:background="@drawable/bg_bottom_nav_floating"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
@@ -295,6 +299,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textPrimary" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

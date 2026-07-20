@@ -75,6 +75,7 @@ data class Categoria(
     @SerializedName("productos_count") val productosCount: Int?, 
     @SerializedName("created_at") val createdAt: String?,
     @SerializedName(value = "activo", alternate = ["activa"]) var activo: Any?
+
 )
 
 data class CategoriaRequest(

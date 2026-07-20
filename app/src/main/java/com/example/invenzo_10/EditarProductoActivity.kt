@@ -1,5 +1,6 @@
 package com.example.invenzo_10
 
+
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -30,6 +31,7 @@ class EditarProductoActivity : AppCompatActivity() {
     private lateinit var edtCodigo: EditText
     private lateinit var edtStock: EditText
     private lateinit var edtStockMinimo: EditText
+
     private lateinit var spCategoria: Spinner
     private lateinit var imgProducto: ImageView
 
@@ -155,9 +157,9 @@ class EditarProductoActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Log.e("EDIT", "Error al cargar categorías", e)
+
             }
         }
-    }
 
     private fun actualizarProducto() {
         val nombre = edtNombre.text.toString().trim()
@@ -226,7 +228,6 @@ class EditarProductoActivity : AppCompatActivity() {
                 Log.e("EDIT", "Fallo actualizar producto", e)
             }
         }
-    }
 
     private fun mostrarDialogoImagen() {
         val vista = layoutInflater.inflate(R.layout.dialog_imagen_producto, null)
@@ -301,4 +302,5 @@ class EditarProductoActivity : AppCompatActivity() {
         }
         return archivo
     }
+
 }
