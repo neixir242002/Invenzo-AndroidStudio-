@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,16 +9,18 @@
     android:background="@color/backgroundColor"
     tools:context=".MasOpcionesActivity">
 
-
+    <!-- CONTENIDO DESPLAZABLE -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:fillViewport="false"
         android:paddingBottom="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,13 +40,14 @@
                 android:fontFamily="sans-serif"
                 android:textFontWeight="600" />
 
-            <!-- Card de Perfil (Encabezado) -->
+            <!-- TARJETA DE PERFIL -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardProfileHeader"
                 style="@style/DashboardCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="28dp">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -54,10 +58,10 @@
                         android:id="@+id/imgProfile"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
+                        android:background="@color/backgroundColor"
+                        android:padding="12dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_user"
-                        android:padding="12dp"
-                        android:background="@color/backgroundColor"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -65,12 +69,10 @@
                         app:strokeColor="@color/grayBorder"
                         app:strokeWidth="1dp" />
 
-                    <TextView
-                        android:id="@+id/txtName"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="8dp"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -81,10 +83,10 @@
                             android:id="@+id/txtName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
                             android:text="@string/david_garcia"
                             android:textColor="@color/textPrimary"
                             android:textSize="18sp"
-                            android:fontFamily="sans-serif"
                             android:textFontWeight="600" />
 
                         <TextView
@@ -94,8 +96,11 @@
                             android:text="@string/admin"
                             android:textColor="@color/textSecondary"
                             android:textSize="14sp" />
+
                     </LinearLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <!-- SECCIÓN: ADMINISTRACIÓN -->
@@ -107,7 +112,8 @@
                 android:textAllCaps="true"
                 android:letterSpacing="0.05"
                 android:textColor="@color/textSecondary" />
-            <!-- Administration Group -->
+
+            <!-- OPCIONES DE ADMINISTRACIÓN -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -123,6 +129,7 @@
                     android:background="@drawable/bg_card"
                     android:orientation="vertical">
 
+                    <!-- CATEGORÍAS -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optCategorias"
                         android:layout_width="match_parent"
@@ -131,6 +138,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconCat"
                             android:layout_width="24dp"
@@ -140,6 +148,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textPrimary" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -150,6 +159,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/iconCat"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
@@ -158,17 +168,23 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textSecondary" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View style="@style/Divider" android:layout_marginHorizontal="16dp" />
+                    <View
+                        style="@style/Divider"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <!-- INVENTARIOS -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optInventarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_card"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconInv"
                             android:layout_width="24dp"
@@ -189,6 +205,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/iconInv"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
@@ -197,18 +214,21 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textSecondary" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View style="@style/Divider" />
 
+                    <!-- USUARIOS -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optUsuarios"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_card"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconUsers"
                             android:layout_width="24dp"
@@ -229,6 +249,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/iconUsers"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
@@ -237,11 +258,14 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textSecondary" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View style="@style/Divider" android:layout_marginHorizontal="16dp" />
+                    <View
+                        style="@style/Divider"
+                        android:layout_marginHorizontal="16dp" />
 
-                    <!-- Historial de Inventario -->
+                    <!-- HISTORIAL DE INVENTARIO -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optHistorialInventario"
                         android:layout_width="match_parent"
@@ -250,6 +274,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconHistorial"
                             android:layout_width="24dp"
@@ -259,6 +284,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textPrimary" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -269,6 +295,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/iconHistorial"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
@@ -277,19 +304,23 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textSecondary" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <View style="@style/Divider" android:layout_marginHorizontal="16dp" />
+                    <View
+                        style="@style/Divider"
+                        android:layout_marginHorizontal="16dp" />
 
-                    <!-- Notificaciones -->
+                    <!-- NOTIFICACIONES -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/optNotificaciones"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_bottom_nav_floating"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconNotif"
                             android:layout_width="24dp"
@@ -310,6 +341,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@id/iconNotif"
                             app:layout_constraintTop_toTopOf="parent" />
+
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
@@ -318,13 +350,14 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/textSecondary" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- SESIÓN -->
+            <!-- SECCIÓN: SESIÓN -->
             <TextView
                 style="@style/InvenzoLabel"
                 android:layout_width="wrap_content"
@@ -356,8 +389,8 @@
                         android:id="@+id/iconLogout"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_arrow"
                         android:rotation="180"
+                        android:src="@drawable/ic_arrow"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -383,13 +416,14 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <!-- BARRA DE NAVEGACIÓN INFERIOR -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:backgroundTint="@color/white"
         android:elevation="8dp"
+        app:backgroundTint="@color/white"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -7,7 +7,5 @@ class InvenzoApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        RetrofitClient.inicializar(applicationContext)
     }
 }
