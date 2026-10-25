@@ -16,9 +16,10 @@
 
     <Button
         android:id="@+id/btnSeleccionar"
+        style="@style/InvenzoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Seleccionar imagen"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:text="Seleccionar imagen" />
 
 </LinearLayout>

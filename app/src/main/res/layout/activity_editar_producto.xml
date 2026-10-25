@@ -12,6 +12,7 @@
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:background="@color/white"
         android:padding="20dp"
         android:elevation="2dp"
@@ -29,6 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/primaryColor" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -233,3 +235,4 @@
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

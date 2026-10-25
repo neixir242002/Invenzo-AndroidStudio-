@@ -137,7 +137,6 @@
                 android:textSize="11sp"
                 android:textStyle="bold"
                 tools:text="Activo" />
-
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
