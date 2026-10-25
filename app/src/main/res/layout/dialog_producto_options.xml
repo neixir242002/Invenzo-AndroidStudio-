@@ -68,7 +68,8 @@
             android:id="@+id/imgStatusIconProducto"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_check" />
+            android:backgroundTint="@color/black"
+            android:src="@drawable/ic_category" />
 
         <TextView
             android:id="@+id/txtStatusActionProducto"
@@ -77,7 +78,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="sans-serif"
             android:text="Cambiando estado..."
-            android:textColor="@color/textPrimary"
+            android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>
 

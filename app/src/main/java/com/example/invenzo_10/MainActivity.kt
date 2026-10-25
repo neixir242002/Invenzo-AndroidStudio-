@@ -16,18 +16,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
-        if (!prefs.getString("token", null).isNullOrEmpty()) {
-            navigateTo(ActivityInicio::class.java, true)
-            return
-        }
+        // Cada vez que se inicia el flujo de login,
+        // se eliminan las credenciales de una sesión anterior.
+        getSharedPreferences("auth", Context.MODE_PRIVATE)
+            .edit()
+            .clear()
+            .commit()
 
-        // isLightStatusBar = false para que los iconos de la barra sean blancos sobre el fondo azul
         applyEdgeToEdgeWithInsets(null, false)
         setContentView(R.layout.activity_main)
-        
-        // Ajustamos el padding del contenedor del logo para evitar el notch/barra de estado
-        applyEdgeToEdgeWithInsets(findViewById(R.id.logoContainer), false)
+
+        applyEdgeToEdgeWithInsets(
+            findViewById(R.id.logoContainer),
+            false
+        )
 
         val inputCorreo = findViewById<TextInputLayout>(R.id.inputCorreo)
         val inputPassword = findViewById<TextInputLayout>(R.id.inputPassword)
@@ -40,9 +42,14 @@ class MainActivity : AppCompatActivity() {
             val password = inputPassword?.editText?.text.toString().trim()
 
             if (correo.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Completa todos los campos",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
+
             ejecutarLogin(correo, password)
         }
 
@@ -51,9 +58,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         tvForgotPass?.setOnClickListener {
-            startActivity(Intent(this, RestablecerPasswordActivity::class.java))
+            startActivity(
+                Intent(this, RestablecerPasswordActivity::class.java)
+            )
         }
     }
+
 
     private fun ejecutarLogin(email: String, pass: String) {
         val request = LoginRequest(email, pass)
